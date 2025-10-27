@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import StaffDashboard from "./StaffDashboard";
 import './App.css';
 
 function App() {
