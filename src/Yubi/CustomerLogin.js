@@ -9,7 +9,16 @@ function CustomerLogin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/customer/dashboard");
+
+    // create a mock user
+    const user = {
+      name: email.split("@")[0],
+      email: email,
+      phone: "123-456-7890"
+    };
+
+    // navigate with user data
+    navigate("/customer/dashboard", { state: { user } });
   };
 
   return (
@@ -41,7 +50,9 @@ function CustomerLogin() {
             <label>
               <input type="checkbox" /> Remember me
             </label>
-            <a href="#">Forgot password?</a>
+            <a href="/" onClick={(e) => e.preventDefault()}>
+              Forgot password?
+            </a>
           </div>
 
           <button type="submit" className="login-btn">Sign In</button>
