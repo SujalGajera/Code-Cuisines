@@ -1,18 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-// Import all pages
-import CustomerLogin from "./Yubi/CustomerLogin";
-import CustomerRegister from "./Yubi/CustomerRegister";
-import CustomerForgotPassword from "./Yubi/CustomerForgotPassword";
-import CustomerDashboard from "./Yubi/CustomerDashboard";
-import CustomerMenu from "./Yubi/CustomerMenu";
+// Import all pages (with .js)
+import CustomerLogin from "./Yubi/CustomerLogin.js";
+import CustomerRegister from "./Yubi/CustomerRegister.js";
+import CustomerForgotPassword from "./Yubi/CustomerForgotPassword.js";
+import CustomerDashboard from "./Yubi/CustomerDashboard.js";
+import CustomerMenu from "./Yubi/CustomerMenu.js";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Default route */}
         <Route path="/" element={<Navigate to="/customer/login" />} />
 
         {/* Auth Pages */}
@@ -24,8 +23,15 @@ function App() {
         <Route path="/customer/dashboard" element={<CustomerDashboard />} />
         <Route path="/customer/menu" element={<CustomerMenu />} />
 
-        {/* Fallback */}
-        <Route path="*" element={<h2 style={{ color: "white", textAlign: "center", marginTop: "50px" }}>404 - Page Not Found</h2>} />
+        {/* 404 Fallback */}
+        <Route
+          path="*"
+          element={
+            <h2 style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
+              404 - Page Not Found
+            </h2>
+          }
+        />
       </Routes>
     </Router>
   );
