@@ -1,0 +1,199 @@
+:root {
+  --brand: #a94c0a; /* warm orange-brown from your Figma */
+  --brand-200: #c35a0c;
+  --ink: #111;
+  --muted: #666;
+  --paper: #ffffff;
+  --nav: #f2f2f2; /* light navbar background (matches screenshot) */
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  --radius: 14px;
+}
+
+/* Wrapper keeps navbar on top */
+.cc-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: transparent;
+}
+
+/* Main bar */
+.cc-nav {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px;
+  background: var(--nav);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Brand */
+.cc-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.cc-logo-pill {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.cc-brand-text {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Links (desktop) */
+.cc-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.cc-link {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 2px;
+}
+
+.cc-link.active {
+  color: var(--brand);
+}
+
+/* Primary button (Login/Register) */
+.cc-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--brand);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.cc-primary-btn .caret {
+  transition: transform .2s ease;
+}
+
+.cc-primary-btn .caret.up {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.cc-dropdown {
+  position: relative;
+}
+
+.cc-menu {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 8px;
+  min-width: 220px;
+}
+
+.cc-menu-item {
+  display: block;
+  padding: 10px 14px;
+  color: #222;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.cc-menu-item:hover {
+  background: #f6f6f6;
+  color: var(--brand);
+}
+
+/* Hamburger (mobile only) */
+.cc-hamburger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  background: #e9e9e9;
+  cursor: pointer;
+}
+
+.cc-hamburger span {
+  display: block;
+  height: 2px;
+  margin: 6px 8px;
+  background: #333;
+}
+
+/* Mobile panel */
+.cc-mobile {
+  display: none;
+  position: fixed;
+  inset: 64px 0 0 0;
+  background: #111;
+  color: #fff;
+  padding: 16px;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all .2s ease;
+}
+
+.cc-mobile.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cc-mobile-link {
+  display: block;
+  padding: 14px 10px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.cc-mobile-link:hover {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+.cc-mobile-divider {
+  height: 1px;
+  background: #2a2a2a;
+  margin: 10px 0;
+}
+
+.cc-mobile-label {
+  color: #bbb;
+  font-size: .9rem;
+  margin: 6px 0 2px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cc-links {
+    display: none;
+  }
+  .cc-hamburger {
+    display: block;
+  }
+}
