@@ -1,40 +1,128 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./CustomerMenu.css";
 
-// Import all pages (with .js)
-import CustomerLogin from "./Yubi/CustomerLogin.js";
-import CustomerRegister from "./Yubi/CustomerRegister.js";
-import CustomerForgotPassword from "./Yubi/CustomerForgotPassword.js";
-import CustomerDashboard from "./Yubi/CustomerDashboard.js";
-import CustomerMenu from "./Yubi/CustomerMenu.js";
+function CustomerMenu() {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("Appetizers");
 
-function App() {
+  // ✅ Each section has its own dishes
+  const menuItems = {
+    Appetizers: [
+      {
+        name: "Bruschetta",
+        price: "$8.99",
+        desc: "Toasted bread topped with fresh tomatoes, basil, garlic, and olive oil.",
+      },
+      {
+        name: "Garlic Bread",
+        price: "$5.49",
+        desc: "Crispy garlic bread with butter and herbs.",
+      },
+      {
+        name: "Stuffed Mushrooms",
+        price: "$7.99",
+        desc: "Mushrooms stuffed with cheese and herbs, baked to perfection.",
+      },
+    ],
+    "Main Courses": [
+      {
+        name: "Grilled Chicken",
+        price: "$15.99",
+        desc: "Served with mashed potatoes, veggies, and mushroom sauce.",
+      },
+      {
+        name: "Beef Steak",
+        price: "$18.99",
+        desc: "Juicy grilled steak with peppercorn sauce and fries.",
+      },
+      {
+        name: "Pasta Alfredo",
+        price: "$13.49",
+        desc: "Creamy Alfredo pasta with mushrooms and parmesan cheese.",
+      },
+    ],
+    Desserts: [
+      {
+        name: "Chocolate Lava Cake",
+        price: "$7.99",
+        desc: "Warm chocolate cake with a molten center and vanilla ice cream.",
+      },
+      {
+        name: "Cheesecake",
+        price: "$6.99",
+        desc: "Classic New York cheesecake with strawberry syrup.",
+      },
+      {
+        name: "Brownie Delight",
+        price: "$6.49",
+        desc: "Rich chocolate brownie served with hot fudge sauce.",
+      },
+    ],
+    Beverages: [
+      {
+        name: "Cappuccino",
+        price: "$4.99",
+        desc: "Freshly brewed Italian coffee with milk foam.",
+      },
+      {
+        name: "Iced Latte",
+        price: "$5.49",
+        desc: "Smooth cold coffee with creamy milk and ice.",
+      },
+      {
+        name: "Lemonade",
+        price: "$3.99",
+        desc: "Refreshing lemon drink with mint and ice.",
+      },
+    ],
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/customer/login" />} />
+    <div className="menu-container">
+      <div className="menu-box">
+        <h2>🍽️ Our Delicious Menu</h2>
+        <p className="subtitle">
+          Select a category to explore our best dishes.
+        </p>
 
-        {/* Auth Pages */}
-        <Route path="/customer/login" element={<CustomerLogin />} />
-        <Route path="/customer/register" element={<CustomerRegister />} />
-        <Route path="/customer/forgot-password" element={<CustomerForgotPassword />} />
+        {/* Tabs */}
+        <div className="menu-tabs">
+          {Object.keys(menuItems).map((category) => (
+            <button
+              key={category}
+              className={selectedCategory === category ? "active" : ""}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
 
-        {/* Dashboard & Menu */}
-        <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-        <Route path="/customer/menu" element={<CustomerMenu />} />
+        {/* Dynamic Items Section */}
+        <div className="menu-grid">
+          {menuItems[selectedCategory].map((item, index) => (
+            <div key={index} className="menu-card">
+              <h3>{item.name}</h3>
+              <p className="desc">{item.desc}</p>
+              <p className="price">{item.price}</p>
+              <button className="order-btn">Add to Order</button>
+            </div>
+          ))}
+        </div>
 
-        {/* 404 Fallback */}
-        <Route
-          path="*"
-          element={
-            <h2 style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
-              404 - Page Not Found
-            </h2>
-          }
-        />
-      </Routes>
-    </Router>
+        {/* Back Button */}
+        <div className="back-btn-container">
+          <button
+            className="back-btn"
+            onClick={() => navigate("/customer/dashboard")}
+          >
+            ⟲ Back to Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default CustomerMenu;
