@@ -1,11 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import './Navbar.css';
+
+// Import the logo file using the correct relative path
+import logo from '../assets/CodeCuisineLogo.png'; 
 
 function Navbar() {
   const [dropOpen, setDropOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);  // Properly initialized mobileOpen state
+  const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const location = useLocation();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -20,21 +24,38 @@ function Navbar() {
 
   // Close mobile menu on route change
   useEffect(() => {
-    const close = () => {
-      setDropOpen(false);
-      setMobileOpen(false);
+    setMobileOpen(false);
+    setDropOpen(false);
+  }, [location]);
+
+  // Close mobile menu on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 900) {
+        setMobileOpen(false);
+      }
     };
-    window.addEventListener('hashchange', close);
-    return () => window.removeEventListener('hashchange', close);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Toggle mobile menu
+  const toggleMobile = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  // Close mobile menu
+  const closeMobile = () => {
+    setMobileOpen(false);
+  };
 
   return (
     <header className="cc-nav-wrap">
       <div className="cc-nav">
         {/* LEFT: Logo */}
-        <Link to="/" className="cc-brand">
-          <span className="cc-logo-pill">CC</span>
-          <span className="cc-brand-text">Code Cuisine</span>
+        <Link to="/" className="cc-brand" onClick={closeMobile}>
+          <img src={logo} alt="Code & Cuisine Logo" className="cc-logo-img" />
+          <span className="cc-brand-text">Code & Cuisine</span>
         </Link>
 
         {/* RIGHT: Desktop menu */}
@@ -69,9 +90,9 @@ function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="cc-hamburger"
+          className={`cc-hamburger ${mobileOpen ? 'active' : ''}`}
           aria-label="Toggle menu"
-          onClick={() => setMobileOpen(!mobileOpen)}  // Proper toggling of mobileOpen state
+          onClick={toggleMobile}
         >
           <span />
           <span />
@@ -79,16 +100,24 @@ function Navbar() {
         </button>
       </div>
 
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div 
+          className="cc-mobile-overlay active" 
+          onClick={closeMobile}
+        />
+      )}
+
       {/* Mobile slide panel */}
       <div className={`cc-mobile ${mobileOpen ? 'open' : ''}`}>
-        <NavLink to="/" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>Home</NavLink>
-        <NavLink to="/explore" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>Explore</NavLink>
-        <NavLink to="/about" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>About Us</NavLink>
+        <NavLink to="/" className="cc-mobile-link" onClick={closeMobile}>Home</NavLink>
+        <NavLink to="/explore" className="cc-mobile-link" onClick={closeMobile}>Explore</NavLink>
+        <NavLink to="/about" className="cc-mobile-link" onClick={closeMobile}>About Us</NavLink>
         <div className="cc-mobile-divider" />
         <div className="cc-mobile-label">Login / Register</div>
-        <Link to="/login/admin" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>Admin</Link>
-        <Link to="/login/staff" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>Staff/Receptionist</Link>
-        <Link to="/login/customer" className="cc-mobile-link" onClick={() => setMobileOpen(false)}>Customer</Link>
+        <Link to="/login/admin" className="cc-mobile-link" onClick={closeMobile}>Admin</Link>
+        <Link to="/login/staff" className="cc-mobile-link" onClick={closeMobile}>Staff/Receptionist</Link>
+        <Link to="/login/customer" className="cc-mobile-link" onClick={closeMobile}>Customer</Link>
       </div>
     </header>
   );

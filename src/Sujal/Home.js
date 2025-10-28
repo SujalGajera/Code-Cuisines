@@ -1,7 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Home.css';
+import logo from '../assets/CodeCuisineLogo.png';
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/login/customer');
+  };
+
+  const handleFeatureClick = () => {
+    navigate('/login/customer');
+  };
+
   return (
     <main className="cc-home">
       {/* HERO */}
@@ -9,10 +21,7 @@ function Home() {
         <div className="cc-hero-bg" />
         <div className="cc-hero-inner">
           <div className="cc-hero-icon">
-            {/* utensils icon */}
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M7 2v9M10 2v9M7 11h3M14 2c2.8 0 5 2.2 5 5 0 1.6-.7 3-1.9 4l.1 9h-2l-.1-9A5 5 0 0 1 14 2z" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <img src={logo} alt="Code Cuisine" className="cc-hero-logo" />
           </div>
 
           <h1 className="cc-hero-title">
@@ -27,12 +36,7 @@ function Home() {
           </p>
 
           <div className="cc-hero-cta">
-            <button className="cc-btn cc-btn-primary">Get Started</button>
-            <div className="cc-hero-input" aria-hidden="true" />
-          </div>
-
-          <div className="cc-scroll-indicator" aria-hidden="true">
-            <span />
+            <button className="cc-btn cc-btn-primary" onClick={handleGetStarted}>Get Started</button>
           </div>
         </div>
       </section>
@@ -51,7 +55,7 @@ function Home() {
               <div className="cc-card-media cc-media-menu">
                 <div className="cc-badge">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M7 2v9M10 2v9M7 11h3M14 2c2.8 0 5 2.2 5 5 0 1.6-.7 3-1.9 4l.1 0" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
@@ -61,7 +65,7 @@ function Home() {
                   Browse our extensive digital menu with beautiful images, detailed descriptions,
                   and real-time availability updates.
                 </p>
-                <button className="cc-btn cc-btn-secondary">Explore Menu</button>
+                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Explore Menu</button>
               </div>
             </article>
 
@@ -70,7 +74,7 @@ function Home() {
               <div className="cc-card-media cc-media-reserve">
                 <div className="cc-badge">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M8 7h8M8 12h8M5 21h14a2 2 0 0 0 2-2V7l-4-4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM16 2v4M8 2v4M3 10h18" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
@@ -80,7 +84,7 @@ function Home() {
                   Book your table instantly with our smart reservation system. Choose your
                   preferred time, party size, and seating preferences.
                 </p>
-                <button className="cc-btn cc-btn-secondary">Book Now</button>
+                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Book Now</button>
               </div>
             </article>
 
@@ -89,7 +93,7 @@ function Home() {
               <div className="cc-card-media cc-media-order">
                 <div className="cc-badge">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 3h18l-2 13H5L3 3zm5 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M9 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-3M9 2a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1M9 2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1m-6 5h6m-6 4h6m-6 4h4" stroke="white" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
@@ -99,7 +103,7 @@ function Home() {
                   Enjoy your favorite dishes at home. Order online for delivery or pickup with
                   real-time order tracking and updates.
                 </p>
-                <button className="cc-btn cc-btn-secondary">Order Now</button>
+                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Order Now</button>
               </div>
             </article>
           </div>
@@ -128,7 +132,7 @@ function Home() {
             <div className="cc-pill">About Code Cuisine</div>
             <h2 className="cc-about-title">Redefining Restaurant Excellence</h2>
             <p className="cc-about-lead">
-              Code Cuisine is more than just a restaurant management platform—it’s a
+              Code Cuisine is more than just a restaurant management platform—it's a
               comprehensive ecosystem designed to elevate every aspect of the dining
               experience. From the moment a customer browses our menu to the final bite,
               we ensure seamless operations and unforgettable moments.
@@ -155,7 +159,7 @@ function Home() {
       <footer className="cc-footer">
         <div className="cc-container cc-footer-grid">
           <div className="cc-foot-brand">
-            <div className="cc-logo-pill">CC</div>
+            <img src={logo} alt="Code Cuisine Logo" className="cc-foot-logo" />
             <div className="cc-foot-name">Code Cuisine</div>
             <p className="cc-foot-desc">
               Revolutionizing restaurant management with modern technology and seamless dining experiences.
