@@ -77,3 +77,72 @@ input:focus {
 .login-btn:hover {
   background-color: #ffca3a;
 }
+
+.name-fields {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.name-fields div {
+  flex: 1;
+}
+
+/* Dashboard shared */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #1b120c;
+  color: #fff6e9;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #24160f;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  color: #f6b400;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #f6b400;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.main {
+  flex: 1;
+  padding: 3rem;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  background-color: #2b1a13;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.profile-section img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+}

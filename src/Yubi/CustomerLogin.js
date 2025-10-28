@@ -7,27 +7,34 @@ function CustomerLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    // create a mock user
-    const user = {
-      name: email.split("@")[0],
-      email: email,
-      phone: "123-456-7890"
-    };
+    // Fetch registered users
+    const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
-    // navigate with user data
-    navigate("/customer/dashboard", { state: { user } });
+    // Check if user exists
+    const matchedUser = users.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (matchedUser) {
+      alert(`✅ Welcome back, ${matchedUser.firstName}!`);
+      // Save logged-in user info for dashboard
+      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+      navigate("/customer/dashboard");
+    } else {
+      alert("❌ Invalid email or password! Please try again or register.");
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Welcome Back, Customer 👋</h2>
+        <h2>Welcome Back, Customer </h2>
         <p>Access your profile and reservations</p>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <label>Email Address</label>
           <input
             type="email"
@@ -50,12 +57,27 @@ function CustomerLogin() {
             <label>
               <input type="checkbox" /> Remember me
             </label>
-            <a href="/" onClick={(e) => e.preventDefault()}>
+            <a
+              href="/customer/forgot-password"
+              style={{ color: "#ffb703", textDecoration: "none" }}
+            >
               Forgot password?
             </a>
           </div>
 
-          <button type="submit" className="login-btn">Sign In</button>
+          <button type="submit" className="login-btn">
+            Sign In
+          </button>
+
+          <p style={{ marginTop: "15px", color: "#fff" }}>
+            Don’t have an account?{" "}
+            <span
+              style={{ color: "#ffb703", cursor: "pointer" }}
+              onClick={() => navigate("/customer/register")}
+            >
+              Register here
+            </span>
+          </p>
         </form>
       </div>
     </div>
