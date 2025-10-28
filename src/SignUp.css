@@ -1,0 +1,108 @@
+body {
+  background-color: #fff8f3;
+  font-family: "Poppins", sans-serif;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-box {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(255, 153, 0, 0.15);
+  width: 360px;
+  text-align: center;
+}
+
+.signup-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.signup-title {
+  color: #ff7300;
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.signup-subtitle {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+}
+
+form input:focus {
+  border-color: #ff7300;
+  box-shadow: 0 0 4px rgba(255, 115, 0, 0.3);
+}
+
+.password-box {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.role-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.role-btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 8px;
+  border: 1px solid #ff7300;
+  border-radius: 6px;
+  color: #ff7300;
+  background-color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.role-btn:hover,
+.role-btn.active {
+  background-color: #ff7300;
+  color: #fff;
+}
+
+.create-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff7300;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.create-btn:hover {
+  background-color: #e96a00;
+}
