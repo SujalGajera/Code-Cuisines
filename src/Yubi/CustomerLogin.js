@@ -53,15 +53,25 @@ function CustomerLogin() {
 
         <button type="submit">Sign In</button>
 
-        <p>
-          Don’t have an account?{" "}
-          <span
-            onClick={() => navigate("/customer/register")}
-            className="link"
-          >
-            Register here
-          </span>
-        </p>
+        <div className="login-footer">
+  <p
+    className="forgot-link"
+    onClick={() => navigate("/customer/forgot-password")}
+  >
+    Forgot Password?
+  </p>
+
+  <p>
+    Don’t have an account?{" "}
+    <span
+      onClick={() => navigate("/customer/register")}
+      className="link"
+    >
+      Register here
+    </span>
+  </p>
+</div>
+
       </form>
     </div>
   );

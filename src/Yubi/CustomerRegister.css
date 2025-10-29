@@ -1,0 +1,85 @@
+body {
+  background-color: #1c0f07;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1c0f07;
+}
+
+.register-box {
+  background: #2b1405;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px #ffb40033;
+  width: 380px;
+  text-align: center;
+}
+
+.register-box h2 {
+  color: #ffb400;
+  margin-bottom: 10px;
+}
+
+.register-box p {
+  color: #ccc;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  color: #ffb400;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  background: #3a1d09;
+  color: #fff;
+}
+
+input:focus {
+  border: 1px solid #ffb400;
+  box-shadow: 0 0 5px #ffb400;
+}
+
+button {
+  margin-top: 20px;
+  background: #ffb400;
+  color: #2b1405;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: #ffcc33;
+  transform: scale(1.05);
+}
+
+.link {
+  color: #ffb400;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #ffcc33;
+}

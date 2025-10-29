@@ -1,148 +1,197 @@
+/* ===============================
+   🍽️ Customer Menu Page Styling
+   =============================== */
+
 body {
-  background-color: #1b0f07;
-  font-family: "Poppins", sans-serif;
-  color: #fff;
   margin: 0;
-  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #1b0d00;
+  color: #fff;
 }
 
+/* Main container */
 .menu-container {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  background-color: #1b0f07;
+  align-items: center;
+  background-color: #1b0d00;
+  min-height: 100vh;
   padding: 50px 0;
 }
 
+/* Main menu box */
 .menu-box {
-  background-color: #2a1a0a;
+  background-color: #2a1800;
   padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(255, 165, 0, 0.2);
-  width: 80%;
-  max-width: 1100px;
+  border-radius: 25px;
   text-align: center;
-  color: #fff;
+  width: 85%;
+  max-width: 1200px;
+  box-shadow: 0 0 35px rgba(255, 183, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
+/* Title */
 .menu-box h2 {
-  color: #ffb200;
   font-size: 2rem;
+  color: #ffb400;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #cbb;
-  font-size: 1rem;
-  margin-bottom: 30px;
+  color: #f1c27d;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
 }
 
+/* Category Tabs */
 .menu-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
 .menu-tabs button {
-  background-color: #3a250c;
-  color: #ffb200;
+  background-color: #3a2200;
   border: none;
+  color: #ffb400;
   padding: 10px 20px;
-  border-radius: 25px;
+  margin: 6px;
+  border-radius: 20px;
   cursor: pointer;
+  font-weight: bold;
   transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(255, 183, 0, 0.2);
 }
 
 .menu-tabs button.active,
 .menu-tabs button:hover {
-  background-color: #ffb200;
-  color: #1b0f07;
-  font-weight: bold;
+  background-color: #ffb400;
+  color: #000;
+  transform: scale(1.05);
 }
 
-/* Menu Grid */
+/* Grid for Menu Cards */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 25px;
 }
 
+/* Each Menu Card */
 .menu-card {
-  background-color: #3a250c;
+  background-color: #3a2200;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 0 15px rgba(255, 165, 0, 0.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 0 15px rgba(255, 183, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .menu-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255, 183, 0, 0.4);
 }
 
-.menu-img {
+/* Dish Image */
+.menu-image {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 10px rgba(255, 183, 0, 0.3);
 }
 
+/* Dish Title */
 .menu-card h3 {
-  color: #ffb200;
+  color: #ffcc33;
   font-size: 1.2rem;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
-.menu-card .desc {
-  color: #ddd;
+/* Description */
+.desc {
+  color: #fff3cd;
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  line-height: 1.4;
+  margin-bottom: 8px;
 }
 
-.menu-card .price {
-  color: #ffb200;
+/* Price */
+.price {
+  color: #ffb400;
   font-weight: bold;
-  margin-bottom: 15px;
+  font-size: 1rem;
+  margin-bottom: 12px;
 }
 
+/* Add to Order Button */
 .order-btn {
-  background-color: #ffb200;
-  color: #1b0f07;
+  background-color: #ffb400;
   border: none;
-  border-radius: 25px;
+  color: #000;
   padding: 10px 15px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  font-weight: bold;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 183, 0, 0.3);
 }
 
 .order-btn:hover {
-  background-color: #ff8c00;
+  background-color: #ffd633;
   transform: scale(1.05);
 }
 
 /* Back Button */
 .back-btn-container {
-  margin-top: 40px;
+  margin-top: 35px;
 }
 
 .back-btn {
-  background-color: #ffb200;
-  color: #1b0f07;
-  border: none;
+  background-color: #ffb400;
+  color: #000;
+  padding: 12px 28px;
   border-radius: 25px;
-  padding: 12px 30px;
+  border: none;
   cursor: pointer;
+  transition: 0.3s ease;
   font-weight: bold;
-  box-shadow: 0 0 15px rgba(255, 165, 0, 0.3);
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  box-shadow: 0 0 12px rgba(255, 183, 0, 0.3);
 }
 
 .back-btn:hover {
-  background-color: #ff8c00;
-  box-shadow: 0 0 25px rgba(255, 165, 0, 0.5);
+  background-color: #ffd633;
   transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-box {
+    width: 95%;
+    padding: 25px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .menu-image {
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-tabs button {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+
+  .menu-card h3 {
+    font-size: 1rem;
+  }
+
+  .order-btn {
+    padding: 8px 12px;
+  }
 }

@@ -75,3 +75,9 @@ input {
   margin-top: 15px;
   font-size: 0.9rem;
 }
+.info-msg {
+  color: #ffb200;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
