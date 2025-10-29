@@ -1,0 +1,425 @@
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+
+  --brand: #f57c00;
+  --brand-600: #e65100;
+  --brand-50: #fff7ed;
+
+  --success: #16a34a;
+  --success-dark: #0f7a35;
+  --success-bg: #dcfce7;
+
+  --warn: #b45309;
+  --warn-bg: #fff7ed;
+  --danger: #b91c1c;
+  --danger-bg: #fef2f2;
+
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- Page ---------- */
+.cb-page {
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 24px;
+  font-family: "Poppins", sans-serif;
+  color: var(--text);
+}
+
+/* ---------- Header ---------- */
+.cb-brandbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, var(--brand), #ff9b2b);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.cb-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cb-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  object-fit: cover;
+}
+.cb-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.cb-brand-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cb-pill {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.cb-search {
+  position: relative;
+}
+.cb-search input {
+  padding: 8px 32px 8px 12px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.cb-search svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #444;
+}
+
+/* ---------- Top Row ---------- */
+.cb-toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* Summary */
+.cb-summary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  width: 340px;
+}
+.cb-summary h3 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+.cb-summary-kv {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.cb-summary-kv:last-child {
+  border-bottom: none;
+}
+.cb-summary-kv span {
+  color: var(--muted);
+}
+
+/* Add Button */
+.cb-top-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.cb-add {
+  background: var(--success);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 22px;
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cb-add:hover {
+  background: var(--success-dark);
+  transform: translateY(-2px);
+}
+
+/* Filter */
+.cb-filterbar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cb-filterbar label {
+  font-weight: 600;
+  color: var(--muted);
+}
+.cb-filterbar select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+
+/* ---------- Table ---------- */
+.cb-tablecard {
+  margin-top: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.cb-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cb-table th {
+  background: #fff;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.cb-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.cb-table tr:hover {
+  background: var(--brand-50);
+}
+.cb-name {
+  background: none;
+  border: none;
+  color: var(--brand);
+  font-weight: 700;
+  cursor: pointer;
+}
+.cb-name:hover {
+  text-decoration: underline;
+}
+.cb-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.cb-badge.confirmed {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.cb-badge.pending {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+.cb-badge.cancelled {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+.cb-link {
+  background: none;
+  border: none;
+  color: var(--brand);
+  cursor: pointer;
+  margin-left: 6px;
+  font-weight: 600;
+}
+.cb-link.danger {
+  color: var(--danger);
+}
+.right {
+  text-align: right;
+}
+
+/* ---------- Modal ---------- */
+.cb-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cb-modal {
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  width: 400px;
+}
+.cb-modal h2 {
+  color: var(--brand);
+  margin-top: 0;
+}
+.cb-modal input,
+.cb-modal select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.cb-modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.cb-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cb-btn.primary {
+  background: var(--brand);
+  color: #fff;
+}
+.cb-btn.primary:hover {
+  background: var(--brand-600);
+}
+.cb-btn:hover {
+  opacity: 0.9;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .cb-toprow {
+    flex-direction: column;
+  }
+  .cb-summary {
+    width: 100%;
+  }
+  .cb-top-actions {
+    align-items: stretch;
+  }
+  .cb-add {
+    width: 100%;
+  }
+  .cb-filterbar {
+    justify-content: space-between;
+  }
+}
+
+/* ---- Add Booking form tweaks ---- */
+.cb-form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.cb-form-grid .field{
+  display:flex; flex-direction:column;
+}
+.cb-form-grid label{
+  font-weight:600; margin-bottom:6px; color:var(--muted);
+}
+.cb-error{
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(185,28,28,.25);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 560px){
+  .cb-form-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* ---- Add Booking form (friendlier) ---- */
+.cb-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cb-form-grid .field{ display:flex; flex-direction:column; }
+.cb-form-grid .field label{ font-weight:600; margin-bottom:6px; color:var(--muted); }
+.cb-form-grid .field .hint{ color:#9aa2af; margin-top:4px; }
+
+.cb-error{
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(185,28,28,.25);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 560px){
+  .cb-form-grid{ grid-template-columns:1fr; }
+}
+/* === New Booking modal spacing & field comfort === */
+.cb-modal{
+  width: 560px;                 /* a bit wider so fields breathe */
+  max-width: 92vw;
+}
+
+.cb-modal h2{
+  margin: 0 0 14px 0;
+}
+
+.cb-form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* 2 columns on desktop */
+  gap: 16px;                        /* more gap between fields */
+}
+
+.cb-form-grid .field{
+  display:flex;
+  flex-direction:column;
+}
+
+.cb-form-grid .field label{
+  font-weight:600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* Comfortable inputs */
+.cb-modal input,
+.cb-modal select,
+.cb-modal textarea{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;               /* more inner space */
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;               /* softer corners */
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+/* Give selects a bit more right padding so the arrow doesn't cover text */
+.cb-modal select{
+  padding-right: 36px;
+}
+
+/* Small hint text under phone number */
+.cb-form-grid .field .hint{
+  color:#9aa2af;
+  margin-top:6px;
+  font-size: 12px;
+}
+
+/* Make date/time native controls not clip the text in some browsers */
+.cb-modal input[type="date"],
+.cb-modal input[type="time"]{
+  min-height: 44px;                 /* touch-friendly */
+}
+
+/* Keep buttons separated from the form */
+.cb-modal-actions{
+  margin-top: 14px;
+}
+
+/* Mobile: stack fields in one column */
+@media (max-width: 560px){
+  .cb-form-grid{ grid-template-columns: 1fr; }
+  .cb-modal{ width: 94vw; }
+}
