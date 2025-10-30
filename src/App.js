@@ -1,21 +1,29 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import CustomerLogin from "./Yubi/CustomerLogin";
-import CustomerRegister from "./Yubi/CustomerRegister";
-import CustomerDashboard from "./Yubi/CustomerDashboard";
-import ForgotPassword from "./Yubi/ForgotPassword"; // ✅ NEW
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './Sujal/Navbar';
+import Home from './Sujal/Home';
+
+// Placeholder components
+const Explore = () => <div>Explore Page</div>;
+const About = () => <div>About Us Page</div>;
+
+const AdminLogin = () => <div>Admin Login Page</div>;
+const StaffLogin = () => <div>Staff/Receptionist Login Page</div>;
+const CustomerLogin = () => <div>Customer Login Page</div>;
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to="/customer/login" />} />
-        <Route path="/customer/login" element={<CustomerLogin />} />
-        <Route path="/customer/register" element={<CustomerRegister />} />
-        <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-        <Route path="/customer/forgot-password" element={<ForgotPassword />} /> {/* ✅ NEW */}
+        <Route path="/" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login/admin" element={<AdminLogin />} />
+        <Route path="/login/staff" element={<StaffLogin />} />
+        <Route path="/login/customer" element={<CustomerLogin />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
