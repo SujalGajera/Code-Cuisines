@@ -4,41 +4,84 @@ import "./SignUp.css";
 const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Image from public folder
-  const logo = process.env.PUBLIC_URL + "/restaurant-image.png";
+  const togglePassword = () => setPasswordVisible(!passwordVisible);
+
+  // Enhanced validation function
+  const validateEmail = (value) => {
+    const generalEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validDomains = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"];
+    if (!generalEmailRegex.test(value)) return false;
+
+    const domain = value.split("@")[1];
+    return validDomains.includes(domain.toLowerCase());
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    if (value.trim() === "") {
+      setEmailError("⚠️ Email is required");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setEmailError("⚠️ Please enter a valid email format");
+    } else {
+      const domain = value.split("@")[1]?.toLowerCase();
+      if (
+        domain &&
+        !["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"].includes(domain)
+      ) {
+        setEmailError("⚠️ Only valid email domains are accepted (e.g., Gmail)");
+      } else {
+        setEmailError("");
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setEmailError("⚠️ Please use a valid email domain (e.g., @gmail.com)");
+      return;
+    }
+
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000);
+  };
 
   return (
     <div className="signup-container">
       <div className="signup-box">
-        {/* Logo and Title */}
-        <img src={logo} alt="Code & Cuisines Logo" className="signup-logo" />
-        <h2 className="signup-title">Sign Up Here</h2>
-        <h3 className="signup-subtitle">Create Your Account</h3>
+        <h2>Create Your Account</h2>
 
-        {/* Form Section */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <input type="text" placeholder="First Name" required />
           <input type="text" placeholder="Last Name" required />
-          <input type="email" placeholder="Work Email" required />
+          <input
+            type="email"
+            placeholder="Work Email"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
+          {emailError && <p className="error-text">{emailError}</p>}
 
-          {/* Password with Show/Hide */}
           <div className="password-box">
             <input
               type={passwordVisible ? "text" : "password"}
               placeholder="Password"
               required
             />
-            <span
-              className="toggle-password"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
+            <span className="toggle-password" onClick={togglePassword}>
               {passwordVisible ? "🙈" : "👁️"}
             </span>
           </div>
 
-          {/* Role Buttons */}
-          <div className="role-buttons">
+          <div className="role-section">
             <button
               type="button"
               className={`role-btn ${role === "staff" ? "active" : ""}`}
@@ -46,6 +89,7 @@ const SignUp = () => {
             >
               Login as Staff
             </button>
+
             <button
               type="button"
               className={`role-btn ${role === "receptionist" ? "active" : ""}`}
@@ -55,10 +99,14 @@ const SignUp = () => {
             </button>
           </div>
 
-          <button type="submit" className="create-btn">
+          <button type="submit" className="submit-btn">
             Create Account
           </button>
         </form>
+
+        {isSubmitted && !emailError && (
+          <p className="success-message">✅ Account has been created successfully!</p>
+        )}
       </div>
     </div>
   );
