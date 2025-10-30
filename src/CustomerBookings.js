@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./CustomerBookings.css";
 
@@ -43,6 +42,12 @@ export default function CustomerBookings() {
     setSelectedBooking(null);
   };
 
+  // 👉 NEW: Delete booking
+  const handleDelete = (id) => {
+    setBookings((prev) => prev.filter((b) => b.id !== id));
+    if (selectedBooking && selectedBooking.id === id) setSelectedBooking(null);
+  };
+
   // ── Open Add modal ──────────────────────────────────────────────────
   const openAdd = () => {
     setAddData({
@@ -60,7 +65,6 @@ export default function CustomerBookings() {
 
   // Helpers to display date/time in same text style as seed data
   const formatDateToMonDay = (isoDate) => {
-    // Expect yyyy-mm-dd (from <input type="date">)
     if (!isoDate) return "";
     const d = new Date(isoDate + "T00:00:00");
     const mon = d.toLocaleString("en-US", { month: "short" });
@@ -68,25 +72,21 @@ export default function CustomerBookings() {
     return `${mon} ${day}`;
   };
   const formatTimeTo12h = (hhmm) => {
-    // input type="time" -> "HH:MM"
     if (!hhmm) return "";
     const [h, m] = hhmm.split(":").map(Number);
     const ampm = h >= 12 ? "PM" : "AM";
     const h12 = h % 12 || 12;
     return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
-    // (table example shows "9:00" on your screenshot, but we keep am/pm for consistency)
   };
 
   // ── Save new booking ────────────────────────────────────────────────
   const saveAdd = () => {
     const { firstName, lastName, phone, date, time, table, status } = addData;
 
-    // Basic validation
     if (!firstName || !lastName || !phone || !date || !time || !table) {
       setAddError("Please fill in all required fields.");
       return;
     }
-    // Simple NZ-ish phone check (starts with 0 and 8–14 digits incl. spaces allowed)
     const digits = phone.replace(/[^\d]/g, "");
     if (!(digits.length >= 8 && digits.length <= 14 && phone.trim().startsWith("0"))) {
       setAddError("Enter a valid phone number (start with 0, 8–14 digits).");
@@ -186,7 +186,8 @@ export default function CustomerBookings() {
                 <td><span className={`cb-badge ${b.status.toLowerCase()}`}>{b.status}</span></td>
                 <td className="right">
                   <button className="cb-link" onClick={() => setSelectedBooking(b)}>✏️ Edit</button>
-                  <button className="cb-link danger">🗑 Delete</button>
+                  {/* 👉 NEW: delete hooked up */}
+                  <button className="cb-link danger" onClick={() => handleDelete(b.id)}>🗑 Delete</button>
                 </td>
               </tr>
             ))}
@@ -239,7 +240,7 @@ export default function CustomerBookings() {
         </div>
       )}
 
-      {/* Add Booking Modal (friendlier) */}
+      {/* Add Booking Modal */}
       {showAdd && (
         <div className="cb-modal-backdrop">
           <div className="cb-modal">
