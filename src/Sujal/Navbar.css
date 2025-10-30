@@ -19,14 +19,14 @@
 
 /* Main bar */
 .cc-nav {
-  height: 64px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 0 24px;
-  background: var(--nav);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  padding: 0 40px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Brand */
@@ -44,8 +44,8 @@
 
 .cc-logo-img {
   place-items: center;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   color: #fff;
   font-weight: 700;
   letter-spacing: .5px;
@@ -53,22 +53,23 @@
 }
 .cc-brand-text {
   font-weight: 700;
+  font-size: 20px;
   color: var(--ink);
-  /* font-family: 'Dancing Script', cursive; */
 }
 
 /* Links (desktop) */
 .cc-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 32px;
 }
 
 .cc-link {
   color: var(--ink);
   text-decoration: none;
   font-weight: 500;
-  padding: 6px 2px;
+  font-size: 16px;
+  padding: 8px 4px;
   position: relative;
   transition: color 0.3s ease;
 }
@@ -109,8 +110,9 @@
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 12px 20px;
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
@@ -220,11 +222,11 @@
 .cc-mobile {
   display: none;
   position: fixed;
-  top: 64px;
+  top: 80px;
   right: -100%;
   width: 80%;
   max-width: 320px;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 80px);
   background: #fff;
   color: var(--ink);
   padding: 24px;
@@ -279,10 +281,10 @@
 .cc-mobile-overlay {
   display: none;
   position: fixed;
-  top: 64px;
+  top: 80px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 80px);
   background: rgba(0, 0, 0, 0.5);
   z-index: 998;
   animation: fadeIn 0.3s ease;
@@ -317,6 +319,7 @@
 @media (max-width: 480px) {
   .cc-nav {
     padding: 0 16px;
+    height: 70px;
   }
   
   .cc-logo-img {
@@ -325,10 +328,17 @@
   }
   
   .cc-brand-text {
-    font-size: 16px;
+    font-size: 18px;
   }
   
   .cc-mobile {
     width: 85%;
+    top: 70px;
+    height: calc(100vh - 70px);
+  }
+  
+  .cc-mobile-overlay {
+    top: 70px;
+    height: calc(100vh - 70px);
   }
 }
