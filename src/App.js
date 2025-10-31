@@ -11,7 +11,6 @@ const AdminLogin = () => <div>Admin Login Page</div>;
 const StaffLogin = () => <div>Staff/Receptionist Login Page</div>;
 const CustomerLogin = () => <div>Customer Login Page</div>;
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +26,5 @@ function App() {
     </BrowserRouter>
   );
 }
- 
+
 export default App;
- 
