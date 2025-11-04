@@ -1,109 +1,59 @@
-/* ===== Base ===== */
-body {
-  background-color: #1b0f07;
-  font-family: "Poppins", sans-serif;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-}
-
 .dashboard {
   display: flex;
   min-height: 100vh;
+  background-color: #fff;
 }
 
-/* ===== Sidebar ===== */
 .sidebar {
-  width: 220px;
-  background-color: #24150a;
-  padding: 30px 20px;
+  width: 230px;
+  background: linear-gradient(180deg, #ff7b00, #ffd54f);
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 2px 0 15px rgba(255, 178, 0, 0.1);
-}
-
-.sidebar h2 {
-  color: #ffb200;
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 30px;
+  padding: 30px 20px;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .sidebar ul li {
-  color: #fff;
-  margin: 20px 0;
   cursor: pointer;
-  transition: color 0.3s ease;
+  margin: 15px 0;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
 .sidebar ul li:hover {
-  color: #ffb200;
+  text-decoration: underline;
 }
 
 .logout-btn {
-  background: none;
+  background: white;
+  color: #ff7b00;
   border: none;
-  color: #ffb200;
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 30px;
-  text-align: left;
-  transition: color 0.3s ease;
 }
 
-.logout-btn:hover {
-  color: #ff8c00;
-}
-
-/* ===== Main Section ===== */
 .main {
   flex: 1;
-  padding: 40px 60px;
-  background-color: #1b0f07;
-  color: #fff;
+  padding: 50px;
+  color: #333;
 }
 
-.main h1 {
-  color: #ffb200;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.welcome-subtext {
-  color: #d8c6a1;
-  margin-bottom: 30px;
-}
-
-/* ===== Profile Section ===== */
-.profile-section {
-  display: flex;
-  align-items: center;
-  background-color: #2a1a0a;
+.profile-section,
+.reservations {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #ffd54f;
+  box-shadow: 0 4px 10px rgba(255, 183, 0, 0.2);
   padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(255, 178, 0, 0.15);
-  margin-bottom: 40px;
-  transition: all 0.3s ease;
-}
-
-.profile-section:hover {
-  box-shadow: 0 0 40px rgba(255, 178, 0, 0.25);
-}
-
-/* Avatar */
-.avatar-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 40px;
+  margin-bottom: 30px;
 }
 
 .profile-img {
@@ -111,232 +61,37 @@ body {
   height: 110px;
   border-radius: 50%;
   border: 3px solid #ffb200;
-  object-fit: cover;
-  margin-bottom: 10px;
-  transition: transform 0.3s ease;
 }
 
-.profile-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 178, 0, 0.5);
-}
-
-.upload-btn {
-  background-color: #ffb200;
-  color: #1b0f07;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.upload-btn:hover {
-  background-color: #ff8c00;
-  transform: scale(1.05);
-}
-
-.upload-btn input {
-  display: none;
-}
-
-/* Profile Details */
-.details h3 {
-  color: #ffb200;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.details p {
-  margin: 5px 0;
-  color: #ddd;
-  font-size: 0.95rem;
-}
-
-.details strong {
-  color: #ffb200;
-}
-
-/* ===== Edit Mode ===== */
-.edit-btn,
-.save-btn,
-.cancel-btn {
-  margin-top: 15px;
-  padding: 10px 18px;
+button {
+  background: linear-gradient(90deg, #ff7b00, #ffd54f);
+  color: white;
   border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.edit-btn {
-  background-color: #ffb200;
-  color: #1b0f07;
-}
-
-.edit-btn:hover {
-  background-color: #ff8c00;
-}
-
-.save-btn {
-  background-color: #00b37d;
-  color: #fff;
-  margin-right: 10px;
-}
-
-.save-btn:hover {
-  background-color: #009966;
-}
-
-.cancel-btn {
-  background-color: #b32727;
-  color: #fff;
-}
-
-.cancel-btn:hover {
-  background-color: #8b1e1e;
-}
-
-/* Input fields */
-.edit-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.edit-fields label {
-  color: #ffb200;
-  font-size: 0.9rem;
-}
-
-.edit-fields input {
-  background-color: #1e1208;
-  border: 1px solid #ffb200;
   border-radius: 8px;
-  color: #fff;
-  padding: 8px 10px;
-  font-size: 0.9rem;
+  padding: 10px 18px;
+  font-weight: 600;
 }
 
-/* Buttons for edit section */
-.edit-buttons {
-  margin-top: 15px;
-}
-
-/* ===== Reservations Section ===== */
-.reservations {
-  background-color: #2a1a0a;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(255, 178, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.reservations:hover {
-  box-shadow: 0 0 40px rgba(255, 178, 0, 0.25);
-}
-
-.reservations h3 {
-  color: #ffb200;
-  margin-bottom: 10px;
-}
-
-.reservations p {
-  color: #ccc;
-  margin-bottom: 15px;
-}
-
-.view-btn {
-  background-color: #ffb200;
-  color: #1b0f07;
-  border: none;
-  border-radius: 25px;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.view-btn:hover {
-  background-color: #ff8c00;
-  transform: scale(1.05);
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 900px) {
-  .dashboard {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .sidebar ul {
-    display: flex;
-    gap: 20px;
-  }
-
-  .main {
-    padding: 20px;
-  }
-
-  .profile-section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .avatar-container {
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-}
-/* ===== Toast Notification ===== */
 .toast {
   position: fixed;
-  bottom: 30px;
+  bottom: 20px;
   right: 30px;
-  background-color: #00b37d;
-  color: white;
-  font-weight: 600;
-  padding: 12px 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 179, 125, 0.5);
-  animation: fadeInOut 3s ease forwards;
-  z-index: 999;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  15% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+  background: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 .logo-container {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .logo-image {
-  width: 140px;
+  width: 120px;
   height: auto;
   object-fit: contain;
-  border-radius: 10px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
