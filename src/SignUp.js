@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import "./SignUp.css";
+import background from "./assets/medicalert-uk-9OnppW9mlCY-unsplash.jpg"; // Ensure the image path is correct
 
 const SignUp = () => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const togglePassword = () => setPasswordVisible(!passwordVisible);
-
-  // Enhanced validation function
   const validateEmail = (value) => {
     const generalEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validDomains = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"];
@@ -30,10 +27,7 @@ const SignUp = () => {
       setEmailError("⚠️ Please enter a valid email format");
     } else {
       const domain = value.split("@")[1]?.toLowerCase();
-      if (
-        domain &&
-        !["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"].includes(domain)
-      ) {
+      if (!["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"].includes(domain)) {
         setEmailError("⚠️ Only valid email domains are accepted (e.g., Gmail)");
       } else {
         setEmailError("");
@@ -43,7 +37,6 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!validateEmail(email)) {
       setEmailError("⚠️ Please use a valid email domain (e.g., @gmail.com)");
       return;
@@ -54,13 +47,14 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-container">
+    <div className="signup-container" style={{ backgroundImage: `url(${background})` }}>
       <div className="signup-box">
         <h2>Create Your Account</h2>
-
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="First Name" required />
-          <input type="text" placeholder="Last Name" required />
+          <div className="row-inputs">
+            <input type="text" placeholder="First Name" required />
+            <input type="text" placeholder="Last Name" required />
+          </div>
           <input
             type="email"
             placeholder="Work Email"
@@ -70,16 +64,11 @@ const SignUp = () => {
           />
           {emailError && <p className="error-text">{emailError}</p>}
 
-          <div className="password-box">
-            <input
-              type={passwordVisible ? "text" : "password"}
-              placeholder="Password"
-              required
-            />
-            <span className="toggle-password" onClick={togglePassword}>
-              {passwordVisible ? "🙈" : "👁️"}
-            </span>
-          </div>
+          <input
+            type="password"
+            placeholder="Password"
+            required
+          />
 
           <div className="role-section">
             <button
@@ -89,7 +78,6 @@ const SignUp = () => {
             >
               Login as Staff
             </button>
-
             <button
               type="button"
               className={`role-btn ${role === "receptionist" ? "active" : ""}`}
