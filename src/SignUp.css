@@ -2,39 +2,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  font-family: 'Poppins', sans-serif;
-}
-
-.signup-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(255, 255, 255, 0.85); /* softened overlay for readability */
-  z-index: 1;
+  height: 100vh;
+  background-color: #fffaf5;
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .signup-box {
-  position: relative;
-  z-index: 2;
-  background-color: #ffffff;
+  background-color: white;
   padding: 40px 50px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   text-align: center;
+  width: 100%;
+  max-width: 420px;
 }
 
 .signup-box h2 {
-  color: #a94coa;
-  font-size: 22px;
+  color: #000;
   margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
 }
 
-/* First & Last Name side-by-side */
+/* Inputs */
+.signup-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.signup-box input:focus {
+  border-color: #ff7b00;
+  box-shadow: 0 0 5px rgba(255, 123, 0, 0.3);
+}
+
+/* Rowed inputs for first and last name */
 .row-inputs {
   display: flex;
   gap: 10px;
@@ -44,78 +52,73 @@
   flex: 1;
 }
 
-/* General Inputs */
-.signup-box input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border-color 0.2s ease;
-}
-
-.signup-box input:focus {
-  border-color: #a84e12;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.1);
-}
-
 /* Role buttons */
 .role-section {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
   margin: 20px 0;
 }
 
 .role-btn {
   flex: 1;
-  padding: 10px 15px;
-  border: 2px solid #d35400;
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #ff7b00;
   background-color: white;
-  color: #d35400;
+  color: #ff7b00;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .role-btn.active,
 .role-btn:hover {
-  background-color: #d35400;
+  background-color: #ff7b00;
   color: white;
 }
 
 /* Submit button */
 .submit-btn {
-  background-color: #d35400;
+  width: 100%;
+  background-color: #ff7b00;
   color: white;
   border: none;
-  width: 100%;
   padding: 12px;
-  margin-top: 10px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: 0.3s;
 }
 
 .submit-btn:hover {
-  background-color: #bf360c;
+  background-color: #e46d00;
 }
 
-/* Feedback messages */
+/* ✅ Success Message */
 .success-message {
+  margin-top: 20px;
   color: #28a745;
   font-weight: 600;
-  margin-top: 15px;
-  font-size: 14px;
+  font-size: 15px;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
+/* 🔴 Error message for email */
 .error-text {
   color: #d93025;
   font-size: 13px;
   text-align: left;
-  margin-top: 4px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

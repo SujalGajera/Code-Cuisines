@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import background from "./assets/medicalert-uk-9OnppW9mlCY-unsplash.jpg"; // Ensure the image path is correct
 
 const SignUp = () => {
   const [role, setRole] = useState("");
@@ -47,7 +46,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-container" style={{ backgroundImage: `url(${background})` }}>
+    <div className="signup-container">
       <div className="signup-box">
         <h2>Create Your Account</h2>
         <form onSubmit={handleSubmit}>
