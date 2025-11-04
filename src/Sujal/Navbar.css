@@ -1,5 +1,5 @@
 :root {
-  --brand: #a94c0a; /* warm orange-brown from your Figma */
+  --brand: #a94c0a; 
   --brand-200: #c35a0c;
   --ink: #111;
   --muted: #666;
@@ -136,6 +136,7 @@
 .cc-dropdown {
   position: relative;
 }
+
 
 .cc-menu {
   position: absolute;

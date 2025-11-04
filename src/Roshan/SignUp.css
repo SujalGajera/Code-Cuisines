@@ -1,0 +1,182 @@
+/* ===== SIGNUP PAGE ===== */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Signup Card */
+.signup-box {
+  background-color: #ffffff;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 480px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* Title */
+.signup-box h2 {
+  color: #2f1f1f;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Inputs */
+.signup-box input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin: 10px 0;
+  border: 1px solid #e5dfdd;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #3b2d2d;
+  transition: all 0.3s ease;
+}
+
+.signup-box input::placeholder {
+  color: #b39c9c;
+}
+
+.signup-box input:focus {
+  border-color: #c35a0c;
+  box-shadow: 0 0 6px rgba(195, 90, 12, 0.25);
+  background-color: #fffdfb;
+}
+
+/* Row inputs (First & Last Name) */
+.row-inputs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0.5rem;
+}
+
+.row-inputs input {
+  flex: 1;
+}
+
+/* ===== Role Buttons ===== */
+.role-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.6rem 0;
+  gap: 10px;
+}
+
+.role-btn {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1.5px solid #c35a0c;
+  background-color: #ffffff;
+  color: #c35a0c;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.role-btn.active,
+.role-btn:hover {
+  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(195, 90, 12, 0.3);
+}
+
+/* ===== Submit Button ===== */
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
+  color: #fff;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  letter-spacing: 0.3px;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(180deg, #d96a10 0%, #b7540b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
+}
+
+/* ===== SUCCESS & ERROR MESSAGES ===== */
+.success-message {
+  margin-top: 20px;
+  color: #2d8a3f;
+  font-weight: 600;
+  font-size: 15px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-text {
+  color: #b32626;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== SIGN-IN LINK ===== */
+.signin-link {
+  margin-top: 1.4rem;
+  font-size: 0.95rem;
+  color: #7a6e6e;
+  text-align: center;
+}
+
+.signin-link a {
+  color: #c35a0c;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .signup-box {
+    padding: 2.2rem 1.6rem;
+    max-width: 90%;
+  }
+
+  .role-section {
+    flex-direction: column;
+  }
+}

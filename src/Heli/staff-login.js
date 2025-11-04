@@ -2,39 +2,58 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
 
-function Login({ setLoggedIn, setUserRole }) {
+export default function Login({ setLoggedIn, setUserRole }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // Mock users
+  const mockUsers = [
+    { email: "heli@gmail.com", password: "Heli123", role: "Staff" },
+    { email: "sujal@gmail.com", password: "Sujal123", role: "Receptionist" },
+  ];
 
   const handleLogin = (role) => {
-    // Simple mock login (you can replace with backend later)
-    if (email && password) {
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("userRole", role);
-      setUserRole(role);
-      setLoggedIn(true);
-      navigate("/");
+    setError("");
+
+    if (email.trim() === "" && password.trim() === "") {
+      setError("⚠️ Please enter your email and password.");
+    } else if (email.trim() === "") {
+      setError("⚠️ Please enter your email address.");
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("⚠️ Please enter a valid email address.");
+    } else if (password.trim() === "") {
+      setError("⚠️ Please enter your password.");
     } else {
-      alert("Please enter your email and password.");
+      const user = mockUsers.find(
+        (u) => u.email === email && u.password === password && u.role === role
+      );
+
+      if (user) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userRole", role);
+        setUserRole(role);
+        setLoggedIn(true);
+        navigate("/");
+      } else {
+        setError("⚠️ Incorrect email or password. Please try again.");
+      }
     }
   };
 
   return (
     <div className="login-page">
       <div className="login-card">
-        <h2 className="login-title">Staff Portal Login</h2>
-        <p className="login-subtitle">
-          Welcome back! Please enter your details.
-        </p>
+        <h2 className="login-title">Staff Login</h2>
+        <p className="login-subtitle">Welcome back! Please enter your details.</p>
 
         <div className="login-form">
           <label>Email</label>
           <div className="input-group">
-            <span className="icon">@</span>
             <input
               type="email"
-              placeholder="you@example.com"
+              placeholder="Enter your work email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -42,41 +61,36 @@ function Login({ setLoggedIn, setUserRole }) {
 
           <label>Password</label>
           <div className="input-group">
-            <span className="icon">🔑</span>
             <input
               type="password"
-              placeholder="********"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Link to="/forgot-password" className="forgot-link">
+            <Link to="/staff/forgot" className="forgot-link">
               Forgot Password?
             </Link>
           </div>
 
-          {/* Staff login */}
-          <button
-            className="btn-primary"
-            onClick={() => handleLogin("Staff")}
-          >
-            Sign In
-          </button>
+          {error && <p className="error-text">{error}</p>}
 
-          <div className="divider">
-            <span>OR</span>
+          <div className="button-row">
+            <button className="btn-primary" onClick={() => handleLogin("Staff")}>
+              Sign In as Staff
+            </button>
+            <button className="btn-primary" onClick={() => handleLogin("Receptionist")}>
+              Sign In as Receptionist
+            </button>
           </div>
 
-          {/* Receptionist login */}
-          <button
-            className="btn-secondary"
-            onClick={() => handleLogin("Receptionist")}
-          >
-            Login as Receptionist
-          </button>
+          <div className="signup-link">
+            Don’t have an account?{" "}
+            <Link to="/signup" className="highlight-link">
+              Sign up here
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default Login;

@@ -1,4 +1,4 @@
-/* ====== GLOBAL LAYOUT ====== */
+/* ===== GLOBAL LAYOUT ===== */
 body {
   margin: 0;
   background-color: #fdf8f6;
@@ -17,7 +17,7 @@ body {
   overflow-y: auto;
 }
 
-/* ====== SIDEBAR ====== */
+/* ===== SIDEBAR ===== */
 .sidebar {
   width: 230px;
   background-color: #f8f1ee;
@@ -65,41 +65,53 @@ body {
 
 .sidebar nav a.active {
   background-color: #fff;
-  color: #c44126;
+  color: #c35a0c;
   font-weight: 600;
 }
 
-/* ====== LOGIN & FORGOT PASSWORD ====== */
+/* ===== LOGIN & FORGOT PASSWORD ===== */
 .login-page {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fdf8f6;
+  background: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+  padding: 40px 20px;
 }
 
 .login-card {
   background: #ffffff;
-  padding: 2.5rem 2rem;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  width: 340px;
+  padding: 3.2rem 3rem 3.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 480px;
+  min-height: 520px;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.login-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== TITLES ===== */
 .login-title {
   font-weight: 700;
-  font-size: 1.5rem;
-  color: #3c2c2c;
-  margin-bottom: 0.3rem;
+  font-size: 1.8rem;
+  color: #2f1f1f;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.3px;
 }
 
 .login-subtitle {
   color: #7c6f6f;
   font-size: 0.95rem;
-  margin-bottom: 1.8rem;
+  margin-bottom: 2rem;
+  line-height: 1.4;
 }
 
+/* ===== FORM ===== */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -109,46 +121,44 @@ body {
 label {
   font-weight: 600;
   color: #3c2c2c;
-  margin-bottom: 0.3rem;
-  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
 }
 
 .input-group {
-  display: flex;
-  align-items: center;
   position: relative;
-  margin-bottom: 1.4rem;
-}
-
-.input-group .icon {
-  position: absolute;
-  left: 10px;
-  font-size: 1rem;
-  color: #a69b9b;
+  margin-bottom: 1.6rem;
 }
 
 .input-group input {
   width: 100%;
-  padding: 0.7rem 0.8rem 0.7rem 2rem;
-  border: 1px solid #e5dfdd;
+  padding: 0.8rem 1rem;
+  border: 1px solid #e8e2df;
   border-radius: 10px;
-  background-color: #fcf8f7;
+  background-color: #fff;
   font-size: 0.95rem;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
+  color: #3c2c2c;
+}
+
+.input-group input::placeholder {
+  color: #b39c9c;
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: #d23b3b;
+  border-color: #c35a0c;
+  box-shadow: 0 0 6px rgba(195, 90, 12, 0.2);
+  background-color: #fffdfb;
 }
 
-/* Forgot Password link */
+/* ===== LINKS ===== */
 .forgot-link {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 8px;
-  font-size: 0.8rem;
-  color: #e3562a;
+  font-size: 0.85rem;
+  color: #c35a0c;
   text-decoration: none;
   font-weight: 500;
 }
@@ -157,262 +167,86 @@ label {
   text-decoration: underline;
 }
 
-/* Buttons */
-.btn-primary {
-  background-color: #9a1c1c;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0.8rem;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #b32626;
-}
-
-.btn-secondary {
-  background-color: #fcf8f7;
-  color: #3c2c2c;
-  border: 1px solid #e5dfdd;
-  border-radius: 8px;
-  padding: 0.8rem;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background-color: #f1e8e5;
-}
-
-/* Divider */
-.divider {
-  text-align: center;
-  color: #999;
-  margin: 1.2rem 0;
-  position: relative;
-}
-
-.divider span {
-  background: #fff;
-  padding: 0 10px;
-  position: relative;
-  z-index: 1;
-}
-
-.divider::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #ddd;
-  z-index: 0;
-}
-
-/* Back link (Forgot Password page) */
 .back-link {
-  margin-top: 1.4rem;
-  text-align: left;
+  margin-top: 1.5rem;
+  text-align: center;
 }
 
 .back-link a {
-  color: #5b4c4c;
+  color: #c35a0c;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
 }
 
 .back-link a:hover {
-  color: #000;
+  text-decoration: underline;
 }
 
-/* ====== DASHBOARD ====== */
-.page {
-  padding: 1rem 2rem;
-}
-
-.page-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #3c2c2c;
-  margin-bottom: 0.5rem;
-}
-
-.dashboard-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-  flex: 1;
-  min-width: 260px;
-}
-
-.card h3 {
-  font-size: 1.1rem;
-  color: #3c2c2c;
-}
-
-.card p {
-  color: #6b5f5f;
-}
-
-.clock {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #c44126;
-  margin: 0.8rem 0;
-}
-
-/* ====== SHIFTS ====== */
-.shifts-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.shift-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1.2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-.shift-card h3 {
-  font-size: 1rem;
-  color: #3c2c2c;
-  margin-bottom: 0.3rem;
-}
-
-.shift-card p {
-  color: #6b5f5f;
-  margin-bottom: 1rem;
-}
-
-/* ===== PROFILE PAGE ===== */
-.profile-card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 2rem;
-  width: 400px;
-  margin-top: 1.5rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profile-img-container {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1.2rem;
-}
-
-.profile-img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #f2d8d4;
-}
-
-.upload-btn {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background: #9a1c1c;
+/* ===== BUTTONS ===== */
+.btn-primary,
+.button-row .btn-primary {
+  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
   color: #fff;
-  border-radius: 50%;
-  padding: 6px 8px;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+  text-align: center;
 }
 
-.upload-btn:hover {
-  background: #b42c2c;
+.btn-primary:hover,
+.button-row .btn-primary:hover {
+  background: linear-gradient(180deg, #d96a10 0%, #b7540b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
 }
 
-.profile-form {
+.button-row {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  text-align: left;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  margin-top: 2rem;
+  flex-wrap: nowrap;
 }
 
-.profile-form label {
+.button-row .btn-primary {
+  flex: 1;
+  max-width: 200px;
+  height: 55px;
+}
+
+/* ===== SIGNUP LINK ===== */
+.signup-link {
+  margin-top: 1.8rem;
+  text-align: center;
+  font-size: 0.93rem;
+  color: #675c5c;
+}
+
+.signup-link .highlight-link {
+  color: #c35a0c;
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #3c2c2c;
-  margin-top: 0.7rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.profile-form input {
-  padding: 0.7rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #e2d6d3;
-  background-color: #fcf8f7;
-  font-size: 0.95rem;
-  margin-top: 0.3rem;
+.signup-link .highlight-link:hover {
+  text-decoration: underline;
 }
 
-.profile-form input:focus {
-  border-color: #9a1c1c;
-  outline: none;
-}
-
-.profile-form .btn-primary {
-  margin-top: 1.4rem;
-}
-
-
-/* ====== RESPONSIVE ====== */
-@media (max-width: 768px) {
-  .app {
-    flex-direction: column;
-  }
-  .sidebar {
-    flex-direction: row;
-    overflow-x: auto;
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #e2d4cf;
-  }
-  .main-content {
-    padding: 1rem;
-  }
-}
-
-.work-time {
-  margin-top: 0.6rem;
-  font-weight: 600;
-  color: #7b3a2b;
-}
-
-/* ====== POPUP BOX MODAL ====== */
+/* ===== POPUP MODAL ===== */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(58, 41, 41, 0.45);
+  background: rgba(59, 41, 41, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -420,18 +254,17 @@ label {
 }
 
 .popup-box {
-  background: #fff;
-  border-radius: 14px;
-  width: 360px;
+  background: #ffffff;
+  border-radius: 16px;
+  width: 380px;
   text-align: center;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  animation: fadeInScale 0.3s ease;
+  padding: 2rem 1.6rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeInScale 0.35s ease;
 }
 
 .popup-box h3 {
-  margin-top: 0;
-  color: #9a1c1c;
+  color: #c35a0c;
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -441,7 +274,7 @@ label {
   color: #4a3f3f;
   font-size: 0.95rem;
   margin-bottom: 1.5rem;
-  line-height: 1.4rem;
+  line-height: 1.5rem;
 }
 
 @keyframes fadeInScale {
@@ -455,48 +288,20 @@ label {
   }
 }
 
-/* ===== LOGOUT BUTTON ===== */
-.btn-logout {
-  background-color: #f1e8e5;
-  color: #9a1c1c;
-  border: 1px solid #e5d3d0;
-  border-radius: 8px;
-  padding: 0.8rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 1.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%;
+    padding: 2.2rem 1.6rem 2.5rem;
+  }
 
-.btn-logout:hover {
-  background-color: #9a1c1c;
-  color: #fff;
-}
-/* ===== SIDEBAR PROFILE HEADER ===== */
-.sidebar-profile {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 2rem;
-  padding: 0.6rem 1rem;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+  .button-row {
+    flex-direction: column;
+    gap: 14px;
+  }
 
-.sidebar-profile img {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #f1d5d0;
-}
-
-.sidebar-profile h3 {
-  font-size: 0.95rem;
-  color: #3c2c2c;
-  margin: 0;
-  font-weight: 600;
+  .button-row .btn-primary {
+    max-width: 100%;
+    width: 100%;
+  }
 }

@@ -61,8 +61,8 @@ function Navbar() {
         {/* RIGHT: Desktop menu */}
         <nav className="cc-links">
           <NavLink to="/" className="cc-link">Home</NavLink>
-          <NavLink to="/explore" className="cc-link">Explore</NavLink>
-          <NavLink to="/about" className="cc-link">About Us</NavLink>
+          <a href="/#features" className="cc-link">Explore</a>
+          <a href="/#about" className="cc-link">About Us</a>
 
           {/* Dropdown */}
           <div className="cc-dropdown" ref={dropdownRef}>
@@ -78,13 +78,14 @@ function Navbar() {
               </svg>
             </button>
 
-            {dropOpen && (
-              <div className="cc-menu" role="menu">
+           {dropOpen && (
+                <div className="cc-menu" role="menu">
                 <Link to="/login/admin" className="cc-menu-item" role="menuitem">Admin</Link>
-                <Link to="/login/staff" className="cc-menu-item" role="menuitem">Staff/Receptionist</Link>
+                <Link to="/signup" className="cc-menu-item" role="menuitem">Staff/Receptionist</Link>
                 <Link to="/login/customer" className="cc-menu-item" role="menuitem">Customer</Link>
-              </div>
-            )}
+            </div>
+          )}
+
           </div>
         </nav>
 
@@ -116,7 +117,7 @@ function Navbar() {
         <div className="cc-mobile-divider" />
         <div className="cc-mobile-label">Login / Register</div>
         <Link to="/login/admin" className="cc-mobile-link" onClick={closeMobile}>Admin</Link>
-        <Link to="/login/staff" className="cc-mobile-link" onClick={closeMobile}>Staff/Receptionist</Link>
+        <Link to="/signup" className="cc-mobile-link" onClick={closeMobile}>Staff/Receptionist</Link>
         <Link to="/login/customer" className="cc-mobile-link" onClick={closeMobile}>Customer</Link>
       </div>
     </header>

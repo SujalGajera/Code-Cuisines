@@ -44,11 +44,12 @@ export default function ForgotPassword() {
         </form>
 
         <div className="back-link">
-          <Link to="/login">← Back to Login</Link>
+          <Link to="/staff-login" className="highlight-link">
+            ← Back to Login
+          </Link>
         </div>
       </div>
 
-      {/* Popup Modal */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup-box">
