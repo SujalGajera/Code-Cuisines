@@ -18,7 +18,7 @@ function CustomerDashboard() {
   const [formData, setFormData] = useState(user);
   const [showToast, setShowToast] = useState(false);
 
-  // ✅ Load current logged-in customer (saved by Login.js)
+  //  Load current logged-in customer (saved by Login.js)
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("currentCustomer"));
     if (currentUser) {
@@ -70,7 +70,14 @@ function CustomerDashboard() {
     <div className="dashboard">
       {/* Sidebar */}
       <aside className="sidebar">
-        <h2>🍴 Code Cuisine</h2>
+        <div className="logo-container">
+  <img 
+    src="/images/code-cuisines-logo.png" 
+    alt="Code Cuisines Logo" 
+    className="logo-image"
+  />
+</div>
+
         <ul>
           <li onClick={() => navigate("/customer/dashboard")}>🏠 Home</li>
           <li onClick={() => navigate("/customer/reservations")}>📅 Reservations</li>
@@ -186,7 +193,7 @@ function CustomerDashboard() {
         </div>
       </main>
 
-      {/* ✅ Toast */}
+      {/*  Toast/ pop up  */}
       {showToast && <div className="toast">✅ Profile Updated Successfully!</div>}
     </div>
   );

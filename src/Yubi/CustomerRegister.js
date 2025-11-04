@@ -20,15 +20,15 @@ function CustomerRegister() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ Get current list of customers
+    // Get current list of customers
     const customers =
       JSON.parse(localStorage.getItem("registeredCustomers")) || [];
 
-    // ✅ Add new customer
+    //  Add new customer
     customers.push(formData);
     localStorage.setItem("registeredCustomers", JSON.stringify(customers));
 
-    alert("✅ Registration successful!");
+    alert(" Registration successful!");
     navigate("/customer/login");
   };
 

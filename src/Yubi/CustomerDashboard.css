@@ -329,3 +329,14 @@ body {
     transform: translateY(20px);
   }
 }
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo-image {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}

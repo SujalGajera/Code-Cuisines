@@ -10,7 +10,7 @@ function ForgotPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  // ✅ Step 1: Verify user email
+  //  Step 1: Verify user email
   const handleVerifyEmail = (e) => {
     e.preventDefault();
 
@@ -26,7 +26,7 @@ function ForgotPassword() {
     setStep("reset");
   };
 
-  // ✅ Step 2: Update password in localStorage
+  // Step 2: Update password in localStorage
   const handlePasswordReset = (e) => {
     e.preventDefault();
 

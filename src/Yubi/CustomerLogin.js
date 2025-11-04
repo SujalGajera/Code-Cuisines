@@ -10,20 +10,20 @@ function CustomerLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // ✅ Get all registered customers
+    //  Get all registered customers
     const users = JSON.parse(localStorage.getItem("registeredCustomers")) || [];
 
-    // ✅ Find the matching user
+    // Find the matching user
     const loggedInUser = users.find(
       (u) => u.email === email && u.password === password
     );
 
     if (loggedInUser) {
-      // ✅ Save current logged-in user data
+      //  Save current logged-in user data
       localStorage.setItem("currentCustomer", JSON.stringify(loggedInUser));
 
       alert(`Welcome back, ${loggedInUser.firstName}!`);
-      navigate("/customer/dashboard");
+      navigate("/customer/dashboard");UUU
     } else {
       alert("Invalid email or password.");
     }
