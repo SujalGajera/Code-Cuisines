@@ -8,7 +8,7 @@
   padding: 20px;
   box-sizing: border-box;
 }
-
+ 
 .signup-box {
   background-color: white;
   padding: 40px 50px;
@@ -18,14 +18,14 @@
   width: 100%;
   max-width: 420px;
 }
-
+ 
 .signup-box h2 {
   color: #000;
   margin-bottom: 25px;
   font-size: 24px;
   font-weight: 600;
 }
-
+ 
 /* Inputs */
 .signup-box input {
   width: 100%;
@@ -36,29 +36,29 @@
   outline: none;
   font-size: 15px;
 }
-
+ 
 .signup-box input:focus {
   border-color: #ff7b00;
   box-shadow: 0 0 5px rgba(255, 123, 0, 0.3);
 }
-
+ 
 /* Rowed inputs for first and last name */
 .row-inputs {
   display: flex;
   gap: 10px;
 }
-
+ 
 .row-inputs input {
   flex: 1;
 }
-
+ 
 /* Role buttons */
 .role-section {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
 }
-
+ 
 .role-btn {
   flex: 1;
   margin: 0 5px;
@@ -70,13 +70,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
+ 
 .role-btn.active,
 .role-btn:hover {
   background-color: #ff7b00;
   color: white;
 }
-
+ 
 /* Submit button */
 .submit-btn {
   width: 100%;
@@ -89,11 +89,11 @@
   cursor: pointer;
   transition: 0.3s;
 }
-
+ 
 .submit-btn:hover {
   background-color: #e46d00;
 }
-
+ 
 /* ✅ Success Message */
 .success-message {
   margin-top: 20px;
@@ -102,7 +102,7 @@
   font-size: 15px;
   animation: fadeIn 0.3s ease-in-out;
 }
-
+ 
 /* 🔴 Error message for email */
 .error-text {
   color: #d93025;
@@ -111,7 +111,7 @@
   margin-top: -5px;
   margin-bottom: 10px;
 }
-
+ 
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -122,3 +122,4 @@
     transform: translateY(0);
   }
 }
+ 
