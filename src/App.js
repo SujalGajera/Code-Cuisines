@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from './Sujal/Navbar';
 import ReceptionistDashboard from "./Roshan/ReceptionistDashboard";
 
+
 // Landing
 import Home from './Sujal/Home';
 
