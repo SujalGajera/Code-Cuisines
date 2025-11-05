@@ -2,22 +2,24 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Global UI
-import Navbar from './Sujal/Navbar';
-
+import Navbar from "./Sujal/Navbar";
 
 // Landing
-import Home from './Sujal/Home';
+import Home from "./Sujal/Home";
 
 // Customer screens
-import CustomerLogin from './Yubi/CustomerLogin';
-import CustomerRegister from './Yubi/CustomerRegister';
-import CustomerDashboard from './Yubi/CustomerDashboard';
-import CustomerForgot from './Yubi/ForgotPassword';
+import CustomerLogin from "./Yubi/CustomerLogin";
+import CustomerRegister from "./Yubi/CustomerRegister";
+import CustomerDashboard from "./Yubi/CustomerDashboard";
+import CustomerForgot from "./Yubi/ForgotPassword";
 
 // Staff / Receptionist screens
-import StaffLogin from './Heli/staff-login';
-import StaffForgot from './Heli/ForgotPassword';
-import SignUp from './Roshan/SignUp';
+import StaffLogin from "./Heli/staff-login";
+import StaffForgot from "./Heli/ForgotPassword";
+import SignUp from "./Roshan/SignUp";
+
+// ✅ Receptionist Dashboard (your part)
+import ReceptionistDashboard from "./Roshan/ReceptionistDashboard";
 
 // Placeholder pages
 const Explore = () => <div style={{ padding: 24 }}>Explore Page (placeholder)</div>;
@@ -48,7 +50,8 @@ function App() {
         <Route path="/staff-login" element={<StaffLogin />} />
         <Route path="/staff/forgot" element={<StaffForgot />} />
 
-  
+        {/* ✅ Receptionist Dashboard */}
+        <Route path="/receptionist" element={<ReceptionistDashboard />} />
 
         {/* Admin */}
         <Route path="/login/admin" element={<AdminLogin />} />
