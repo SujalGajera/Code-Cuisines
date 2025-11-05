@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Global UI
 import Navbar from './Sujal/Navbar';
-import ReceptionistDashboard from "./Roshan/ReceptionistDashboard";
 
 
 // Landing
@@ -49,8 +48,7 @@ function App() {
         <Route path="/staff-login" element={<StaffLogin />} />
         <Route path="/staff/forgot" element={<StaffForgot />} />
 
-        {/* Receptionist Dashboard */}
-        <Route path="/receptionist" element={<ReceptionistDashboard />} />
+  
 
         {/* Admin */}
         <Route path="/login/admin" element={<AdminLogin />} />
