@@ -1,54 +1,53 @@
-/* ===== GLOBAL LAYOUT ===== */
-body {
-  margin: 0;
-  background-color: #fcfaf8;
-  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #3b2d2d;
-  line-height: 1.6;
-  letter-spacing: 0.2px;
+:root {
+  --brand: #a94c0a;
+  --brand-light: #ff9b3d;
+  --brand-accent: #ffce3d;
+  --ink: #2e1f1f;
+  --muted: #6a6a6a;
+  --bg: #fffaf7;
+  --paper: #ffffff;
+  --radius: 18px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
 }
 
+/* ================= GLOBAL ================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ================= LAYOUT ================= */
 .dashboard {
   display: flex;
   min-height: 100vh;
-  overflow: hidden;
+  width: 100%;
 }
 
-/* ===== SIDEBAR ===== */
+/* ---- SIDEBAR ---- */
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #ff8c42 0%, #ffb84d 40%, #ffe083 100%);
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand-accent) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2rem 1.5rem;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
 }
 
-.sidebar-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+.sidebar img {
+  width: 150px;
+  margin: 0 auto 1.8rem auto;
+  display: block;
 }
 
-.sidebar-header img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background-color: #fff;
-  object-fit: cover;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
-  margin-bottom: 0.8rem;
-}
-
-.sidebar-header h2 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #2f1f1f;
-  letter-spacing: 0.3px;
-}
-
-/* ===== SIDEBAR NAV ===== */
 .sidebar nav {
   display: flex;
   flex-direction: column;
@@ -56,210 +55,167 @@ body {
 }
 
 .sidebar nav a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #3b2d2d;
   text-decoration: none;
   font-weight: 600;
-  background-color: rgba(255, 255, 255, 0.25);
-  padding: 0.75rem 1rem;
+  color: #2d2d2d;
+  padding: 0.8rem 1rem;
   border-radius: 12px;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.sidebar nav a i {
-  font-size: 1.1rem;
-}
-
-.sidebar nav a:hover {
-  background-color: #fff;
-  color: #c35a0c;
-  transform: translateX(6px);
-  box-shadow: 0 4px 12px rgba(195, 90, 12, 0.12);
-}
-
+.sidebar nav a:hover,
 .sidebar nav a.active {
-  background-color: #fff;
-  color: #c35a0c;
-  font-weight: 700;
-  box-shadow: 0 5px 14px rgba(195, 90, 12, 0.25);
+  background: #fff;
+  color: var(--brand);
+  transform: translateX(5px);
 }
 
-/* ===== LOGOUT BUTTON ===== */
 .logout-btn {
   background: #fff;
+  color: var(--brand);
   border: none;
-  color: #c35a0c;
-  font-weight: 600;
+  padding: 0.9rem;
   border-radius: 10px;
-  padding: 0.9rem 1.2rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+  margin-top: 2rem;
+  box-shadow: var(--shadow);
+  transition: 0.3s;
 }
 
 .logout-btn:hover {
-  background: #c35a0c;
+  background: var(--brand);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(195, 90, 12, 0.3);
-  transform: translateY(-2px);
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ================= MAIN CONTENT ================= */
 .main-content {
   flex: 1;
-  padding: 3.5rem 4rem;
-  background-color: #fffdfb;
-  overflow-y: auto;
-  transition: background 0.3s ease;
+  padding: 3rem 5rem;
+  background: var(--bg);
 }
 
 .main-content h1 {
-  font-size: 2.3rem;
-  color: #2f1f1f;
-  margin-bottom: 0.4rem;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  margin-bottom: 0.4rem;
 }
 
-.main-content p {
-  color: #7c6f6f;
+.main-content p.subtitle {
+  color: var(--muted);
   font-size: 1rem;
   margin-bottom: 2.5rem;
 }
 
-/* ===== SECTION HEADERS ===== */
-.section-title {
-  font-size: 1.25rem;
-  color: #2f1f1f;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-/* ===== CARDS ===== */
-.card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 2rem 2.4rem;
-  margin-bottom: 2rem;
-  border: 1px solid #f1e6e2;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09);
-}
-
-.card h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #2f1f1f;
-  margin-bottom: 1rem;
-}
-
-.card p {
-  font-size: 0.97rem;
-  margin: 6px 0;
-  color: #4a3f3f;
-  line-height: 1.6;
-}
-
-.card strong {
-  color: #2f1f1f;
-}
-
-/* ===== PRIMARY BUTTONS ===== */
-.btn-primary {
-  display: inline-block;
+/* ================= PROFILE CARD ================= */
+.profile-card {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
   width: 100%;
-  background: linear-gradient(90deg, #ff962c 0%, #ffce47 100%);
-  color: #2f1f1f;
-  border: none;
-  padding: 0.95rem;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: center;
-  font-size: 1rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
   transition: all 0.3s ease;
-  letter-spacing: 0.3px;
+  border-left: 6px solid var(--brand);
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card h3 {
+  color: var(--brand);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.profile-card p {
+  margin: 8px 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.profile-card strong {
+  color: var(--ink);
+}
+
+/* Profile image placeholder */
+.profile-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--brand-light);
+  margin-bottom: 1rem;
+  background-color: #fffaf3;
+}
+
+/* ================= BUTTON ================= */
+.btn-primary {
+  width: 100%;
+  border: none;
+  background: linear-gradient(90deg, var(--brand-light), var(--brand-accent));
+  color: #fff;
+  font-weight: 600;
+  padding: 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(255, 155, 61, 0.25);
+  transition: 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(90deg, #ffb955 0%, #ffe374 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 155, 61, 0.35);
+  background: linear-gradient(90deg, var(--brand-accent), var(--brand-light));
+  transform: translateY(-3px);
 }
 
-/* ===== PROFILE PHOTO PLACEHOLDER ===== */
-.profile-photo {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffb955;
+/* ================= RESERVATION CARD ================= */
+.reservation-card {
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  border-left: 6px solid var(--brand);
+}
+
+.reservation-card h3 {
+  color: var(--brand);
+  font-size: 1.2rem;
   margin-bottom: 1rem;
-  display: block;
 }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #ffb955;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #ff962c;
+.reservation-card p {
+  color: var(--muted);
+  margin-bottom: 1.2rem;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
   .dashboard {
     flex-direction: column;
   }
 
   .sidebar {
+    width: 100%;
+    border-radius: 0;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 1rem 1.5rem;
-  }
-
-  .sidebar nav {
-    flex-direction: row;
-    gap: 0.8rem;
+    padding: 1rem 2rem;
   }
 
   .main-content {
-    padding: 2rem 1.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .main-content h1 {
-    font-size: 1.7rem;
+    padding: 2rem;
   }
 
-  .card {
-    padding: 1.6rem;
-  }
-
-  .btn-primary {
-    font-size: 0.9rem;
-  }
-
-  .sidebar {
-    flex-wrap: wrap;
-    text-align: center;
+  .profile-card,
+  .reservation-card {
+    max-width: 100%;
   }
 }
