@@ -1,73 +1,94 @@
-/* ===== CUSTOMER LOGIN PAGE ===== */
+:root {
+  --brand: #a94c0a;
+  --brand-200: #c35a0c;
+  --ink: #111;
+  --muted: #666;
+  --paper: #ffffff;
+  --shadow: 0 10px 30px rgba(0,0,0,.12);
+  --radius: 14px;
+}
+
+/* === RESET === */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--ink);
+}
+
+/* === CONTAINER === */
 .login-container {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
   padding: 40px 20px;
 }
 
-/* ===== LOGIN BOX ===== */
+/* === CARD BOX === */
 .login-box {
-  background: #ffffff;
-  padding: 3.2rem 3rem 3.5rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-  width: 480px;
-  min-height: 520px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 460px;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .login-box:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* ===== TITLE & SUBTITLE ===== */
+/* === HEADINGS === */
 .login-box h2 {
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #2f1f1f;
+  font-size: clamp(28px, 3vw, 36px);
+  color: var(--ink);
   margin-bottom: 0.5rem;
-  letter-spacing: 0.3px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .login-box p {
-  color: #7c6f6f;
-  font-size: 0.95rem;
-  margin-bottom: 2rem;
-  line-height: 1.4;
+  color: var(--muted);
+  font-size: 0.96rem;
+  margin-bottom: 2.5rem;
 }
 
-/* ===== FORM ===== */
-.login-box form {
+/* === FORM === */
+form {
   display: flex;
   flex-direction: column;
   text-align: left;
 }
 
-/* ===== LABELS ===== */
+/* LABEL */
 label {
   font-weight: 600;
-  color: #3c2c2c;
-  margin-bottom: 0.4rem;
   font-size: 0.92rem;
+  color: #3b2d2d;
+  margin-bottom: 6px;
 }
 
-/* ===== INPUT FIELDS ===== */
+/* INPUT */
 input {
   width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1rem;
   margin-bottom: 1.5rem;
   border: 1px solid #e8e2df;
-  border-radius: 10px;
-  background-color: #fff;
-  font-size: 0.95rem;
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 1rem;
+  color: #2f1f1f;
   transition: all 0.3s ease;
-  color: #3c2c2c;
 }
 
 input::placeholder {
@@ -75,131 +96,73 @@ input::placeholder {
 }
 
 input:focus {
+  border-color: var(--brand);
   outline: none;
-  border-color: #c35a0c;
-  box-shadow: 0 0 6px rgba(195, 90, 12, 0.2);
-  background-color: #fffdfb;
+  box-shadow: 0 0 0 3px rgba(169, 76, 10, 0.2);
 }
 
-/* ===== BUTTON ===== */
+/* === BUTTON === */
 button {
   width: 100%;
-  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
+  background: var(--brand);
   color: #fff;
   border: none;
-  border-radius: 10px;
-  padding: 0.9rem 1.2rem;
-  font-size: 1rem;
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
   letter-spacing: 0.3px;
 }
 
 button:hover {
-  background: linear-gradient(180deg, #d96a10 0%, #b7540b 100%);
+  background: var(--brand-200);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
+  box-shadow: 0 10px 25px rgba(169, 76, 10, 0.25);
 }
 
-/* ===== FOOTER LINKS ===== */
+/* === FOOTER LINKS === */
 .login-footer {
   margin-top: 1.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
   text-align: center;
-  font-size: 0.93rem;
-  color: #675c5c;
 }
 
 .forgot-link {
-  display: inline-block;
-  color: #c35a0c;
+  color: var(--brand);
   font-weight: 600;
-  text-decoration: none;
-  transition: color 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .forgot-link:hover {
-  color: #a94c0a;
+  color: var(--brand-200);
   text-decoration: underline;
 }
 
 .link {
-  color: #c35a0c;
+  color: var(--brand);
   font-weight: 600;
-  text-decoration: none;
   cursor: pointer;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .link:hover {
-  color: #a94c0a;
+  color: var(--brand-200);
   text-decoration: underline;
 }
 
-/* ===== POPUP MODAL (Optional for success/login) ===== */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(59, 41, 41, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.popup-box {
-  background: #ffffff;
-  border-radius: 16px;
-  width: 380px;
-  text-align: center;
-  padding: 2rem 1.6rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  animation: fadeInScale 0.35s ease;
-}
-
-.popup-box h3 {
-  color: #c35a0c;
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.popup-box p {
-  color: #4a3f3f;
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.5rem;
-}
-
-@keyframes fadeInScale {
+/* === ANIMATION === */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===== ERROR MESSAGE ===== */
-.error-message {
-  color: #b32626;
-  font-size: 0.9rem;
-  text-align: center;
-  margin-bottom: 10px;
-  font-weight: 500;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -207,14 +170,22 @@ button:hover {
   }
 }
 
-/* ===== RESPONSIVE ===== */
+.login-box {
+  animation: fadeInUp 0.5s ease;
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .login-box {
-    width: 90%;
-    padding: 2.2rem 1.6rem 2.5rem;
+    padding: 2.2rem 1.6rem;
+    width: 92%;
+  }
+
+  .login-box h2 {
+    font-size: 1.6rem;
   }
 
   button {
-    padding: 0.85rem;
+    font-size: 0.95rem;
   }
 }
