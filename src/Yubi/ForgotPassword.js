@@ -49,7 +49,7 @@ function ForgotPassword() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Forgot Password 🔑</h2>
+        <h2>Forgot </h2>
         <p>Reset your Code Cuisine account password</p>
 
         {step === 1 ? (

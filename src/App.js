@@ -7,10 +7,6 @@ import Navbar from './Sujal/Navbar';
 // Landing
 import Home from './Sujal/Home';
 
-// Admin screens
-import AdminSignIn from './Sujal/AdminSignIn';
-import AdminForgot from './Sujal/AdminForgot'; 
-
 // Customer screens
 import CustomerLogin from './Yubi/CustomerLogin';
 import CustomerRegister from './Yubi/CustomerRegister';
@@ -39,16 +35,13 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/about" element={<About />} />
 
-        {/* Admin Pages */}
-        <Route path="/login/admin" element={<AdminSignIn />} />
-        <Route path="/admin/forgot" element={<AdminForgot />} />
-
-        {/* Customer auth & app */}
+        {/* Customer auth & dashboard */}
         <Route path="/login/customer" element={<CustomerLogin />} />
         <Route path="/customer/login" element={<Navigate to="/login/customer" replace />} />
         <Route path="/customer/register" element={<CustomerRegister />} />
         <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-        <Route path="/customer/forgot" element={<CustomerForgot />} />
+        {/* ✅ Updated path for Forgot Password */}
+        <Route path="/customer/forgot-password" element={<CustomerForgot />} />
 
         {/* Staff / Receptionist auth & app */}
         <Route path="/signup" element={<SignUp />} />
