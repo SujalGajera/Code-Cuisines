@@ -55,7 +55,7 @@ export default function ReceptionistDashboard() {
     );
   }, [searchTerm, filterStatus, bookings]);
 
-  // Open "Add Booking" modal
+  // Open Add Booking modal
   const openAdd = () => {
     setIsEditing(false);
     setFormData({
@@ -70,7 +70,7 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  // Open "Edit Booking" modal
+  // Open Edit Booking modal
   const openEdit = (b) => {
     setIsEditing(true);
     setFormData({ ...b });
@@ -108,7 +108,13 @@ export default function ReceptionistDashboard() {
       {/* HEADER */}
       <header className="cb-brandbar">
         <div className="cb-brand-left">
-          <span className="cb-title">Receptionist Dashboard</span>
+          <span
+            className="cb-title"
+            onClick={() => window.location.reload()}
+            style={{ cursor: "pointer" }}
+          >
+            Receptionist Dashboard
+          </span>
         </div>
 
         <div className="cb-brand-right-row">
