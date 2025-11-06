@@ -2,17 +2,17 @@
 // Date: November 2025
 // Description: Receptionist Dashboard (clean UI + improved row click + editable fields + auto date)
 
-// ✅ Import React + CSS
+// Import React + CSS
 import React, { useMemo, useState } from "react";
 import "./ReceptionistDashboard.css";
 
 export default function ReceptionistDashboard() {
 
-  // ✅ Search + Filter state
+  // Search + Filter state
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // ✅ Main bookings data
+  // Main bookings data
   const [bookings, setBookings] = useState([
     { id: 1, name: "John Smith", contact: "021 456 98724", date: "Oct 7", time: "7:30 PM", table: "Table 3", status: "Confirmed" },
     { id: 2, name: "Alice Brown", contact: "027 321 65425", date: "Oct 1", time: "1:00 PM", table: "Table 5", status: "Pending" },
@@ -20,11 +20,11 @@ export default function ReceptionistDashboard() {
     { id: 4, name: "Maria Lopez", contact: "029 876 54326", date: "Oct 8", time: "8:00 PM", table: "Table 7", status: "Confirmed" },
   ]);
 
-  // ✅ Modal control (Add/Edit)
+  // Modal control
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // ✅ Form fields
+  // Form fields
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -35,7 +35,7 @@ export default function ReceptionistDashboard() {
     status: "Pending",
   });
 
-  // ✅ Auto-update today's date (header only)
+  // Auto-update today's date (header only)
   const today = new Date();
   const formattedDate = today.toLocaleDateString("en-US", {
     month: "short",
@@ -43,7 +43,7 @@ export default function ReceptionistDashboard() {
     year: "numeric",
   });
 
-  // ✅ Filter + search logic
+  // Search + filter logic
   const filtered = useMemo(() => {
     const q = searchTerm.toLowerCase();
     return bookings.filter(
@@ -55,7 +55,7 @@ export default function ReceptionistDashboard() {
     );
   }, [searchTerm, filterStatus, bookings]);
 
-  // ✅ Open "Add Booking" modal
+  // Open "Add Booking" modal
   const openAdd = () => {
     setIsEditing(false);
     setFormData({
@@ -70,14 +70,14 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  // ✅ Open "Edit Booking" modal
+  // Open "Edit Booking" modal
   const openEdit = (b) => {
     setIsEditing(true);
     setFormData({ ...b });
     setShowModal(true);
   };
 
-  // ✅ Save booking (Add or Edit)
+  // Save booking
   const saveBooking = () => {
     if (!formData.name || !formData.contact || !formData.date || !formData.time || !formData.table) {
       alert("Please fill all fields");
@@ -85,7 +85,9 @@ export default function ReceptionistDashboard() {
     }
 
     if (isEditing) {
-      setBookings((prev) => prev.map((x) => (x.id === formData.id ? formData : x)));
+      setBookings((prev) =>
+        prev.map((x) => (x.id === formData.id ? formData : x))
+      );
     } else {
       setBookings((prev) => [{ ...formData, id: Date.now() }, ...prev]);
     }
@@ -93,7 +95,7 @@ export default function ReceptionistDashboard() {
     setShowModal(false);
   };
 
-  // ✅ Delete booking
+  // Delete booking
   const deleteBooking = (id) => {
     if (window.confirm("Delete this booking?")) {
       setBookings((prev) => prev.filter((x) => x.id !== id));
@@ -103,7 +105,7 @@ export default function ReceptionistDashboard() {
   return (
     <div className="cb-page">
 
-      {/* ✅ HEADER (Roshan + Auto Date) */}
+      {/* HEADER */}
       <header className="cb-brandbar">
         <div className="cb-brand-left">
           <span className="cb-title">Receptionist Dashboard</span>
@@ -115,17 +117,16 @@ export default function ReceptionistDashboard() {
         </div>
       </header>
 
-      {/* ✅ Tabs */}
+      {/* Tabs */}
       <div className="cb-tabs-row">
         <button className="cb-chip">👤 Profile</button>
         <button className="cb-chip cb-chip--active">🧾 Customer Booking</button>
         <button className="cb-chip">⏰ Shifts</button>
       </div>
 
-      {/* ✅ Search + Filter + Add Booking */}
+      {/* Search + Filter + Add Booking */}
       <div className="cb-actionbar">
 
-        {/* Search */}
         <input
           type="text"
           className="cb-search"
@@ -134,12 +135,10 @@ export default function ReceptionistDashboard() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        {/* Add New Booking */}
         <button className="cb-add" onClick={openAdd}>
           + Add New Booking
         </button>
 
-        {/* Filter dropdown */}
         <div className="cb-filterbar">
           <label>Filter:</label>
           <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
@@ -151,7 +150,7 @@ export default function ReceptionistDashboard() {
         </div>
       </div>
 
-      {/* ✅ TABLE */}
+      {/* TABLE */}
       <div className="cb-tablecard">
         <table className="cb-table">
           <thead>
@@ -168,10 +167,10 @@ export default function ReceptionistDashboard() {
 
           <tbody>
             {filtered.map((b) => (
-              <tr 
+              <tr
                 key={b.id}
                 className="cb-row"
-                onClick={() => openEdit(b)} // ✅ Row click opens edit
+                onClick={() => openEdit(b)}
               >
                 <td>{b.name}</td>
                 <td>{b.contact}</td>
@@ -183,7 +182,7 @@ export default function ReceptionistDashboard() {
                   <span className={`cb-badge ${b.status.toLowerCase()}`}>{b.status}</span>
                 </td>
 
-                {/* ✅ Edit/Delete buttons (not triggering row click) */}
+                {/* ACTION BUTTONS */}
                 <td>
                   <div className="cb-actions-col">
 
@@ -216,32 +215,56 @@ export default function ReceptionistDashboard() {
         </table>
       </div>
 
-      {/* ✅ MODAL */}
+      {/* MODAL */}
       {showModal && (
-        <div className="cb-modal-backdrop" onClick={(e) => e.target === e.currentTarget && setShowModal(false)}>
+        <div
+          className="cb-modal-backdrop"
+          onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
+        >
           <div className="cb-modal">
             <h2>{isEditing ? "Edit Booking" : "New Booking"}</h2>
 
-            {/* Editable fields */}
-            <input type="text" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-            <input type="text" placeholder="Contact" value={formData.contact} onChange={(e) => setFormData({ ...formData, contact: e.target.value })} />
-            <input type="text" placeholder="Date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
-            <input type="text" placeholder="Time" value={formData.time} onChange={(e) => setFormData({ ...formData, time: e.target.value })} />
-            <input type="text" placeholder="Table" value={formData.table} onChange={(e) => setFormData({ ...formData, table: e.target.value })} />
+            <input type="text" placeholder="Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
 
-            {/* Status dropdown */}
-            <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}>
+            <input type="text" placeholder="Contact"
+              value={formData.contact}
+              onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+            />
+
+            <input type="text" placeholder="Date"
+              value={formData.date}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+            />
+
+            <input type="text" placeholder="Time"
+              value={formData.time}
+              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+            />
+
+            <input type="text" placeholder="Table"
+              value={formData.table}
+              onChange={(e) => setFormData({ ...formData, table: e.target.value })}
+            />
+
+            <select
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+            >
               <option>Pending</option>
               <option>Confirmed</option>
               <option>Cancelled</option>
             </select>
 
-            {/* Modal Buttons */}
             <div className="cb-modal-actions">
               <button className="save-btn" onClick={saveBooking}>
                 {isEditing ? "Save Changes" : "Create"}
               </button>
-              <button className="cancel-btn" onClick={() => setShowModal(false)}>Cancel</button>
+              <button className="cancel-btn" onClick={() => setShowModal(false)}>
+                Cancel
+              </button>
             </div>
 
           </div>
