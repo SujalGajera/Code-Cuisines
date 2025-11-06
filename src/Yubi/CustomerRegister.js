@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CustomerLogin.css"; //  same style as login page
+import "./CustomerLogin.css";
 
 function CustomerRegister() {
   const navigate = useNavigate();
@@ -10,33 +10,26 @@ function CustomerRegister() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [subscribe, setSubscribe] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
-
-    // Validation checks
-    if (password !== confirmPassword) {
-      alert("❌ Passwords do not match!");
-      return;
-    }
 
     if (!/^\d{10}$/.test(phone)) {
       alert("⚠️ Please enter a valid 10-digit phone number.");
       return;
     }
 
-    // Save user to localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const existingUsers =
+      JSON.parse(localStorage.getItem("registeredUsers")) || [];
     const userExists = existingUsers.some((user) => user.email === email);
+
     if (userExists) {
       alert("⚠️ Email already registered. Please login instead.");
       navigate("/customer/login");
       return;
     }
 
-    const newUser = { firstName, lastName, email, phone, password, subscribe };
+    const newUser = { firstName, lastName, email, phone, password };
     existingUsers.push(newUser);
     localStorage.setItem("registeredUsers", JSON.stringify(existingUsers));
 
@@ -47,7 +40,7 @@ function CustomerRegister() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2>Create Your Account 🍴</h2>
+        <h2>Create Your Account</h2>
         <p>Join Code Cuisine to manage your profile and reservations</p>
 
         <form onSubmit={handleRegister}>
@@ -62,7 +55,6 @@ function CustomerRegister() {
                 required
               />
             </div>
-
             <div>
               <label>Last Name</label>
               <input
@@ -96,41 +88,21 @@ function CustomerRegister() {
           <label>Password</label>
           <input
             type="password"
-            placeholder="••••••••"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            placeholder="Re-enter your password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-
-          <div className="login-options">
-            <label>
-              <input
-                type="checkbox"
-                checked={subscribe}
-                onChange={(e) => setSubscribe(e.target.checked)}
-              />{" "}
-              Subscribe to our newsletter
-            </label>
-          </div>
-
-          <button type="submit" className="login-btn">
+          <button type="submit" className="submit-btn">
             Register
           </button>
 
-          <p style={{ marginTop: "15px", color: "#fff" }}>
-            Already have an account?{" "}
+          <p className="signin-link">
+            Already registered?{" "}
             <span
-              style={{ color: "#ffb703", cursor: "pointer" }}
               onClick={() => navigate("/customer/login")}
+              style={{ color: "#c35a0c", cursor: "pointer", fontWeight: 600 }}
             >
               Login here
             </span>

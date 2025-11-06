@@ -1,148 +1,247 @@
+/* ===== CUSTOMER LOGIN & REGISTER ===== */
+:root {
+  --brand: #a94c0a;
+  --brand-200: #c35a0c;
+  --ink: #111;
+  --muted: #666;
+  --paper: #ffffff;
+  --bg-soft: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --radius: 20px;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-soft);
+  color: var(--ink);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== Container ===== */
 .login-container {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1b120c;
-  color: #fff6e9;
-  font-family: "Poppins", sans-serif;
+  min-height: calc(100vh - 80px);
+  background: var(--bg-soft);
+  padding: 20px;
 }
 
+/* ===== Card (used for both login & register) ===== */
 .login-box {
-  background-color: #24160f;
-  padding: 2.5rem;
-  border-radius: 16px;
-  width: 380px;
-  box-shadow: 0 0 25px rgba(255, 180, 0, 0.2);
+  background: var(--paper);
+  padding: 3rem 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 440px;
+  transition: all 0.3s ease;
+  text-align: left;
+  animation: fadeIn 0.4s ease;
 }
 
-h2 {
-  color: #f6b400;
+.login-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Titles ===== */
+.login-box h2 {
   text-align: center;
-  margin-bottom: 0.5rem;
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.3px;
 }
 
-p {
+.login-box p {
   text-align: center;
-  color: #cbbca7;
-  margin-bottom: 2rem;
+  color: #7a6e6e;
+  margin-bottom: 1.8rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
 
+/* ===== Input Fields ===== */
 label {
   display: block;
-  margin-top: 0.8rem;
-  color: #fff6e9;
+  font-weight: 600;
   font-size: 0.95rem;
+  color: var(--ink);
+  margin-top: 1rem;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin-top: 0.3rem;
-  border: none;
-  border-radius: 8px;
-  background-color: #3a2a20;
-  color: #fff;
+  padding: 0.85rem 1rem;
+  margin-top: 6px;
+  border: 1px solid #e5dfdd;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 1rem;
+  color: #3b2d2d;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: #b39c9c;
 }
 
 input:focus {
-  outline: 2px solid #f6b400;
+  border-color: var(--brand-200);
+  box-shadow: 0 0 6px rgba(195, 90, 12, 0.25);
+  outline: none;
 }
 
+/* ===== Dual Name Fields (Register only) ===== */
+.name-fields,
+.row-inputs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 0.3rem;
+}
+
+.name-fields div,
+.row-inputs input {
+  flex: 1;
+}
+
+/* ===== Checkbox / Remember Me / Newsletter ===== */
 .login-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
   font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.login-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.login-options input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand);
 }
 
 .login-options a {
-  color: #f6b400;
+  color: var(--brand-200);
+  font-weight: 600;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.login-btn {
-  margin-top: 1.5rem;
+.login-options a:hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+/* ===== Buttons ===== */
+.login-btn,
+.submit-btn {
   width: 100%;
-  padding: 10px;
-  background-color: #f6b400;
+  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
+  color: #fff;
   border: none;
+  padding: 0.9rem;
   border-radius: 10px;
-  font-weight: 600;
-  color: #000;
-  cursor: pointer;
-}
-
-.login-btn:hover {
-  background-color: #ffca3a;
-}
-
-.name-fields {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.name-fields div {
-  flex: 1;
-}
-
-/* Dashboard shared */
-.dashboard {
-  display: flex;
-  height: 100vh;
-  background-color: #1b120c;
-  color: #fff6e9;
-}
-
-.sidebar {
-  width: 240px;
-  background-color: #24160f;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin-bottom: 1.5rem;
-  cursor: pointer;
-}
-
-.sidebar li:hover {
-  color: #f6b400;
-}
-
-.logout-btn {
-  background: none;
-  border: none;
-  color: #f6b400;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.6rem;
+  letter-spacing: 0.3px;
 }
 
-.main {
-  flex: 1;
-  padding: 3rem;
+.login-btn:hover,
+.submit-btn:hover {
+  background: linear-gradient(180deg, #d96a10 0%, #b7540b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(195, 90, 12, 0.35);
 }
 
-.profile-section {
+/* ===== Bottom Links ===== */
+.link-prompt,
+.signin-link {
+  text-align: center;
+  margin-top: 1.3rem;
+  color: #7a6e6e;
+  font-size: 0.95rem;
+}
+
+.link-prompt span,
+.signin-link a {
+  color: var(--brand-200);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.link-prompt span:hover,
+.signin-link a:hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+/* ===== Newsletter Checkbox (Register only) ===== */
+.newsletter {
   display: flex;
   align-items: center;
-  background-color: #2b1a13;
-  border-radius: 16px;
-  padding: 1.5rem;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #7a6e6e;
+  margin-top: 0.8rem;
 }
 
-.profile-section img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  margin-right: 1.5rem;
+/* ===== Error / Success messages ===== */
+.error-text {
+  color: #b32626;
+  font-size: 0.9rem;
+  text-align: left;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.success-message {
+  margin-top: 20px;
+  color: #2d8a3f;
+  font-weight: 600;
+  font-size: 15px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 2.2rem 1.6rem;
+    max-width: 90%;
+  }
+
+  .name-fields,
+  .row-inputs {
+    flex-direction: column;
+  }
 }
