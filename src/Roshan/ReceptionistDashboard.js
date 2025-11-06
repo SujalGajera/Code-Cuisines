@@ -3,7 +3,7 @@
 // Description: Receptionist Dashboard (clean UI + improved row click + editable fields + auto date)
 
 // Import React + CSS
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./ReceptionistDashboard.css";
 
 export default function ReceptionistDashboard() {
@@ -12,13 +12,23 @@ export default function ReceptionistDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // Main bookings data
-  const [bookings, setBookings] = useState([
-    { id: 1, name: "John Smith", contact: "021 456 98724", date: "Oct 7", time: "7:30 PM", table: "Table 3", status: "Confirmed" },
-    { id: 2, name: "Alice Brown", contact: "027 321 65425", date: "Oct 1", time: "1:00 PM", table: "Table 5", status: "Pending" },
-    { id: 3, name: "David Clark", contact: "020 345 78926", date: "Oct 6", time: "6:45 PM", table: "Table 1", status: "Cancelled" },
-    { id: 4, name: "Maria Lopez", contact: "029 876 54326", date: "Oct 8", time: "8:00 PM", table: "Table 7", status: "Confirmed" },
-  ]);
+  // ✅ Load bookings from LocalStorage on first load
+  const [bookings, setBookings] = useState(() => {
+    const saved = localStorage.getItem("bookings");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          { id: 1, name: "John Smith", contact: "021 456 98724", date: "Oct 7", time: "7:30 PM", table: "Table 3", status: "Confirmed" },
+          { id: 2, name: "Alice Brown", contact: "027 321 65425", date: "Oct 1", time: "1:00 PM", table: "Table 5", status: "Pending" },
+          { id: 3, name: "David Clark", contact: "020 345 78926", date: "Oct 6", time: "6:45 PM", table: "Table 1", status: "Cancelled" },
+          { id: 4, name: "Maria Lopez", contact: "029 876 54326", date: "Oct 8", time: "8:00 PM", table: "Table 7", status: "Confirmed" },
+        ];
+  });
+
+  // ✅ Save to LocalStorage whenever bookings change
+  useEffect(() => {
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+  }, [bookings]);
 
   // Modal control
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +65,7 @@ export default function ReceptionistDashboard() {
     );
   }, [searchTerm, filterStatus, bookings]);
 
-  // Open Add Booking modal
+  // Open "Add Booking" modal
   const openAdd = () => {
     setIsEditing(false);
     setFormData({
@@ -70,7 +80,7 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  // Open Edit Booking modal
+  // Open "Edit Booking" modal
   const openEdit = (b) => {
     setIsEditing(true);
     setFormData({ ...b });
@@ -105,7 +115,7 @@ export default function ReceptionistDashboard() {
   return (
     <div className="cb-page">
 
-      {/* HEADER */}
+      {/* ✅ ONLY ONE HEADER NOW (No duplicates) */}
       <header className="cb-brandbar">
         <div className="cb-brand-left">
           <span
@@ -188,7 +198,6 @@ export default function ReceptionistDashboard() {
                   <span className={`cb-badge ${b.status.toLowerCase()}`}>{b.status}</span>
                 </td>
 
-                {/* ACTION BUTTONS */}
                 <td>
                   <div className="cb-actions-col">
 
