@@ -12,7 +12,7 @@ export default function ReceptionistDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // ✅ Load bookings from LocalStorage on first load
+  // Load bookings from LocalStorage
   const [bookings, setBookings] = useState(() => {
     const saved = localStorage.getItem("bookings");
     return saved
@@ -25,7 +25,7 @@ export default function ReceptionistDashboard() {
         ];
   });
 
-  // ✅ Save to LocalStorage whenever bookings change
+  // Save bookings to LocalStorage
   useEffect(() => {
     localStorage.setItem("bookings", JSON.stringify(bookings));
   }, [bookings]);
@@ -45,7 +45,7 @@ export default function ReceptionistDashboard() {
     status: "Pending",
   });
 
-  // Auto-update today's date (header only)
+  // Auto date for header
   const today = new Date();
   const formattedDate = today.toLocaleDateString("en-US", {
     month: "short",
@@ -65,7 +65,7 @@ export default function ReceptionistDashboard() {
     );
   }, [searchTerm, filterStatus, bookings]);
 
-  // Open "Add Booking" modal
+  // Add new booking
   const openAdd = () => {
     setIsEditing(false);
     setFormData({
@@ -80,7 +80,7 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  // Open "Edit Booking" modal
+  // Edit booking
   const openEdit = (b) => {
     setIsEditing(true);
     setFormData({ ...b });
@@ -115,7 +115,7 @@ export default function ReceptionistDashboard() {
   return (
     <div className="cb-page">
 
-      {/* ✅ ONLY ONE HEADER NOW (No duplicates) */}
+      {/* HEADER */}
       <header className="cb-brandbar">
         <div className="cb-brand-left">
           <span
@@ -183,18 +183,16 @@ export default function ReceptionistDashboard() {
 
           <tbody>
             {filtered.map((b) => (
-              <tr
-                key={b.id}
-                className="cb-row"
-                onClick={() => openEdit(b)}
-              >
-                <td>{b.name}</td>
-                <td>{b.contact}</td>
-                <td>{b.date}</td>
-                <td>{b.time}</td>
-                <td>{b.table}</td>
+              <tr key={b.id} className="cb-row">
 
-                <td>
+                {/* Only cell click — NOT row click */}
+                <td onClick={() => openEdit(b)}>{b.name}</td>
+                <td onClick={() => openEdit(b)}>{b.contact}</td>
+                <td onClick={() => openEdit(b)}>{b.date}</td>
+                <td onClick={() => openEdit(b)}>{b.time}</td>
+                <td onClick={() => openEdit(b)}>{b.table}</td>
+
+                <td onClick={() => openEdit(b)}>
                   <span className={`cb-badge ${b.status.toLowerCase()}`}>{b.status}</span>
                 </td>
 
