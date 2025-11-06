@@ -1,85 +1,58 @@
-body {
-  background-color: #1c0f07;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #1c0f07;
+  height: 90vh;
+  background: #fff;
 }
 
 .register-box {
-  background: #2b1405;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 0 40px #ffb40033;
-  width: 380px;
+  background: #ffffff;
+  border: 1px solid #ffd54f;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(255, 136, 0, 0.15);
+  padding: 40px 35px;
+  width: 420px;
   text-align: center;
 }
 
 .register-box h2 {
-  color: #ffb400;
-  margin-bottom: 10px;
-}
-
-.register-box p {
-  color: #ccc;
-  margin-bottom: 25px;
+  color: #ff7b00;
 }
 
 label {
-  display: block;
+  color: #ff7b00;
   text-align: left;
-  color: #ffb400;
-  font-weight: bold;
+  display: block;
+  font-weight: 500;
   margin-top: 10px;
-  margin-bottom: 5px;
 }
 
 input {
-  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   padding: 10px;
-  border: none;
-  border-radius: 6px;
-  outline: none;
-  background: #3a1d09;
-  color: #fff;
-}
-
-input:focus {
-  border: 1px solid #ffb400;
-  box-shadow: 0 0 5px #ffb400;
+  margin-top: 5px;
 }
 
 button {
   margin-top: 20px;
-  background: #ffb400;
-  color: #2b1405;
-  font-weight: bold;
+  width: 100%;
+  background: linear-gradient(90deg, #ff7b00, #ffd54f);
   border: none;
-  border-radius: 25px;
-  padding: 10px 25px;
-  cursor: pointer;
-  transition: 0.3s ease;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: bold;
 }
 
-button:hover {
-  background: #ffcc33;
-  transform: scale(1.05);
+p {
+  color: #444;
 }
 
 .link {
-  color: #ffb400;
+  color: #ff7b00;
   cursor: pointer;
   text-decoration: underline;
-}
-
-.link:hover {
-  color: #ffcc33;
 }

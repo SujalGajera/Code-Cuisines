@@ -23,7 +23,7 @@ function CustomerLogin() {
       localStorage.setItem("currentCustomer", JSON.stringify(loggedInUser));
 
       alert(`Welcome back, ${loggedInUser.firstName}!`);
-      navigate("/customer/dashboard");UUU
+      navigate("/customer/dashboard");
     } else {
       alert("Invalid email or password.");
     }
@@ -32,7 +32,7 @@ function CustomerLogin() {
   return (
     <div className="login-container">
       <form className="login-box" onSubmit={handleSubmit}>
-        <h2>Welcome Back, Customer 👋</h2>
+        <h2>Welcome Back, Customer </h2>
         <p>Access your profile and reservations</p>
 
         <label>Email Address</label>
