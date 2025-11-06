@@ -18,24 +18,11 @@ function CustomerDashboard() {
   const [formData, setFormData] = useState(user);
   const [showToast, setShowToast] = useState(false);
 
-  //  Load current logged-in customer (saved by Login.js)
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("currentCustomer"));
     if (currentUser) {
-      setUser({
-        firstName: currentUser.firstName || "",
-        lastName: currentUser.lastName || "",
-        email: currentUser.email || "",
-        phone: currentUser.phone || "",
-        avatar: currentUser.avatar || defaultAvatar,
-      });
-      setFormData({
-        firstName: currentUser.firstName || "",
-        lastName: currentUser.lastName || "",
-        email: currentUser.email || "",
-        phone: currentUser.phone || "",
-        avatar: currentUser.avatar || defaultAvatar,
-      });
+      setUser(currentUser);
+      setFormData(currentUser);
     }
   }, []);
 
@@ -60,141 +47,111 @@ function CustomerDashboard() {
     localStorage.setItem("currentCustomer", JSON.stringify(formData));
     setIsEditing(false);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
+    setTimeout(() => setShowToast(false), 2500);
   };
 
-  const fullName =
-    (user.firstName || "") + (user.lastName ? ` ${user.lastName}` : "");
+  const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
   return (
-    <div className="dashboard">
+    <div className="cd-dashboard">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <div className="logo-container">
-  <img 
-    src="/images/code-cuisines-logo.png" 
-    alt="Code Cuisines Logo" 
-    className="logo-image"
-  />
-</div>
+      <aside className="cd-sidebar">
+        <div className="cd-logo-box">
+          <img
+            src="/images/code-cuisines-logo.png"
+            alt="Code Cuisines Logo"
+            className="cd-logo"
+          />
+        </div>
 
-        <ul>
-          <li onClick={() => navigate("/customer/dashboard")}>🏠 Home</li>
-          <li onClick={() => navigate("/customer/reservations")}>📅 Reservations</li>
-          <li onClick={() => navigate("/customer/menu")}>🍽️ Menu</li>
-        </ul>
+        <nav className="cd-nav">
+          <a
+            className="cd-nav-item active"
+            onClick={() => navigate("/customer/dashboard")}
+          >
+            🏠 Dashboard
+          </a>
+          <a className="cd-nav-item" onClick={() => navigate("/customer/reservations")}>
+            📅 Reservations
+          </a>
+          <a className="cd-nav-item" onClick={() => navigate("/customer/menu")}>
+            🍽️ Menu
+          </a>
+        </nav>
+
         <button
+          className="cd-logout"
           onClick={() => {
             localStorage.removeItem("currentCustomer");
             navigate("/customer/login");
           }}
-          className="logout-btn"
         >
-          ⟲ Log Out
+          ⟲ Logout
         </button>
       </aside>
 
-      {/* Main Content */}
-      <main className="main">
-        <h1>Welcome, {fullName || "Guest"} 👋</h1>
-        <p className="welcome-subtext">Glad to see you back at Code Cuisine!</p>
+      {/* Main */}
+      <main className="cd-main">
+        <header className="cd-header">
+          <h1>Welcome, {fullName || "Guest"} </h1>
+          <p>Your personal Code Cuisines dashboard</p>
+        </header>
 
-        {/* Profile Section */}
-        <div className="profile-section">
-          <div className="avatar-container">
+        {/* Profile */}
+        <section className="cd-card cd-profile-card">
+          <div className="cd-avatar-box">
             <img
               src={formData.avatar || defaultAvatar}
-              alt="Profile"
-              className="profile-img"
+              className="cd-avatar"
+              alt="User Avatar"
             />
             {isEditing && (
-              <label className="upload-btn">
+              <label className="cd-upload-btn">
                 📸 Change Photo
                 <input type="file" accept="image/*" onChange={handleImageChange} />
               </label>
             )}
           </div>
 
-          <div className="details">
+          <div className="cd-details">
             <h3>My Profile</h3>
-
             {!isEditing ? (
               <>
-                <p>
-                  <strong>Full Name:</strong> {fullName || "Not available"}
-                </p>
-                <p>
-                  <strong>Email:</strong> {user.email || "Not available"}
-                </p>
-                <p>
-                  <strong>Phone Number:</strong> {user.phone || "Not available"}
-                </p>
-                <button className="edit-btn" onClick={() => setIsEditing(true)}>
+                <p><strong>Full Name:</strong> {fullName || "Not Available"}</p>
+                <p><strong>Email:</strong> {user.email || "Not Available"}</p>
+                <p><strong>Phone:</strong> {user.phone || "Not Available"}</p>
+                <button className="cd-edit-btn" onClick={() => setIsEditing(true)}>
                   ✏️ Edit Profile
                 </button>
               </>
             ) : (
               <>
-                <div className="edit-fields">
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                  />
-
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                  />
-
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-
-                  <label>Phone</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="edit-buttons">
-                  <button className="save-btn" onClick={handleSave}>
-                    💾 Save
-                  </button>
-                  <button
-                    className="cancel-btn"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    ✖ Cancel
-                  </button>
+                <label>First Name</label>
+                <input name="firstName" value={formData.firstName} onChange={handleChange} />
+                <label>Last Name</label>
+                <input name="lastName" value={formData.lastName} onChange={handleChange} />
+                <label>Email</label>
+                <input name="email" value={formData.email} onChange={handleChange} />
+                <label>Phone</label>
+                <input name="phone" value={formData.phone} onChange={handleChange} />
+                <div className="cd-btn-row">
+                  <button className="cd-save-btn" onClick={handleSave}>💾 Save</button>
+                  <button className="cd-cancel-btn" onClick={() => setIsEditing(false)}>✖ Cancel</button>
                 </div>
               </>
             )}
           </div>
-        </div>
+        </section>
 
-        {/* Reservations Section */}
-        <div className="reservations">
+        {/* Reservations */}
+        <section className="cd-card cd-res-card">
           <h3>My Reservations</h3>
-          <p>You have 2 upcoming reservations</p>
-          <button className="view-btn">View Reservations</button>
-        </div>
-      </main>
+          <p>You have 2 upcoming reservations.</p>
+          <button className="cd-btn-primary">View Reservations</button>
+        </section>
 
-      {/*  Toast/ pop up  */}
-      {showToast && <div className="toast">✅ Profile Updated Successfully!</div>}
+        {showToast && <div className="cd-toast">✅ Profile Updated Successfully!</div>}
+      </main>
     </div>
   );
 }
