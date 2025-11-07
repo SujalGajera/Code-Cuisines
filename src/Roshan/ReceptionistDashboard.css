@@ -453,13 +453,14 @@
   .cb-badge.cancelled { background: #ffe2e2; color: #d02424; }
 
   /* ✅ ACTIONS COLUMN VERTICAL */
-  .cb-actions-col {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    justify-content: center;
-    align-items: center;
-  }
+.cb-actions-col {
+  display: flex;
+  flex-direction: row;      /* ✅ Edit then Delete in one line */
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 
   .edit-btn {
     background: var(--brand);
@@ -590,13 +591,13 @@
     overflow: hidden;
   }
 
-  /* ✅ EDIT + DELETE restored to previous clean style */
-  .cb-actions-col {
-    display: flex;
-    flex-direction: row;   /* ✅ inline */
-    gap: 10px;
-    justify-content: flex-end;
-  }
+.cb-actions-col {
+  display: flex;
+  flex-direction: row;      /* ✅ Edit then Delete in one line */
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
 
   .edit-btn {
     background: var(--brand);
