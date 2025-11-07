@@ -1,4 +1,4 @@
-  /* Scoped dashboard styles (won’t touch your main site theme) */
+ /* Scoped dashboard styles (won’t touch your main site theme) */
 
   :root {
     /* Keep your site’s red theme shade */
@@ -675,4 +675,20 @@
     justify-content: center;
     align-items: center;
   }
+
+
+  .cb-tabs-inside {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+
+
+
+
+
+
 

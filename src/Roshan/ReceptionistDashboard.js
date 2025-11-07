@@ -117,28 +117,24 @@ export default function ReceptionistDashboard() {
 
       {/* HEADER */}
       <header className="cb-brandbar">
-        <div className="cb-brand-left">
-          <span
-            className="cb-title"
-            onClick={() => window.location.reload()}
-            style={{ cursor: "pointer" }}
-          >
-            Receptionist Dashboard
-          </span>
-        </div>
 
-        <div className="cb-brand-right-row">
-          <span className="cb-pill">📅 {formattedDate}</span>
-          <span className="cb-pill">Roshan</span>
-        </div>
-      </header>
+  <div className="cb-brand-left">
+    <span className="cb-title">Receptionist Dashboard</span>
+  </div>
 
-      {/* Tabs */}
-      <div className="cb-tabs-row">
-        <button className="cb-chip">👤 Profile</button>
-        <button className="cb-chip cb-chip--active">🧾 Customer Booking</button>
-        <button className="cb-chip">⏰ Shifts</button>
-      </div>
+  {/* ✅ Insert the buttons INSIDE the navbar */}
+  <div className="cb-tabs-inside">
+    <button className="cb-chip">👤 Profile</button>
+    <button className="cb-chip cb-chip--active">🧾 Customer Booking</button>
+    <button className="cb-chip">⏰ Shifts</button>
+  </div>
+
+  <div className="cb-brand-right-row">
+    <span className="cb-pill">📅 Nov 7, 2025</span>
+    <span className="cb-pill">Roshan</span>
+  </div>
+
+</header>
 
       {/* Search + Filter + Add Booking */}
       <div className="cb-actionbar">
@@ -284,6 +280,9 @@ export default function ReceptionistDashboard() {
         </div>
       )}
 
+      
+
     </div>
   );
 }
+
