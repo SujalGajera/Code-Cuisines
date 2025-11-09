@@ -1,16 +1,34 @@
+/* ===== COMMON STYLES (used by both Login & Verify) ===== */
+:root {
+  --brand: #a94c0a;
+  --brand-light: #c35a0c;
+  --brand-hover: #d96a10;
+  --ink: #2f1f1f;
+  --muted: #7c6f6f;
+  --bg-light: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+}
+
 /* ===== ADMIN LOGIN PAGE ===== */
-.admin-login-page {
+.admin-login-page,
+.admin-verify-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+  background: var(--bg-light);
   padding: 40px 20px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.admin-login-card {
-  background: #ffffff;
+.admin-login-card,
+.admin-verify-card {
+  background: #fff;
   padding: 3rem 2.5rem;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -20,29 +38,33 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.admin-login-card:hover {
+.admin-login-card:hover,
+.admin-verify-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
 }
 
-/* Titles */
-.admin-login-title {
+/* ===== TITLES ===== */
+.admin-login-title,
+.admin-verify-title {
   font-weight: 700;
   font-size: 1.8rem;
-  color: #2f1f1f;
+  color: var(--ink);
   margin-bottom: 0.4rem;
   letter-spacing: 0.3px;
 }
 
-.admin-login-subtitle {
-  color: #7c6f6f;
+.admin-login-subtitle,
+.admin-verify-subtitle {
+  color: var(--muted);
   font-size: 0.95rem;
   margin-bottom: 2rem;
   line-height: 1.4;
 }
 
-/* Form */
-.admin-login-form {
+/* ===== FORM FIELDS ===== */
+.admin-login-form,
+.admin-verify-form {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -77,12 +99,12 @@ label {
 
 .input-group input:focus {
   outline: none;
-  border-color: #c35a0c;
+  border-color: var(--brand-light);
   box-shadow: 0 0 6px rgba(195, 90, 12, 0.25);
   background-color: #fffdfb;
 }
 
-/* Error text */
+/* ===== ERROR TEXT ===== */
 .error-text {
   color: #b32626;
   font-size: 0.9rem;
@@ -92,10 +114,10 @@ label {
   text-align: center;
 }
 
-/* Button */
+/* ===== BUTTON ===== */
 .btn-primary {
   width: 100%;
-  background: linear-gradient(180deg, #c35a0c 0%, #a94c0a 100%);
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -108,19 +130,19 @@ label {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(180deg, #d96a10 0%, #b7540b 100%);
+  background: linear-gradient(180deg, var(--brand-hover) 0%, #b7540b 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
 }
 
-/* Back link */
+/* ===== BACK LINK ===== */
 .back-link {
   margin-top: 1.5rem;
   text-align: center;
 }
 
 .back-link a {
-  color: #c35a0c;
+  color: var(--brand-light);
   font-weight: 600;
   text-decoration: none;
   font-size: 0.95rem;
@@ -130,29 +152,83 @@ label {
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .admin-login-card {
-    padding: 2.2rem 1.6rem;
-    max-width: 90%;
-  }
-}
-
-.password-row {
-  position: relative;
+/* ===== PASSWORD FIELD WITH FORGOT LINK ===== */
+.password-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .forgot-link {
-  position: absolute;
-  right: 14px;
-  top: 9px;
   font-size: 0.85rem;
-  color: #c35a0c;
+  color: var(--brand-light);
   text-decoration: none;
   font-weight: 500;
+  margin-left: auto;
   transition: color 0.2s ease;
 }
 
 .forgot-link:hover {
   text-decoration: underline;
+}
+
+.password-input {
+  margin-bottom: 1.2rem !important;
+}
+
+/* ===== PASSWORD TOGGLE ===== */
+.password-group {
+  position: relative;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a36a3a;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--brand-light);
+}
+
+
+/* ===== VERIFICATION CODE PAGE ===== */
+.admin-verify-form label {
+  margin-bottom: 0.8rem;
+}
+
+.admin-verify-form input {
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.admin-verify-form input::placeholder {
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .admin-login-card,
+  .admin-verify-card {
+    padding: 2.2rem 1.6rem;
+    max-width: 90%;
+  }
 }

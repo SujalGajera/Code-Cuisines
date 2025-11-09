@@ -9,7 +9,8 @@ import Home from './Sujal/Home';
 
 // Admin screens
 import AdminSignIn from './Sujal/AdminSignIn';
-import AdminForgot from './Sujal/AdminForgot'; 
+import AdminForgot from './Sujal/AdminForgot';
+import AdminVerify from './Sujal/AdminVerify';
 
 // Customer screens
 import CustomerLogin from './Yubi/CustomerLogin';
@@ -22,16 +23,16 @@ import StaffLogin from './Heli/staff-login';
 import StaffForgot from './Heli/ForgotPassword';
 import SignUp from './Roshan/SignUp';
 
-// Lightweight placeholder pages (until you have real ones)
+// Placeholder pages until implementation
 const Explore = () => <div style={{ padding: 24 }}>Explore Page (placeholder)</div>;
 const About = () => <div style={{ padding: 24 }}>About Us Page (placeholder)</div>;
-const AdminLogin = () => <div style={{ padding: 24 }}>Admin Login Page (placeholder)</div>;
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
+
         {/* Landing */}
         <Route path="/" element={<Home />} />
 
@@ -42,24 +43,23 @@ function App() {
         {/* Admin Pages */}
         <Route path="/login/admin" element={<AdminSignIn />} />
         <Route path="/admin/forgot" element={<AdminForgot />} />
+        <Route path="/admin/verify" element={<AdminVerify />} />
 
-        {/* Customer auth & app */}
+        {/* Customer Auth */}
         <Route path="/login/customer" element={<CustomerLogin />} />
         <Route path="/customer/login" element={<Navigate to="/login/customer" replace />} />
         <Route path="/customer/register" element={<CustomerRegister />} />
         <Route path="/customer/dashboard" element={<CustomerDashboard />} />
         <Route path="/customer/forgot-password" element={<CustomerForgot />} />
 
-        {/* Staff / Receptionist auth & app */}
+        {/* Staff / Receptionist */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/staff-login" element={<StaffLogin />} />
         <Route path="/staff/forgot" element={<StaffForgot />} />
 
-        {/* Admin */}
-        <Route path="/login/admin" element={<AdminLogin />} />
-
-        {/* Fallback */}
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
     </BrowserRouter>
   );
