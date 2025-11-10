@@ -1,239 +1,306 @@
+/* Use the same site theme */
 :root {
   --brand: #a94c0a;
-  --brand-light: #ffb84a;
-  --brand-hover: linear-gradient(90deg, #a94c0a, #ffb84a);
-  --bg: #fffaf7;
-  --paper: #ffffff;
-  --text: #222;
+  --brand-200: #c35a0c;
+  --ink: #111;
   --muted: #666;
-  --radius: 20px;
+  --paper: #ffffff;
   --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --radius: 14px;
 }
 
-/* Reset */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-
-/* Layout */
+/* === Base Layout === */
 .cd-dashboard {
   display: flex;
   min-height: 100vh;
+  background: #f9f8f6;
+  color: var(--ink);
+  font-family: "Poppins", "Segoe UI", sans-serif;
 }
 
-/* Sidebar */
+/* === Sidebar === */
 .cd-sidebar {
-  width: 270px;
-  background: linear-gradient(180deg, var(--brand), var(--brand-light));
-  padding: 2rem 1.5rem;
+  background: #fff;
+  width: 230px;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: 0 22px 22px 0;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  padding: 2rem 1rem;
+  border-right: 1px solid #eee;
 }
 
 .cd-logo-box {
-  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .cd-logo {
-  width: 130px;
-  border-radius: 12px;
-  margin-bottom: 1.8rem;
+  width: 120px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Navigation */
 .cd-nav {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  width: 100%;
+  gap: 0.6rem;
 }
 
 .cd-nav-item {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  padding: 0.9rem 1.1rem;
+  background: transparent;
+  border: none;
+  padding: 0.9rem 1rem;
+  text-align: left;
+  width: 100%;
   border-radius: 10px;
   font-weight: 600;
-  text-align: left;
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: 0.3s ease;
   cursor: pointer;
-  border: none;
 }
 
-/* === NEW HOVER EFFECT === */
-.cd-nav-item:hover,
+.cd-nav-item:hover {
+  background: #f6efe9;
+  color: var(--brand);
+}
+
 .cd-nav-item.active {
-  background: var(--brand-hover);
+  background: var(--brand);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(169, 76, 10, 0.35);
-  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(169, 76, 10, 0.25);
 }
 
-/* Logout Button */
 .cd-logout {
-  background: #fff;
+  margin-top: auto;
+  background: #f3e5db;
   color: var(--brand);
   border: none;
-  padding: 0.9rem;
   border-radius: 10px;
+  padding: 0.8rem 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-/* Hover effect for Logout too */
 .cd-logout:hover {
-  background: var(--brand-hover);
+  background: var(--brand-200);
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(169, 76, 10, 0.35);
 }
 
-/* Main */
+/* === Main Area === */
 .cd-main {
   flex: 1;
-  padding: 3rem 5rem;
+  padding: 2.5rem 3rem;
 }
 
-/* Header */
+.cd-header {
+  margin-bottom: 2rem;
+}
+
 .cd-header h1 {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 1.8rem;
   color: var(--brand);
+  font-weight: 700;
 }
 
 .cd-header p {
-  margin-top: 6px;
   color: var(--muted);
+  font-size: 0.95rem;
 }
 
-/* Card */
+/* === Card Styling === */
 .cd-card {
   background: var(--paper);
   border-radius: var(--radius);
-  padding: 2rem;
-  margin-top: 2rem;
   box-shadow: var(--shadow);
-  border-left: 6px solid var(--brand);
-  transition: 0.3s ease;
+  padding: 1.8rem 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
 }
 
 .cd-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-/* Avatar */
+/* === Profile Card === */
+.cd-profile-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+
 .cd-avatar-box {
+  flex: 0 0 140px;
   text-align: center;
-  margin-bottom: 1.2rem;
 }
 
 .cd-avatar {
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  border: 4px solid var(--brand);
   object-fit: cover;
-  box-shadow: 0 4px 10px rgba(169, 76, 10, 0.25);
-  background: #fff9f6;
+  border: 4px solid #f6efe9;
+  box-shadow: var(--shadow);
 }
 
 .cd-upload-btn {
-  margin-top: 1rem;
-  background: var(--brand-hover);
-  color: #fff;
-  padding: 0.6rem 1rem;
-  border-radius: 10px;
-  font-weight: 600;
   display: inline-block;
-  position: relative;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--brand);
+  font-weight: 600;
   cursor: pointer;
+  background: #f6efe9;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
 }
 
 .cd-upload-btn input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
+  display: none;
 }
 
-/* Buttons */
-.cd-edit-btn,
-.cd-save-btn,
-.cd-cancel-btn,
-.cd-btn-primary {
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 0.8rem 1.2rem;
-  transition: 0.3s ease;
+.cd-details {
+  flex: 1;
 }
 
-.cd-edit-btn {
-  background: #ffe9e0;
+.cd-details h3 {
   color: var(--brand);
-  border: 2px solid var(--brand);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
-.cd-edit-btn:hover {
-  background: var(--brand-hover);
-  color: #fff;
+.cd-details p {
+  color: var(--ink);
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
 }
 
-.cd-save-btn,
-.cd-btn-primary {
-  background: var(--brand-hover);
-  color: #fff;
+.cd-details strong {
+  color: var(--brand-200);
 }
 
-.cd-save-btn:hover,
-.cd-btn-primary:hover {
-  box-shadow: 0 6px 18px rgba(169, 76, 10, 0.35);
-  transform: translateY(-2px);
+/* === Form Fields === */
+.cd-details input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+  transition: 0.3s;
 }
 
-.cd-cancel-btn {
-  background: #f1f1f1;
-  color: #444;
-}
-
-.cd-cancel-btn:hover {
-  background: #ddd;
+.cd-details input:focus {
+  border-color: var(--brand-200);
+  box-shadow: 0 0 0 2px rgba(195, 90, 12, 0.15);
+  outline: none;
 }
 
 .cd-btn-row {
   display: flex;
-  gap: 10px;
-  margin-top: 1.5rem;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-/* Toast */
-.cd-toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+.cd-save-btn {
   background: var(--brand);
   color: #fff;
-  padding: 1rem 1.4rem;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  animation: fade-in 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-@keyframes fade-in {
+.cd-save-btn:hover {
+  background: var(--brand-200);
+}
+
+.cd-cancel-btn {
+  background: #f6efe9;
+  color: var(--brand);
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cd-cancel-btn:hover {
+  background: #f3e5db;
+}
+
+.cd-edit-btn {
+  background: #f6efe9;
+  color: var(--brand);
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cd-edit-btn:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* === Reservation Section === */
+.cd-res-card h3 {
+  font-size: 1.2rem;
+  color: var(--brand);
+  margin-bottom: 0.5rem;
+}
+
+.cd-res-card p {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.cd-btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cd-btn-primary:hover {
+  background: var(--brand-200);
+}
+
+/* === Toast === */
+.cd-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--brand);
+  color: #fff;
+  padding: 1rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.3s ease;
+}
+
+/* === Animation === */
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -241,20 +308,27 @@ body {
   }
 }
 
-/* Responsive */
+/* === Responsive === */
 @media (max-width: 900px) {
   .cd-dashboard {
     flex-direction: column;
   }
 
   .cd-sidebar {
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1rem 2rem;
-    border-radius: 0;
+    padding: 1rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .cd-nav {
+    flex-direction: row;
+    gap: 1rem;
   }
 
   .cd-main {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 }

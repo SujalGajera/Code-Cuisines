@@ -65,18 +65,24 @@ function CustomerDashboard() {
         </div>
 
         <nav className="cd-nav">
-          <a
+          <button
             className="cd-nav-item active"
             onClick={() => navigate("/customer/dashboard")}
           >
             🏠 Dashboard
-          </a>
-          <a className="cd-nav-item" onClick={() => navigate("/customer/reservations")}>
+          </button>
+          <button
+            className="cd-nav-item"
+            onClick={() => navigate("/customer/reservations")}
+          >
             📅 Reservations
-          </a>
-          <a className="cd-nav-item" onClick={() => navigate("/customer/menu")}>
+          </button>
+          <button
+            className="cd-nav-item"
+            onClick={() => navigate("/customer/menu")}
+          >
             🍽️ Menu
-          </a>
+          </button>
         </nav>
 
         <button
@@ -147,7 +153,12 @@ function CustomerDashboard() {
         <section className="cd-card cd-res-card">
           <h3>My Reservations</h3>
           <p>You have 2 upcoming reservations.</p>
-          <button className="cd-btn-primary">View Reservations</button>
+          <button
+            className="cd-btn-primary"
+            onClick={() => navigate("/customer/reservations")}
+          >
+            View Reservations
+          </button>
         </section>
 
         {showToast && <div className="cd-toast">✅ Profile Updated Successfully!</div>}
