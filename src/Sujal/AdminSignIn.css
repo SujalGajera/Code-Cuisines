@@ -1,0 +1,234 @@
+/* ===== COMMON STYLES (used by both Login & Verify) ===== */
+:root {
+  --brand: #a94c0a;
+  --brand-light: #c35a0c;
+  --brand-hover: #d96a10;
+  --ink: #2f1f1f;
+  --muted: #7c6f6f;
+  --bg-light: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+}
+
+/* ===== ADMIN LOGIN PAGE ===== */
+.admin-login-page,
+.admin-verify-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-light);
+  padding: 40px 20px;
+}
+
+.admin-login-card,
+.admin-verify-card {
+  background: #fff;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-login-card:hover,
+.admin-verify-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== TITLES ===== */
+.admin-login-title,
+.admin-verify-title {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.3px;
+}
+
+.admin-login-subtitle,
+.admin-verify-subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+/* ===== FORM FIELDS ===== */
+.admin-login-form,
+.admin-verify-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  color: #3c2c2c;
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.6rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #e8e2df;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  color: #3c2c2c;
+}
+
+.input-group input::placeholder {
+  color: #b39c9c;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--brand-light);
+  box-shadow: 0 0 6px rgba(195, 90, 12, 0.25);
+  background-color: #fffdfb;
+}
+
+/* ===== ERROR TEXT ===== */
+.error-text {
+  color: #b32626;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, var(--brand-hover) 0%, #b7540b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
+}
+
+/* ===== BACK LINK ===== */
+.back-link {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.back-link a {
+  color: var(--brand-light);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== PASSWORD FIELD WITH FORGOT LINK ===== */
+.password-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.forgot-link {
+  font-size: 0.85rem;
+  color: var(--brand-light);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: auto;
+  transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.password-input {
+  margin-bottom: 1.2rem !important;
+}
+
+/* ===== PASSWORD TOGGLE ===== */
+.password-group {
+  position: relative;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a36a3a;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--brand-light);
+}
+
+
+/* ===== VERIFICATION CODE PAGE ===== */
+.admin-verify-form label {
+  margin-bottom: 0.8rem;
+}
+
+.admin-verify-form input {
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.admin-verify-form input::placeholder {
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .admin-login-card,
+  .admin-verify-card {
+    padding: 2.2rem 1.6rem;
+    max-width: 90%;
+  }
+}
