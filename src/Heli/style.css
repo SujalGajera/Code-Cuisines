@@ -17,6 +17,9 @@ body {
   overflow-y: auto;
 }
 
+src/Heli/style.css
+
+
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: 230px;
@@ -305,3 +308,252 @@ label {
     width: 100%;
   }
 }
+/* center forgot password */
+.forgot-center {
+  width: 100%;
+  text-align: right;
+  margin-top: 6px;
+}
+
+
+/* Center Forgot Password slightly lower */
+.forgot-centered {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-20%);
+  font-size: 14px;
+  color: #c06318;
+}
+
+/* Make the password container relative */
+.password-group {
+  position: relative;
+}
+
+/* New single full-width button */
+.btn-primary-full {
+  width: 80%;
+  padding: 14px 0;
+  background-color: #c06318;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px auto;
+  display: block;
+}
+
+.btn-primary-full:hover {
+  background-color: #a65212;
+}
+
+.password-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.password-row input {
+  width: 100%;
+}
+
+.forgot-link {
+  margin-left: 10px;
+  white-space: nowrap;
+  color: #b45a0b;
+  font-size: 14px;
+}
+.full-width {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* ===== FIX LOGIN BUTTON & SPACING ===== */
+
+.login-card {
+  width: 480px;
+  padding: 3rem 3rem 3rem;
+}
+
+/* Make form column layout */
+.login-card input {
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+/* Fix the button */
+.btn-primary.login-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px 0;
+  font-size: 1.05rem;
+  border-radius: 10px;
+}
+
+/* Proper password + Forgot Password alignment */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .forgot-link {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Prevent overlap in small screens */
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%;
+  }
+
+  .btn-primary.login-btn {
+    width: 100%;
+  }
+}
+
+/* Cleaner input style (no layout change) */
+.input-clean {
+  border: 1px solid #e5d6d2 !important;
+  border-radius: 10px !important;
+  padding: 0.85rem 1rem !important;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+/* Password wrapper */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Toggle Icon */
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  color: #b45a0b;
+}
+.password-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Page Centering */
+.sl-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff7f2;
+  padding: 40px 20px;
+}
+
+/* Card */
+.sl-card {
+  width: 420px;
+  background: #fff;
+  padding: 40px 36px;
+  border-radius: 22px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* Title */
+.sl-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #2e1e1e;
+  margin-bottom: 6px;
+}
+
+.sl-sub {
+  margin-bottom: 28px;
+  color: #6b6b6b;
+  font-size: 15px;
+}
+
+/* Labels */
+.sl-label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  color: #3d3d3d;
+  margin-bottom: 6px;
+}
+
+/* Input fields */
+.sl-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #e3e3e3;
+  background: #fafafa;
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.sl-input:focus {
+  outline: none;
+  border-color: #c06b1b;
+}
+
+/* Password wrapper */
+.sl-pass-wrapper {
+  position: relative;
+}
+
+.sl-pass-input {
+  padding-right: 120px;
+}
+
+/* Show password text */
+.sl-show-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  font-size: 13px;
+  transform: translateY(-50%);
+  color: #c06b1b;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Button */
+.sl-btn {
+  width: 100%;
+  background: #b5580f;
+  border: none;
+  color: white;
+  padding: 14px 0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.sl-btn:hover {
+  background: #964909;
+}
+
+/* Bottom text */
+.sl-bottom-text {
+  margin-top: 20px;
+  color: #444;
+}
+
+.sl-link {
+  color: #b5580f;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
