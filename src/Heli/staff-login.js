@@ -37,7 +37,7 @@ export default function StaffLogin() {
     <div className="login-page">
       <div className="login-card">
 
-        <h2 className="login-title">Staff Login</h2>
+        <h2 className="login-title">Sign In Here</h2>
         <p className="login-subtitle">
           Welcome back! Please enter your details.
         </p>

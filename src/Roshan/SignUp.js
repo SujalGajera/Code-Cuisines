@@ -21,19 +21,17 @@ export default function SignUp() {
     }
 
     try {
-      // 1) Create auth user
       const userCred = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      // 2) Save profile to **users** collection (matches your rules)
       await setDoc(doc(db, "users", userCred.user.uid), {
         firstName,
         lastName,
         email,
-        role: "staff", // we’ll use this on login
+        role: "staff",
       });
 
       alert("Account created successfully!");
@@ -50,7 +48,6 @@ export default function SignUp() {
         <h2 className="login-title">Create Your Account</h2>
 
         <div className="login-form">
-          {/* Name row */}
           <label>Name</label>
           <div style={{ display: "flex", gap: "10px" }}>
             <input
@@ -69,7 +66,6 @@ export default function SignUp() {
             />
           </div>
 
-          {/* Work Email */}
           <label>Work Email</label>
           <input
             type="email"
@@ -79,7 +75,6 @@ export default function SignUp() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          {/* Password + Show/Hide text */}
           <label>Password</label>
           <div className="sl-pass-wrapper">
             <input
@@ -104,10 +99,7 @@ export default function SignUp() {
 
         <p className="signup-link">
           Already signed up?
-          <a className="highlight-link" href="/staff-login">
-            {" "}
-            Sign in
-          </a>
+          <a className="highlight-link" href="/staff-login"> Sign in</a>
         </p>
       </div>
     </div>
