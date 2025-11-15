@@ -1,48 +1,76 @@
+// src/Heli/StaffLogin.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import "./style.css";
 
 export default function StaffLogin() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      setError("");
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const snap = await getDoc(doc(db, "users", userCred.user.uid));
+
+      if (!snap.exists()) return setError("User not found in DB");
+
+      const role = snap.data().role;
+
+      if (role === "staff" || role === "receptionist") {
+        navigate("/receptionist");
+      } else {
+        setError("Unknown role!");
+      }
+
+    } catch (err) {
+      setError("Wrong login details!");
+    }
+  };
 
   return (
-    <div className="sl-page">
-      <div className="sl-card">
+    <div className="login-page">
+      <div className="login-card">
 
-        <h2 className="sl-title">Sign In Here</h2>
-        <p className="sl-sub">Welcome back! Please enter your details.</p>
+        <h2 className="login-title">Staff Login</h2>
+        <p className="login-subtitle">
+          Welcome back! Please enter your details.
+        </p>
 
-        {/* Email */}
-        <label className="sl-label">Email</label>
-        <input
-          type="email"
-          placeholder="Enter your work email"
-          className="sl-input"
-        />
-
-        {/* Password */}
-        <label className="sl-label">Password</label>
-
-        <div className="sl-pass-wrapper">
+        <div className="login-form">
+          <label>Email</label>
           <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Enter your password"
-            className="sl-input sl-pass-input"
+            type="email"
+            className="input-clean"
+            placeholder="Enter your work email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <span
-            className="sl-show-btn"
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            {passwordVisible ? "Hide Password" : "Show Password"}
-          </span>
+
+          <label>Password</label>
+          <input
+            type="password"
+            className="input-clean"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {error && <p className="error-login">{error}</p>}
+
+          <button className="btn-primary login-btn" onClick={handleLogin}>
+            Sign In as Staff / Receptionist
+          </button>
         </div>
 
-        <button className="sl-btn">
-          Sign In as Staff / Receptionist
-        </button>
-
-        <p className="sl-bottom-text">
-          Already have an account?
-          <a href="/staff-login" className="sl-link"> Sign in here</a>
+        <p className="signup-link">
+          Don’t have an account?
+          <a className="highlight-link" href="/signup"> Sign up here</a>
         </p>
 
       </div>

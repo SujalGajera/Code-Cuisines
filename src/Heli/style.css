@@ -557,3 +557,90 @@ label {
   margin-left: 4px;
 }
 
+.sl-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff7f2;
+}
+
+.sl-card {
+  width: 500px;
+  background: #ffffff;
+  padding: 45px 55px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.sl-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #2e1e1e;
+  margin-bottom: 6px;
+}
+
+.sl-sub {
+  font-size: 15px;
+  color: #6b6b6b;
+  margin-bottom: 30px;
+}
+
+.sl-label {
+  text-align: left;
+  display: block;
+  font-size: 14px;
+  color: #3d3d3d;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.sl-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e3e3e3;
+  background: #fafafa;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.sl-btn {
+  width: 100%;
+  background: #b5580f;
+  border: none;
+  padding: 15px 0;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.sl-btn:hover {
+  background: #964909;
+}
+
+.sl-bottom-text {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.sl-link {
+  margin-left: 5px;
+  font-weight: 700;
+  color: #c35a0c;
+}
+
+.error-login {
+  color: #d00000;
+  font-size: 14px;
+  text-align: left;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+
