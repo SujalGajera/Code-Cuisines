@@ -1,3 +1,4 @@
+// src/Roshan/SignUp.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
@@ -6,9 +7,9 @@ import { doc, setDoc } from "firebase/firestore";
 import "./SignUp.css";
 
 export default function SignUp() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,23 +22,23 @@ export default function SignUp() {
     }
 
     try {
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      // 1️⃣ Create Firebase Auth account
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
-      await setDoc(doc(db, "users", userCred.user.uid), {
+      // 2️⃣ Save Firestore document in receptionists collection
+      await setDoc(doc(db, "receptionists", userCred.user.uid), {
         firstName,
         lastName,
         email,
-        role: "staff",
+        role: "receptionist",
+        uid: userCred.user.uid,
       });
 
       alert("Account created successfully!");
       navigate("/staff-login");
+
     } catch (error) {
-      console.log("Signup error:", error.code, error.message);
+      console.log("Signup error:", error);
       alert(error.message);
     }
   };
@@ -50,44 +51,25 @@ export default function SignUp() {
         <div className="login-form">
           <label>Name</label>
           <div style={{ display: "flex", gap: "10px" }}>
-            <input
-              type="text"
-              placeholder="First Name"
-              className="input-clean"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="input-clean"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
+            <input className="input-clean" placeholder="First Name"
+              value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <input className="input-clean" placeholder="Last Name"
+              value={lastName} onChange={(e) => setLastName(e.target.value)} />
           </div>
 
           <label>Work Email</label>
-          <input
-            type="email"
-            placeholder="Work Email"
-            className="input-clean"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input className="input-clean" type="email"
+            placeholder="Email" value={email}
+            onChange={(e) => setEmail(e.target.value)} />
 
           <label>Password</label>
           <div className="sl-pass-wrapper">
-            <input
+            <input className="input-clean sl-pass-input"
               type={passwordVisible ? "text" : "password"}
-              placeholder="Password"
-              className="input-clean sl-pass-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span
-              className="sl-show-btn"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
+              value={password} placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)} />
+            <span className="sl-show-btn"
+              onClick={() => setPasswordVisible(!passwordVisible)}>
               {passwordVisible ? "Hide Password" : "Show Password"}
             </span>
           </div>

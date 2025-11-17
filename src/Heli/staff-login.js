@@ -16,13 +16,15 @@ export default function StaffLogin() {
     try {
       setError("");
       const userCred = await signInWithEmailAndPassword(auth, email, password);
-      const snap = await getDoc(doc(db, "users", userCred.user.uid));
 
-      if (!snap.exists()) return setError("User not found in DB");
+      const userRef = doc(db, "receptionists", userCred.user.uid);
+      const snap = await getDoc(userRef);
+
+      if (!snap.exists()) return setError("Access denied");
 
       const role = snap.data().role;
 
-      if (role === "staff" || role === "receptionist") {
+      if (role === "receptionist" || role === "staff") {
         navigate("/receptionist");
       } else {
         setError("Unknown role!");
@@ -36,7 +38,6 @@ export default function StaffLogin() {
   return (
     <div className="login-page">
       <div className="login-card">
-
         <h2 className="login-title">Sign In Here</h2>
         <p className="login-subtitle">
           Welcome back! Please enter your details.
@@ -72,7 +73,6 @@ export default function StaffLogin() {
           Don’t have an account?
           <a className="highlight-link" href="/signup"> Sign up here</a>
         </p>
-
       </div>
     </div>
   );
