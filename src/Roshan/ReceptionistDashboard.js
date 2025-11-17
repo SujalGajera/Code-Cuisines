@@ -1,6 +1,6 @@
 // Author: Roshan Dhakal
 // Date: November 2025
-// Description: Receptionist Dashboard (clean UI + bookings + staff orders)
+// Description: Receptionist Dashboard (clean UI + bookings + staff orders + profile)
 
 import React, { useMemo, useState, useEffect } from "react";
 import "./ReceptionistDashboard.css";
@@ -9,7 +9,97 @@ export default function ReceptionistDashboard() {
   // -----------------------
   // TAB SELECTION
   // -----------------------
-  const [activeTab, setActiveTab] = useState("bookings"); // "bookings" | "staff"
+  const [activeTab, setActiveTab] = useState("bookings"); // "profile" | "bookings" | "staff"
+
+  // =======================
+  // 0) PROFILE (NEW)
+  // =======================
+
+  // main saved profile (stored in localStorage)
+  const [profile, setProfile] = useState(() => {
+    const saved = localStorage.getItem("receptionProfile");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          name: "Roshan Dhakal",
+          email: "roshandhakal788@gmail.com",
+          phone: "021 000 0000",
+          role: "Receptionist",
+          avatar: "", // base64 image string
+          skills: ["Front Counter", "Table Bookings"],
+        };
+  });
+
+  // draft profile used while editing on Profile tab
+  const [profileDraft, setProfileDraft] = useState(profile);
+  const [newSkill, setNewSkill] = useState("");
+
+  // keep localStorage in sync
+  useEffect(() => {
+    localStorage.setItem("receptionProfile", JSON.stringify(profile));
+  }, [profile]);
+
+  // keep draft in sync if saved profile changes
+  useEffect(() => {
+    setProfileDraft(profile);
+  }, [profile]);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileDraft((prev) => ({
+        ...prev,
+        avatar: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleProfileFieldChange = (field, value) => {
+    setProfileDraft((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const addSkill = () => {
+    const trimmed = newSkill.trim();
+    if (!trimmed) return;
+    if (
+      profileDraft.skills &&
+      profileDraft.skills.find(
+        (s) => s.toLowerCase() === trimmed.toLowerCase()
+      )
+    ) {
+      setNewSkill("");
+      return;
+    }
+
+    setProfileDraft((prev) => ({
+      ...prev,
+      skills: [...(prev.skills || []), trimmed],
+    }));
+    setNewSkill("");
+  };
+
+  const removeSkill = (skill) => {
+    setProfileDraft((prev) => ({
+      ...prev,
+      skills: (prev.skills || []).filter((s) => s !== skill),
+    }));
+  };
+
+  const saveProfile = () => {
+    setProfile(profileDraft);
+    alert("Profile updated successfully.");
+  };
+
+  const resetProfileDraft = () => {
+    setProfileDraft(profile);
+  };
 
   // =======================
   // 1) CUSTOMER BOOKINGS
@@ -265,9 +355,6 @@ export default function ReceptionistDashboard() {
     }
   };
 
-  // (Status can be changed from Edit modal now,
-  // so we don't need Confirm/Cancel buttons anymore.)
-
   // =======================
   // RENDER
   // =======================
@@ -282,7 +369,17 @@ export default function ReceptionistDashboard() {
 
         {/* TABS inside navbar */}
         <div className="cb-tabs-inside">
-          <button className="cb-chip">👤 Profile</button>
+          <button
+            className={`cb-chip ${
+              activeTab === "profile" ? "cb-chip--active" : ""
+            }`}
+            onClick={() => {
+              setProfileDraft(profile);
+              setActiveTab("profile");
+            }}
+          >
+            👤 Profile
+          </button>
 
           <button
             className={`cb-chip ${
@@ -310,6 +407,294 @@ export default function ReceptionistDashboard() {
           <span className="cb-pill">Roshan</span>
         </div>
       </header>
+
+      {/* -------------------------
+          TAB 0: PROFILE
+          ------------------------- */}
+      {activeTab === "profile" && (
+        <div className="cb-tablecard" style={{ maxWidth: 960, margin: "32px auto" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "32px",
+              alignItems: "flex-start",
+              flexWrap: "wrap",
+            }}
+          >
+            {/* Avatar + change photo */}
+            <div style={{ minWidth: 180, textAlign: "center" }}>
+              <div
+                style={{
+                  width: 96,
+                  height: 96,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  background: "#ffe8d9",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 32,
+                  fontWeight: 700,
+                  color: "#9b4a0f",
+                  margin: "0 auto 12px",
+                }}
+              >
+                {profileDraft.avatar ? (
+                  <img
+                    src={profileDraft.avatar}
+                    alt="Avatar"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  (profileDraft.name || "R").charAt(0).toUpperCase()
+                )}
+              </div>
+
+              <label
+                className="cb-add"
+                style={{
+                  display: "inline-block",
+                  padding: "0.45rem 0.9rem",
+                  fontSize: 14,
+                  cursor: "pointer",
+                }}
+              >
+                Change Photo
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleAvatarChange}
+                />
+              </label>
+            </div>
+
+            {/* Main profile form */}
+            <div style={{ flex: 1, minWidth: 260 }}>
+              <h2
+                style={{
+                  marginTop: 0,
+                  marginBottom: 16,
+                  fontSize: 22,
+                  color: "#2f1f1f",
+                }}
+              >
+                Profile Details
+              </h2>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "16px 24px",
+                }}
+              >
+                <div>
+                  <label
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "#3c2c2c",
+                      display: "block",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    value={profileDraft.name}
+                    onChange={(e) =>
+                      handleProfileFieldChange("name", e.target.value)
+                    }
+                    className="input-clean"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "#3c2c2c",
+                      display: "block",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Role
+                  </label>
+                  <input
+                    type="text"
+                    value={profileDraft.role}
+                    onChange={(e) =>
+                      handleProfileFieldChange("role", e.target.value)
+                    }
+                    className="input-clean"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "#3c2c2c",
+                      display: "block",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Work Email
+                  </label>
+                  <input
+                    type="email"
+                    value={profileDraft.email}
+                    onChange={(e) =>
+                      handleProfileFieldChange("email", e.target.value)
+                    }
+                    className="input-clean"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "#3c2c2c",
+                      display: "block",
+                      marginBottom: 4,
+                    }}
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    value={profileDraft.phone}
+                    onChange={(e) =>
+                      handleProfileFieldChange("phone", e.target.value)
+                    }
+                    className="input-clean"
+                  />
+                </div>
+              </div>
+
+              {/* Skills / responsibilities */}
+              <div style={{ marginTop: 24 }}>
+                <label
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "#3c2c2c",
+                    display: "block",
+                    marginBottom: 6,
+                  }}
+                >
+                  Responsibilities / Skills
+                </label>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 8,
+                    marginBottom: 10,
+                  }}
+                >
+                  {(profileDraft.skills || []).map((skill) => (
+                    <span
+                      key={skill}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "6px 10px",
+                        borderRadius: 999,
+                        background: "#fff3e0",
+                        fontSize: 13,
+                        color: "#8a4510",
+                        border: "1px solid #f3d2a3",
+                      }}
+                    >
+                      {skill}
+                      <button
+                        type="button"
+                        onClick={() => removeSkill(skill)}
+                        style={{
+                          border: "none",
+                          background: "transparent",
+                          cursor: "pointer",
+                          fontSize: 14,
+                          lineHeight: 1,
+                          color: "#c35a0c",
+                        }}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                  {(!profileDraft.skills || profileDraft.skills.length === 0) && (
+                    <span style={{ fontSize: 13, color: "#7a6e6e" }}>
+                      No skills added yet.
+                    </span>
+                  )}
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 8,
+                    maxWidth: 360,
+                    alignItems: "center",
+                  }}
+                >
+                  <input
+                    type="text"
+                    placeholder="Add new skill (e.g. Walk-ins)"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        addSkill();
+                      }
+                    }}
+                    className="input-clean"
+                  />
+                  <button
+                    type="button"
+                    className="cb-add"
+                    style={{ padding: "0.55rem 0.9rem", whiteSpace: "nowrap" }}
+                    onClick={addSkill}
+                  >
+                    + Add
+                  </button>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div
+                className="cb-modal-actions"
+                style={{ marginTop: 28, justifyContent: "flex-end" }}
+              >
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={resetProfileDraft}
+                >
+                  Reset
+                </button>
+                <button
+                  type="button"
+                  className="save-btn"
+                  onClick={saveProfile}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* -------------------------
           TAB 1: CUSTOMER BOOKINGS
