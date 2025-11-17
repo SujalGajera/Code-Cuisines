@@ -189,17 +189,6 @@
   padding-right: 120px;
 }
 
-.sl-show-btn {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 13px;
-  color: #c06b1b;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-}
 
 /* Fix spacing between first/last name row and next input */
 .sl-name-row {
