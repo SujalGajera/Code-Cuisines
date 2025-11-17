@@ -1,12 +1,19 @@
 // Author: Roshan Dhakal
 // Date: November 2025
-// Description: Receptionist Dashboard (clean UI + improved row click + editable fields + auto date)
+// Description: Receptionist Dashboard (clean UI + bookings + staff orders)
 
-// Import React + CSS
 import React, { useMemo, useState, useEffect } from "react";
 import "./ReceptionistDashboard.css";
 
 export default function ReceptionistDashboard() {
+  // -----------------------
+  // TAB SELECTION
+  // -----------------------
+  const [activeTab, setActiveTab] = useState("bookings"); // "bookings" | "staff"
+
+  // =======================
+  // 1) CUSTOMER BOOKINGS
+  // =======================
 
   // Search + Filter state
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,10 +25,42 @@ export default function ReceptionistDashboard() {
     return saved
       ? JSON.parse(saved)
       : [
-          { id: 1, name: "John Smith", contact: "021 456 98724", date: "Oct 7", time: "7:30 PM", table: "Table 3", status: "Confirmed" },
-          { id: 2, name: "Alice Brown", contact: "027 321 65425", date: "Oct 1", time: "1:00 PM", table: "Table 5", status: "Pending" },
-          { id: 3, name: "David Clark", contact: "020 345 78926", date: "Oct 6", time: "6:45 PM", table: "Table 1", status: "Cancelled" },
-          { id: 4, name: "Maria Lopez", contact: "029 876 54326", date: "Oct 8", time: "8:00 PM", table: "Table 7", status: "Confirmed" },
+          {
+            id: 1,
+            name: "John Smith",
+            contact: "021 456 98724",
+            date: "Oct 7",
+            time: "7:30 PM",
+            table: "Table 3",
+            status: "Confirmed",
+          },
+          {
+            id: 2,
+            name: "Alice Brown",
+            contact: "027 321 65425",
+            date: "Oct 1",
+            time: "1:00 PM",
+            table: "Table 5",
+            status: "Pending",
+          },
+          {
+            id: 3,
+            name: "David Clark",
+            contact: "020 345 78926",
+            date: "Oct 6",
+            time: "6:45 PM",
+            table: "Table 1",
+            status: "Cancelled",
+          },
+          {
+            id: 4,
+            name: "Maria Lopez",
+            contact: "029 876 54326",
+            date: "Oct 8",
+            time: "8:00 PM",
+            table: "Table 7",
+            status: "Confirmed",
+          },
         ];
   });
 
@@ -34,7 +73,7 @@ export default function ReceptionistDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Form fields
+  // Form fields (bookings)
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -45,15 +84,7 @@ export default function ReceptionistDashboard() {
     status: "Pending",
   });
 
-  // Auto date for header
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  // Search + filter logic
+  // Search + filter logic for bookings
   const filtered = useMemo(() => {
     const q = searchTerm.toLowerCase();
     return bookings.filter(
@@ -89,7 +120,13 @@ export default function ReceptionistDashboard() {
 
   // Save booking
   const saveBooking = () => {
-    if (!formData.name || !formData.contact || !formData.date || !formData.time || !formData.table) {
+    if (
+      !formData.name ||
+      !formData.contact ||
+      !formData.date ||
+      !formData.time ||
+      !formData.table
+    ) {
       alert("Please fill all fields");
       return;
     }
@@ -112,177 +149,519 @@ export default function ReceptionistDashboard() {
     }
   };
 
+  // =======================
+  // 2) STAFF ORDERS
+  // =======================
+
+  const [orderSearch, setOrderSearch] = useState("");
+  const [orderFilter, setOrderFilter] = useState("All");
+
+  const [orders, setOrders] = useState(() => {
+    const saved = localStorage.getItem("staffOrders");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 1,
+            customer: "John Smith",
+            item: "Pizza",
+            qty: 2,
+            table: "Table 3",
+            status: "Confirmed",
+          },
+          {
+            id: 2,
+            customer: "Alice Brown",
+            item: "Burger",
+            qty: 1,
+            table: "Table 5",
+            status: "Served", // keep Served
+          },
+          {
+            id: 3,
+            customer: "David Clark",
+            item: "Pasta",
+            qty: 1,
+            table: "Table 1",
+            status: "Pending",
+          },
+        ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("staffOrders", JSON.stringify(orders));
+  }, [orders]);
+
+  const filteredOrders = useMemo(() => {
+    const q = orderSearch.toLowerCase();
+    return orders.filter(
+      (o) =>
+        (orderFilter === "All" || o.status === orderFilter) &&
+        (String(o.id).includes(q) ||
+          o.customer.toLowerCase().includes(q) ||
+          o.item.toLowerCase().includes(q) ||
+          o.table.toLowerCase().includes(q))
+    );
+  }, [orders, orderSearch, orderFilter]);
+
+  const [orderModalOpen, setOrderModalOpen] = useState(false);
+  const [orderEditing, setOrderEditing] = useState(false);
+  const [orderForm, setOrderForm] = useState({
+    id: "",
+    customer: "",
+    item: "",
+    qty: 1,
+    table: "",
+    status: "Pending",
+  });
+
+  const openOrderAdd = () => {
+    setOrderEditing(false);
+    setOrderForm({
+      id: "",
+      customer: "",
+      item: "",
+      qty: 1,
+      table: "",
+      status: "Pending",
+    });
+    setOrderModalOpen(true);
+  };
+
+  const openOrderEdit = (order) => {
+    setOrderEditing(true);
+    setOrderForm({ ...order });
+    setOrderModalOpen(true);
+  };
+
+  const saveOrder = () => {
+    if (
+      !orderForm.customer ||
+      !orderForm.item ||
+      !orderForm.qty ||
+      !orderForm.table
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (orderEditing) {
+      setOrders((prev) =>
+        prev.map((o) => (o.id === orderForm.id ? orderForm : o))
+      );
+    } else {
+      const newId =
+        orderForm.id ||
+        (orders.length ? Math.max(...orders.map((o) => o.id)) + 1 : 1);
+
+      setOrders((prev) => [{ ...orderForm, id: newId }, ...prev]);
+    }
+    setOrderModalOpen(false);
+  };
+
+  const deleteOrder = (id) => {
+    if (window.confirm("Delete this order?")) {
+      setOrders((prev) => prev.filter((o) => o.id !== id));
+    }
+  };
+
+  // (Status can be changed from Edit modal now,
+  // so we don't need Confirm/Cancel buttons anymore.)
+
+  // =======================
+  // RENDER
+  // =======================
+
   return (
     <div className="cb-page">
-
       {/* HEADER */}
       <header className="cb-brandbar">
-
-  <div className="cb-brand-left">
-    <span className="cb-title">Receptionist Dashboard</span>
-  </div>
-
-  {/* ✅ Insert the buttons INSIDE the navbar */}
-  <div className="cb-tabs-inside">
-    <button className="cb-chip">👤 Profile</button>
-    <button className="cb-chip cb-chip--active">🧾 Customer Booking</button>
-    <button className="cb-chip">⏰ Shifts</button>
-  </div>
-
-  <div className="cb-brand-right-row">
-    <span className="cb-pill">📅 Nov 7, 2025</span>
-    <span className="cb-pill">Roshan</span>
-  </div>
-
-</header>
-
-      {/* Search + Filter + Add Booking */}
-      <div className="cb-actionbar">
-
-        <input
-          type="text"
-          className="cb-search"
-          placeholder="Search bookings…"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-
-        <button className="cb-add" onClick={openAdd}>
-          + Add New Booking
-        </button>
-
-        <div className="cb-filterbar">
-          <label>Filter:</label>
-          <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
-            <option>All</option>
-            <option>Pending</option>
-            <option>Confirmed</option>
-            <option>Cancelled</option>
-          </select>
+        <div className="cb-brand-left">
+          <span className="cb-title">Receptionist Dashboard</span>
         </div>
-      </div>
 
-      {/* TABLE */}
-      <div className="cb-tablecard">
-        <table className="cb-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Contact</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Table</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        {/* TABS inside navbar */}
+        <div className="cb-tabs-inside">
+          <button className="cb-chip">👤 Profile</button>
 
-          <tbody>
-            {filtered.map((b) => (
-              <tr key={b.id} className="cb-row">
+          <button
+            className={`cb-chip ${
+              activeTab === "bookings" ? "cb-chip--active" : ""
+            }`}
+            onClick={() => setActiveTab("bookings")}
+          >
+            🧾 Customer Booking
+          </button>
 
-                {/* Only cell click — NOT row click */}
-                <td onClick={() => openEdit(b)}>{b.name}</td>
-                <td onClick={() => openEdit(b)}>{b.contact}</td>
-                <td onClick={() => openEdit(b)}>{b.date}</td>
-                <td onClick={() => openEdit(b)}>{b.time}</td>
-                <td onClick={() => openEdit(b)}>{b.table}</td>
+          <button className="cb-chip">⏰ Shifts</button>
 
-                <td onClick={() => openEdit(b)}>
-                  <span className={`cb-badge ${b.status.toLowerCase()}`}>{b.status}</span>
-                </td>
+          <button
+            className={`cb-chip ${
+              activeTab === "staff" ? "cb-chip--active" : ""
+            }`}
+            onClick={() => setActiveTab("staff")}
+          >
+            👥 Staff
+          </button>
+        </div>
 
-                <td>
-                  <div className="cb-actions-col">
+        <div className="cb-brand-right-row">
+          <span className="cb-pill">📅 Nov 7, 2025</span>
+          <span className="cb-pill">Roshan</span>
+        </div>
+      </header>
 
-                    <button
-                      className="edit-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEdit(b);
-                      }}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      className="delete-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteBooking(b.id);
-                      }}
-                    >
-                      Delete
-                    </button>
-
-                  </div>
-                </td>
-
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* MODAL */}
-      {showModal && (
-        <div
-          className="cb-modal-backdrop"
-          onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
-        >
-          <div className="cb-modal">
-            <h2>{isEditing ? "Edit Booking" : "New Booking"}</h2>
-
-            <input type="text" placeholder="Name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+      {/* -------------------------
+          TAB 1: CUSTOMER BOOKINGS
+          ------------------------- */}
+      {activeTab === "bookings" && (
+        <>
+          {/* Search + Filter + Add Booking */}
+          <div className="cb-actionbar">
+            <input
+              type="text"
+              className="cb-search"
+              placeholder="Search bookings…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            <input type="text" placeholder="Contact"
-              value={formData.contact}
-              onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-            />
+            <button className="cb-add" onClick={openAdd}>
+              + Add New Booking
+            </button>
 
-            <input type="text" placeholder="Date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            />
-
-            <input type="text" placeholder="Time"
-              value={formData.time}
-              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-            />
-
-            <input type="text" placeholder="Table"
-              value={formData.table}
-              onChange={(e) => setFormData({ ...formData, table: e.target.value })}
-            />
-
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-            >
-              <option>Pending</option>
-              <option>Confirmed</option>
-              <option>Cancelled</option>
-            </select>
-
-            <div className="cb-modal-actions">
-              <button className="save-btn" onClick={saveBooking}>
-                {isEditing ? "Save Changes" : "Create"}
-              </button>
-              <button className="cancel-btn" onClick={() => setShowModal(false)}>
-                Cancel
-              </button>
+            <div className="cb-filterbar">
+              <label>Filter:</label>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option>All</option>
+                <option>Pending</option>
+                <option>Confirmed</option>
+                <option>Cancelled</option>
+              </select>
             </div>
-
           </div>
-        </div>
+
+          {/* BOOKINGS TABLE */}
+          <div className="cb-tablecard">
+            <table className="cb-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Contact</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Table</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filtered.map((b) => (
+                  <tr key={b.id} className="cb-row">
+                    <td onClick={() => openEdit(b)}>{b.name}</td>
+                    <td onClick={() => openEdit(b)}>{b.contact}</td>
+                    <td onClick={() => openEdit(b)}>{b.date}</td>
+                    <td onClick={() => openEdit(b)}>{b.time}</td>
+                    <td onClick={() => openEdit(b)}>{b.table}</td>
+
+                    <td onClick={() => openEdit(b)}>
+                      <span className={`cb-badge ${b.status.toLowerCase()}`}>
+                        {b.status}
+                      </span>
+                    </td>
+
+                    <td>
+                      <div className="cb-actions-col">
+                        <button
+                          className="edit-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEdit(b);
+                          }}
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          className="delete-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteBooking(b.id);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* BOOKINGS MODAL */}
+          {showModal && (
+            <div
+              className="cb-modal-backdrop"
+              onClick={(e) =>
+                e.target === e.currentTarget && setShowModal(false)
+              }
+            >
+              <div className="cb-modal">
+                <h2>{isEditing ? "Edit Booking" : "New Booking"}</h2>
+
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Contact"
+                  value={formData.contact}
+                  onChange={(e) =>
+                    setFormData({ ...formData, contact: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Date"
+                  value={formData.date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Time"
+                  value={formData.time}
+                  onChange={(e) =>
+                    setFormData({ ...formData, time: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Table"
+                  value={formData.table}
+                  onChange={(e) =>
+                    setFormData({ ...formData, table: e.target.value })
+                  }
+                />
+
+                <select
+                  value={formData.status}
+                  onChange={(e) =>
+                    setFormData({ ...formData, status: e.target.value })
+                  }
+                >
+                  <option>Pending</option>
+                  <option>Confirmed</option>
+                  <option>Cancelled</option>
+                </select>
+
+                <div className="cb-modal-actions">
+                  <button className="save-btn" onClick={saveBooking}>
+                    {isEditing ? "Save Changes" : "Create"}
+                  </button>
+                  <button
+                    className="cancel-btn"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
-      
+      {/* -------------------------
+          TAB 2: STAFF ORDERS
+          ------------------------- */}
+      {activeTab === "staff" && (
+        <>
+          {/* Search + Filter + Add Order */}
+          <div className="cb-actionbar">
+            <input
+              type="text"
+              className="cb-search"
+              placeholder="Search orders…"
+              value={orderSearch}
+              onChange={(e) => setOrderSearch(e.target.value)}
+            />
 
+            <button className="cb-add" onClick={openOrderAdd}>
+              + Add New Order
+            </button>
+
+            <div className="cb-filterbar">
+              <label>Filter:</label>
+              <select
+                value={orderFilter}
+                onChange={(e) => setOrderFilter(e.target.value)}
+              >
+                <option>All</option>
+                <option>Pending</option>
+                <option>Confirmed</option>
+                <option>Served</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+          </div>
+
+          {/* STAFF ORDERS TABLE */}
+          <div className="cb-tablecard">
+            <table className="cb-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Item Name</th>
+                  <th>Qty</th>
+                  <th>Table</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filteredOrders.map((o) => (
+                  <tr key={o.id} className="cb-row">
+                    <td>{o.id}</td>
+                    <td>{o.customer}</td>
+                    <td>{o.item}</td>
+                    <td>{o.qty}</td>
+                    <td>{o.table}</td>
+                    <td>
+                      <span className={`cb-badge ${o.status.toLowerCase()}`}>
+                        {o.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="cb-actions-col">
+                        <button
+                          className="edit-btn"
+                          onClick={() => openOrderEdit(o)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => deleteOrder(o.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* STAFF ORDER MODAL */}
+          {orderModalOpen && (
+            <div
+              className="cb-modal-backdrop"
+              onClick={(e) =>
+                e.target === e.currentTarget && setOrderModalOpen(false)
+              }
+            >
+              <div className="cb-modal">
+                <h2>{orderEditing ? "Edit Order" : "New Order"}</h2>
+
+                <input
+                  type="text"
+                  placeholder="Order ID (optional)"
+                  value={orderForm.id}
+                  onChange={(e) =>
+                    setOrderForm({
+                      ...orderForm,
+                      id: e.target.value ? Number(e.target.value) : "",
+                    })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Customer"
+                  value={orderForm.customer}
+                  onChange={(e) =>
+                    setOrderForm({ ...orderForm, customer: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Item Name"
+                  value={orderForm.item}
+                  onChange={(e) =>
+                    setOrderForm({ ...orderForm, item: e.target.value })
+                  }
+                />
+
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Quantity"
+                  value={orderForm.qty}
+                  onChange={(e) =>
+                    setOrderForm({
+                      ...orderForm,
+                      qty: Number(e.target.value),
+                    })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Table"
+                  value={orderForm.table}
+                  onChange={(e) =>
+                    setOrderForm({ ...orderForm, table: e.target.value })
+                  }
+                />
+
+                <select
+                  value={orderForm.status}
+                  onChange={(e) =>
+                    setOrderForm({ ...orderForm, status: e.target.value })
+                  }
+                >
+                  <option>Pending</option>
+                  <option>Confirmed</option>
+                  <option>Served</option>
+                  <option>Cancelled</option>
+                </select>
+
+                <div className="cb-modal-actions">
+                  <button className="save-btn" onClick={saveOrder}>
+                    {orderEditing ? "Save Changes" : "Create"}
+                  </button>
+                  <button
+                    className="cancel-btn"
+                    onClick={() => setOrderModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }
-
