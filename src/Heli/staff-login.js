@@ -1,95 +1,78 @@
+// src/Heli/StaffLogin.js
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import "./style.css";
 
-export default function Login({ setLoggedIn, setUserRole }) {
+export default function StaffLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Mock users
-  const mockUsers = [
-    { email: "heli@gmail.com", password: "Heli123", role: "Staff" },
-    { email: "sujal@gmail.com", password: "Sujal123", role: "Receptionist" },
-  ];
+  const handleLogin = async () => {
+    try {
+      setError("");
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-  const handleLogin = (role) => {
-    setError("");
+      const userRef = doc(db, "receptionists", userCred.user.uid);
+      const snap = await getDoc(userRef);
 
-    if (email.trim() === "" && password.trim() === "") {
-      setError("⚠️ Please enter your email and password.");
-    } else if (email.trim() === "") {
-      setError("⚠️ Please enter your email address.");
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("⚠️ Please enter a valid email address.");
-    } else if (password.trim() === "") {
-      setError("⚠️ Please enter your password.");
-    } else {
-      const user = mockUsers.find(
-        (u) => u.email === email && u.password === password && u.role === role
-      );
+      if (!snap.exists()) return setError("Access denied");
 
-      if (user) {
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("userRole", role);
-        setUserRole(role);
-        setLoggedIn(true);
-        navigate("/");
+      const role = snap.data().role;
+
+      if (role === "receptionist" || role === "staff") {
+        navigate("/receptionist");
       } else {
-        setError("⚠️ Incorrect email or password. Please try again.");
+        setError("Unknown role!");
       }
+
+    } catch (err) {
+      setError("Wrong login details!");
     }
   };
 
   return (
     <div className="login-page">
       <div className="login-card">
-        <h2 className="login-title">Staff Login</h2>
-        <p className="login-subtitle">Welcome back! Please enter your details.</p>
+        <h2 className="login-title">Sign In Here</h2>
+        <p className="login-subtitle">
+          Welcome back! Please enter your details.
+        </p>
 
         <div className="login-form">
           <label>Email</label>
-          <div className="input-group">
-            <input
-              type="email"
-              placeholder="Enter your work email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <input
+            type="email"
+            className="input-clean"
+            placeholder="Enter your work email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label>Password</label>
-          <div className="input-group">
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Link to="/staff/forgot" className="forgot-link">
-              Forgot Password?
-            </Link>
-          </div>
+          <input
+            type="password"
+            className="input-clean"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          {error && <p className="error-text">{error}</p>}
+          {error && <p className="error-login">{error}</p>}
 
-          <div className="button-row">
-            <button className="btn-primary" onClick={() => handleLogin("Staff")}>
-              Sign In as Staff
-            </button>
-            <button className="btn-primary" onClick={() => handleLogin("Receptionist")}>
-              Sign In as Receptionist
-            </button>
-          </div>
-
-          <div className="signup-link">
-            Don’t have an account?{" "}
-            <Link to="/signup" className="highlight-link">
-              Sign up here
-            </Link>
-          </div>
+          <button className="btn-primary login-btn" onClick={handleLogin}>
+            Sign In as Staff / Receptionist
+          </button>
         </div>
+
+        <p className="signup-link">
+          Don’t have an account?
+          <a className="highlight-link" href="/signup"> Sign up here</a>
+        </p>
       </div>
     </div>
   );

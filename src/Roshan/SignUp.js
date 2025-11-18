@@ -1,107 +1,89 @@
+// src/Roshan/SignUp.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import "./SignUp.css";
-import { Link } from "react-router-dom";
 
-const SignUp = () => {
-  const [role, setRole] = useState("");
+export default function SignUp() {
+  const navigate = useNavigate();
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
- 
-  const validateEmail = (value) => {
-    const generalEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validDomains = ["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"];
-    if (!generalEmailRegex.test(value)) return false;
- 
-    const domain = value.split("@")[1];
-    return validDomains.includes(domain.toLowerCase());
-  };
- 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
- 
-    if (value.trim() === "") {
-      setEmailError("⚠️ Email is required");
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      setEmailError("⚠️ Please enter a valid email format");
-    } else {
-      const domain = value.split("@")[1]?.toLowerCase();
-      if (!["gmail.com", "outlook.com", "hotmail.com", "yahoo.com"].includes(domain)) {
-        setEmailError("⚠️ Only valid email domains are accepted (e.g., Gmail)");
-      } else {
-        setEmailError("");
-      }
-    }
-  };
- 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      setEmailError("⚠️ Please use a valid email domain (e.g., @gmail.com)");
+  const [password, setPassword] = useState("");
+
+  const handleSignup = async () => {
+    if (!firstName || !lastName || !email || !password) {
+      alert("Please fill all fields");
       return;
     }
- 
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
+
+    try {
+      // 1️⃣ Create Firebase Auth account
+      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+      // 2️⃣ Save Firestore document in receptionists collection
+      await setDoc(doc(db, "receptionists", userCred.user.uid), {
+        firstName,
+        lastName,
+        email,
+        role: "receptionist",
+        uid: userCred.user.uid,
+      });
+
+      alert("Account created successfully!");
+      navigate("/staff-login");
+
+    } catch (error) {
+      console.log("Signup error:", error);
+      alert(error.message);
+    }
   };
- 
+
   return (
-    <div className="signup-container">
-      <div className="signup-box">
-        <h2>Create Your Account</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="row-inputs">
-            <input type="text" placeholder="First Name" required />
-            <input type="text" placeholder="Last Name" required />
+    <div className="login-page">
+      <div className="login-card">
+        <h2 className="login-title">Create Your Account</h2>
+
+        <div className="login-form">
+          <label>Name</label>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <input className="input-clean" placeholder="First Name"
+              value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <input className="input-clean" placeholder="Last Name"
+              value={lastName} onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <input
-            type="email"
-            placeholder="Work Email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
-          {emailError && <p className="error-text">{emailError}</p>}
- 
-          <input
-            type="password"
-            placeholder="Password"
-            required
-          />
- 
-          <div className="role-section">
-            <button
-              type="button"
-              className={`role-btn ${role === "staff" ? "active" : ""}`}
-              onClick={() => setRole("staff")}
-            >
-              Login as Staff
-            </button>
-            <button
-              type="button"
-              className={`role-btn ${role === "receptionist" ? "active" : ""}`}
-              onClick={() => setRole("receptionist")}
-            >
-              Login as Receptionist
-            </button>
+
+          <label>Work Email</label>
+          <input className="input-clean" type="email"
+            placeholder="Email" value={email}
+            onChange={(e) => setEmail(e.target.value)} />
+
+          <label>Password</label>
+          <div className="sl-pass-wrapper">
+            <input className="input-clean sl-pass-input"
+              type={passwordVisible ? "text" : "password"}
+              value={password} placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)} />
+            <span className="sl-show-btn"
+              onClick={() => setPasswordVisible(!passwordVisible)}>
+              {passwordVisible ? "Hide Password" : "Show Password"}
+            </span>
           </div>
- 
-          <button type="submit" className="submit-btn">
+
+          <button className="btn-primary login-btn" onClick={handleSignup}>
             Create Account
           </button>
-        </form>
- 
-        {isSubmitted && !emailError && (
-          <p className="success-message">✅ Account has been created successfully!</p>
-        )}
+        </div>
 
-        <p className="signin-link">
-            Already signed up? <Link to="/staff-login">Sign in</Link>
+        <p className="signup-link">
+          Already signed up?
+          <a className="highlight-link" href="/staff-login"> Sign in</a>
         </p>
       </div>
     </div>
   );
-};
- 
-export default SignUp;
+}

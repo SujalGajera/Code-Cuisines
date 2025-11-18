@@ -180,3 +180,57 @@
     flex-direction: column;
   }
 }
+.sl-pass-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sl-pass-input {
+  padding-right: 120px;
+}
+
+
+/* Fix spacing between first/last name row and next input */
+.sl-name-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;   /* <— reduce space */
+}
+
+.sl-name-row input {
+  flex: 1;
+}
+.name-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sl-pass-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sl-pass-input {
+  padding-right: 120px;
+}
+
+.sl-show-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: #c06b1b;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.input-clean {
+  border: 1px solid #e5d6d2 !important;
+  border-radius: 10px !important;
+  padding: 0.85rem 1rem !important;
+  font-size: 0.95rem;
+  width: 100%;
+}
