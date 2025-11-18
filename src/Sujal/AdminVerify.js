@@ -1,47 +1,63 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./AdminSignIn.css";
 
 export default function AdminVerify() {
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleVerify = (e) => {
     e.preventDefault();
-    if (code.trim().length === 6) {
+
+    // Example static check — replace with real Firebase or backend logic if needed
+    const correctCode = "123456";
+
+    if (code.trim() === "") {
+      setError("⚠️ Please enter the 6-digit code.");
+      return;
+    }
+
+    if (code === correctCode) {
       alert("✅ Verified successfully!");
-      navigate("/admin-dashboard");
+
+      // 🔒 Save verification flag so ProtectedRoute allows dashboard
+      localStorage.setItem("isAdminVerified", "true");
+
+      // ✅ Redirect to AdminOverview
+      navigate("/admin", { replace: true });
     } else {
-      alert("⚠️ Please enter a valid 6-digit code.");
+      setError("❌ Invalid code. Please try again.");
     }
   };
 
   return (
     <div className="admin-verify-page">
       <div className="admin-verify-card">
-        <h2 className="admin-verify-title">Verification Code</h2>
-        <p className="admin-verify-subtitle">Please enter the 6-digit code sent to your email.</p>
+        <h2>Verification Code</h2>
+        <p>Please enter the 6-digit code sent to your email.</p>
 
-        <form className="admin-verify-form" onSubmit={handleVerify}>
-          <label htmlFor="verifyCode">6-Digit Code</label>
-          <div className="input-group">
-            <input
-              type="text"
-              id="verifyCode"
-              placeholder="Enter code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              maxLength="6"
-            />
-          </div>
-          <button className="btn-primary" type="submit">
-            Verify
-          </button>
+        <form onSubmit={handleVerify}>
+          <label>6-Digit Code</label>
+          <input
+            type="text"
+            maxLength="6"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="Enter code"
+          />
+          {error && <p className="error-text">{error}</p>}
+
+          <button type="submit">Verify</button>
         </form>
 
-        <div className="back-link">
-          <Link to="/adminsignin">← Back</Link>
-        </div>
+        <button
+          onClick={() => navigate("/login/admin")}
+          className="back-link"
+          type="button"
+        >
+          ← Back
+        </button>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
 /* ===== COMMON STYLES (used by both Login & Verify) ===== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 :root {
   --brand: #a94c0a;
   --brand-light: #c35a0c;
@@ -8,14 +10,17 @@
   --bg-light: linear-gradient(180deg, #fdf8f6 0%, #fffaf8 100%);
 }
 
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", sans-serif;
   background: var(--bg-light);
+  font-weight: 500;
+  color: var(--ink);
 }
 
-/* ===== ADMIN LOGIN PAGE ===== */
+/* ===== ADMIN LOGIN + VERIFY PAGE ===== */
 .admin-login-page,
 .admin-verify-page {
   min-height: 100vh;
@@ -46,20 +51,24 @@ body, html {
 
 /* ===== TITLES ===== */
 .admin-login-title,
-.admin-verify-title {
+.admin-verify-title,
+.admin-login-card h2,
+.admin-verify-card h2 {
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   color: var(--ink);
   margin-bottom: 0.4rem;
   letter-spacing: 0.3px;
 }
 
 .admin-login-subtitle,
-.admin-verify-subtitle {
+.admin-verify-subtitle,
+.admin-verify-card p {
   color: var(--muted);
   font-size: 0.95rem;
   margin-bottom: 2rem;
-  line-height: 1.4;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 /* ===== FORM FIELDS ===== */
@@ -84,13 +93,14 @@ label {
 
 .input-group input {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1rem;
   border: 1px solid #e8e2df;
   border-radius: 10px;
   background-color: #fff;
   font-size: 0.95rem;
   transition: all 0.3s ease;
   color: #3c2c2c;
+  font-weight: 500;
 }
 
 .input-group input::placeholder {
@@ -114,8 +124,9 @@ label {
   text-align: center;
 }
 
-/* ===== BUTTON ===== */
-.btn-primary {
+/* ===== BUTTON (Sign In / Verify unified) ===== */
+.btn-primary,
+.admin-verify-form button[type="submit"] {
   width: 100%;
   background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
   color: #fff;
@@ -127,9 +138,12 @@ label {
   cursor: pointer;
   transition: all 0.25s ease;
   letter-spacing: 0.3px;
+  margin-top: 0.8rem;
+  font-family: "Poppins", sans-serif;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.admin-verify-form button[type="submit"]:hover {
   background: linear-gradient(180deg, var(--brand-hover) 0%, #b7540b 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(195, 90, 12, 0.35);
@@ -141,15 +155,26 @@ label {
   text-align: center;
 }
 
-.back-link a {
+.back-link a,
+.back-link,
+.admin-verify-form .back-link {
   color: var(--brand-light);
   font-weight: 600;
   text-decoration: none;
   font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-block;
+  background: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  padding: 0;
+  transition: color 0.2s ease;
 }
 
-.back-link a:hover {
+.back-link:hover,
+.admin-verify-form .back-link:hover {
   text-decoration: underline;
+  color: var(--brand-hover);
 }
 
 /* ===== PASSWORD FIELD WITH FORGOT LINK ===== */
@@ -188,7 +213,7 @@ label {
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 40px; /* space for the icon */
+  padding-right: 40px;
 }
 
 .toggle-password {
@@ -204,7 +229,6 @@ label {
 .toggle-password:hover {
   color: var(--brand-light);
 }
-
 
 /* ===== VERIFICATION CODE PAGE ===== */
 .admin-verify-form label {
@@ -231,4 +255,23 @@ label {
     padding: 2.2rem 1.6rem;
     max-width: 90%;
   }
+}
+
+/* Force Verify button styling */
+.admin-verify-form button,
+.admin-verify-form input[type="submit"],
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0.9rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  letter-spacing: 0.3px !important;
+  margin-top: 0.8rem !important;
+  font-family: "Poppins", sans-serif !important;
 }

@@ -1,0 +1,148 @@
+/* PAGE LAYOUT */
+.adm-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADINGS */
+.adm-h2 {
+  font-size: 22px;
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+.adm-h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* SUBTEXT */
+.adm-sub {
+  color: #777;
+  margin-top: 2px;
+}
+
+.adm-muted {
+  color: #9a9a9a;
+}
+
+/* SEARCH + HEADER ROW */
+.adm-list-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.adm-search {
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.adm-search input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+/* BUTTONS */
+.adm-right-btn {
+  background: #a94c0a;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.adm-right-btn:hover {
+  background: #d96a10;
+}
+
+/* CARDS */
+.adm-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 10px;
+}
+
+/* GRID */
+.adm-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+/* KPI BLOCKS */
+.adm-kpi {
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-kpi-title {
+  font-size: 14px;
+  color: #777;
+}
+
+.adm-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #a94c0a;
+}
+
+.adm-kpi-sub {
+  height: 1px;
+  background: #eee;
+  margin: 6px 0;
+}
+
+/* TABLES */
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.adm-table th, .adm-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+/* STATUS TAGS */
+.adm-chip {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chip-green { background: #e3f8e6; color: #2e8b57; }
+.chip-yellow { background: #fff5cc; color: #c49a00; }
+.chip-red { background: #ffe3e3; color: #b23a3a; }
+
+/* ACTION BUTTONS */
+.adm-actions .link {
+  background: none;
+  border: none;
+  color: #d06a00;
+  padding-right: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.link-danger {
+  color: #c0392b;
+}
+
+.adm-inp{
+  width:100%; padding:10px 12px; border:1px solid #efe7dc; border-radius:10px;
+  background:#fff; outline:none;
+}
+.adm-inp:focus{border-color:#ffd29a; box-shadow:0 0 0 3px rgba(255,179,71,.15)};
