@@ -1,21 +1,20 @@
 // Author: Roshan Dhakal
 // Date: November 2025
-// Description: Receptionist Dashboard (clean UI + bookings + staff orders + profile)
+// Description: Receptionist Dashboard (clean UI + bookings + staff orders + profile + shifts)
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import "./ReceptionistDashboard.css";
 
 export default function ReceptionistDashboard() {
   // -----------------------
   // TAB SELECTION
   // -----------------------
-  const [activeTab, setActiveTab] = useState("bookings"); // "profile" | "bookings" | "staff"
+  const [activeTab, setActiveTab] = useState("bookings"); // "profile" | "bookings" | "staff" | "shifts"
 
   // =======================
-  // 0) PROFILE (NEW)
+  // 0) PROFILE
   // =======================
 
-  // main saved profile (stored in localStorage)
   const [profile, setProfile] = useState(() => {
     const saved = localStorage.getItem("receptionProfile");
     return saved
@@ -25,21 +24,18 @@ export default function ReceptionistDashboard() {
           email: "roshandhakal788@gmail.com",
           phone: "021 000 0000",
           role: "Receptionist",
-          avatar: "", // base64 image string
+          avatar: "",
           skills: ["Front Counter", "Table Bookings"],
         };
   });
 
-  // draft profile used while editing on Profile tab
   const [profileDraft, setProfileDraft] = useState(profile);
   const [newSkill, setNewSkill] = useState("");
 
-  // keep localStorage in sync
   useEffect(() => {
     localStorage.setItem("receptionProfile", JSON.stringify(profile));
   }, [profile]);
 
-  // keep draft in sync if saved profile changes
   useEffect(() => {
     setProfileDraft(profile);
   }, [profile]);
@@ -102,14 +98,45 @@ export default function ReceptionistDashboard() {
   };
 
   // =======================
+  // HEADER DATE (CALENDAR)
+  // =======================
+
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const saved = localStorage.getItem("receptionDate");
+    return saved || "2025-11-07"; // default date
+  });
+
+  useEffect(() => {
+    localStorage.setItem("receptionDate", selectedDate);
+  }, [selectedDate]);
+
+  const dateInputRef = useRef(null);
+
+  const formatDateLabel = (iso) => {
+    if (!iso) return "Pick a date";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "Pick a date";
+    const options = { month: "short", day: "numeric", year: "numeric" };
+    return d.toLocaleDateString("en-US", options);
+  };
+
+  const openDatePicker = () => {
+    if (!dateInputRef.current) return;
+    // try showPicker (newer browsers), fall back to click
+    if (dateInputRef.current.showPicker) {
+      dateInputRef.current.showPicker();
+    } else {
+      dateInputRef.current.click();
+    }
+  };
+
+  // =======================
   // 1) CUSTOMER BOOKINGS
   // =======================
 
-  // Search + Filter state
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  // Load bookings from LocalStorage
   const [bookings, setBookings] = useState(() => {
     const saved = localStorage.getItem("bookings");
     return saved
@@ -154,16 +181,13 @@ export default function ReceptionistDashboard() {
         ];
   });
 
-  // Save bookings to LocalStorage
   useEffect(() => {
     localStorage.setItem("bookings", JSON.stringify(bookings));
   }, [bookings]);
 
-  // Modal control
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Form fields (bookings)
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -174,7 +198,6 @@ export default function ReceptionistDashboard() {
     status: "Pending",
   });
 
-  // Search + filter logic for bookings
   const filtered = useMemo(() => {
     const q = searchTerm.toLowerCase();
     return bookings.filter(
@@ -186,7 +209,6 @@ export default function ReceptionistDashboard() {
     );
   }, [searchTerm, filterStatus, bookings]);
 
-  // Add new booking
   const openAdd = () => {
     setIsEditing(false);
     setFormData({
@@ -201,14 +223,12 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  // Edit booking
   const openEdit = (b) => {
     setIsEditing(true);
     setFormData({ ...b });
     setShowModal(true);
   };
 
-  // Save booking
   const saveBooking = () => {
     if (
       !formData.name ||
@@ -232,7 +252,6 @@ export default function ReceptionistDashboard() {
     setShowModal(false);
   };
 
-  // Delete booking
   const deleteBooking = (id) => {
     if (window.confirm("Delete this booking?")) {
       setBookings((prev) => prev.filter((x) => x.id !== id));
@@ -265,7 +284,7 @@ export default function ReceptionistDashboard() {
             item: "Burger",
             qty: 1,
             table: "Table 5",
-            status: "Served", // keep Served
+            status: "Served",
           },
           {
             id: 3,
@@ -356,6 +375,119 @@ export default function ReceptionistDashboard() {
   };
 
   // =======================
+  // 3) SHIFTS
+  // =======================
+
+  const [shifts, setShifts] = useState(() => {
+    const saved = localStorage.getItem("receptionShifts");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            id: 1,
+            staff: "Roshan Dhakal",
+            role: "Receptionist",
+            date: "2025-11-07",
+            start: "09:00",
+            end: "17:00",
+            status: "Scheduled",
+          },
+          {
+            id: 2,
+            staff: "Alice Brown",
+            role: "Wait Staff",
+            date: "2025-11-07",
+            start: "12:00",
+            end: "20:00",
+            status: "Completed",
+          },
+          {
+            id: 3,
+            staff: "David Clark",
+            role: "Host",
+            date: "2025-11-08",
+            start: "10:00",
+            end: "18:00",
+            status: "Scheduled",
+          },
+        ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("receptionShifts", JSON.stringify(shifts));
+  }, [shifts]);
+
+  const [shiftFilter, setShiftFilter] = useState("All");
+  const [shiftModalOpen, setShiftModalOpen] = useState(false);
+  const [shiftEditing, setShiftEditing] = useState(false);
+  const [shiftForm, setShiftForm] = useState({
+    id: "",
+    staff: "",
+    role: "",
+    date: selectedDate,
+    start: "09:00",
+    end: "17:00",
+    status: "Scheduled",
+  });
+
+  const filteredShifts = useMemo(() => {
+    return shifts.filter(
+      (s) => shiftFilter === "All" || s.status === shiftFilter
+    );
+  }, [shifts, shiftFilter]);
+
+  const openShiftAdd = () => {
+    setShiftEditing(false);
+    setShiftForm({
+      id: "",
+      staff: profile.name || "Receptionist",
+      role: profile.role || "Receptionist",
+      date: selectedDate,
+      start: "09:00",
+      end: "17:00",
+      status: "Scheduled",
+    });
+    setShiftModalOpen(true);
+  };
+
+  const openShiftEdit = (shift) => {
+    setShiftEditing(true);
+    setShiftForm({ ...shift });
+    setShiftModalOpen(true);
+  };
+
+  const saveShift = () => {
+    if (
+      !shiftForm.staff ||
+      !shiftForm.role ||
+      !shiftForm.date ||
+      !shiftForm.start ||
+      !shiftForm.end
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    if (shiftEditing) {
+      setShifts((prev) =>
+        prev.map((s) => (s.id === shiftForm.id ? shiftForm : s))
+      );
+    } else {
+      const newId =
+        shiftForm.id ||
+        (shifts.length ? Math.max(...shifts.map((s) => s.id)) + 1 : 1);
+      setShifts((prev) => [{ ...shiftForm, id: newId }, ...prev]);
+    }
+    setShiftModalOpen(false);
+  };
+
+  const deleteShift = (id) => {
+    if (window.confirm("Delete this shift?")) {
+      setShifts((prev) => prev.filter((s) => s.id !== id));
+    }
+  };
+
+  // =======================
   // RENDER
   // =======================
 
@@ -390,7 +522,14 @@ export default function ReceptionistDashboard() {
             🧾 Customer Booking
           </button>
 
-          <button className="cb-chip">⏰ Shifts</button>
+          <button
+            className={`cb-chip ${
+              activeTab === "shifts" ? "cb-chip--active" : ""
+            }`}
+            onClick={() => setActiveTab("shifts")}
+          >
+            ⏰ Shifts
+          </button>
 
           <button
             className={`cb-chip ${
@@ -403,8 +542,32 @@ export default function ReceptionistDashboard() {
         </div>
 
         <div className="cb-brand-right-row">
-          <span className="cb-pill">📅 Nov 7, 2025</span>
-          <span className="cb-pill">Roshan</span>
+          {/* date pill with calendar */}
+          <span
+            className="cb-pill"
+            style={{ cursor: "pointer" }}
+            onClick={openDatePicker}
+          >
+            📅 {formatDateLabel(selectedDate)}
+          </span>
+
+          {/* hidden date input for native calendar */}
+          <input
+            type="date"
+            ref={dateInputRef}
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            style={{ display: "none" }}
+          />
+
+          {/* name pill that opens profile */}
+          <span
+            className="cb-pill"
+            style={{ cursor: "pointer" }}
+            onClick={() => setActiveTab("profile")}
+          >
+            {profile.name || "Receptionist"}
+          </span>
         </div>
       </header>
 
@@ -412,7 +575,10 @@ export default function ReceptionistDashboard() {
           TAB 0: PROFILE
           ------------------------- */}
       {activeTab === "profile" && (
-        <div className="cb-tablecard" style={{ maxWidth: 960, margin: "32px auto" }}>
+        <div
+          className="cb-tablecard"
+          style={{ maxWidth: 960, margin: "32px auto" }}
+        >
           <div
             style={{
               display: "flex",
@@ -701,7 +867,6 @@ export default function ReceptionistDashboard() {
           ------------------------- */}
       {activeTab === "bookings" && (
         <>
-          {/* Search + Filter + Add Booking */}
           <div className="cb-actionbar">
             <input
               type="text"
@@ -729,7 +894,6 @@ export default function ReceptionistDashboard() {
             </div>
           </div>
 
-          {/* BOOKINGS TABLE */}
           <div className="cb-tablecard">
             <table className="cb-table">
               <thead>
@@ -788,7 +952,6 @@ export default function ReceptionistDashboard() {
             </table>
           </div>
 
-          {/* BOOKINGS MODAL */}
           {showModal && (
             <div
               className="cb-modal-backdrop"
@@ -877,7 +1040,6 @@ export default function ReceptionistDashboard() {
           ------------------------- */}
       {activeTab === "staff" && (
         <>
-          {/* Search + Filter + Add Order */}
           <div className="cb-actionbar">
             <input
               type="text"
@@ -906,7 +1068,6 @@ export default function ReceptionistDashboard() {
             </div>
           </div>
 
-          {/* STAFF ORDERS TABLE */}
           <div className="cb-tablecard">
             <table className="cb-table">
               <thead>
@@ -956,7 +1117,6 @@ export default function ReceptionistDashboard() {
             </table>
           </div>
 
-          {/* STAFF ORDER MODAL */}
           {orderModalOpen && (
             <div
               className="cb-modal-backdrop"
@@ -1038,6 +1198,175 @@ export default function ReceptionistDashboard() {
                   <button
                     className="cancel-btn"
                     onClick={() => setOrderModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* -------------------------
+          TAB 3: SHIFTS
+          ------------------------- */}
+      {activeTab === "shifts" && (
+        <>
+          <div className="cb-actionbar">
+            <button className="cb-add" onClick={openShiftAdd}>
+              + Add New Shift
+            </button>
+
+            <div className="cb-filterbar">
+              <label>Filter:</label>
+              <select
+                value={shiftFilter}
+                onChange={(e) => setShiftFilter(e.target.value)}
+              >
+                <option>All</option>
+                <option>Scheduled</option>
+                <option>Completed</option>
+                <option>Off</option>
+                <option>Sick</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="cb-tablecard">
+            <table className="cb-table">
+              <thead>
+                <tr>
+                  <th>Shift ID</th>
+                  <th>Staff</th>
+                  <th>Role</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filteredShifts.map((s) => (
+                  <tr key={s.id} className="cb-row">
+                    <td>{s.id}</td>
+                    <td>{s.staff}</td>
+                    <td>{s.role}</td>
+                    <td>{formatDateLabel(s.date)}</td>
+                    <td>
+                      {s.start} – {s.end}
+                    </td>
+                    <td>
+                      <span className={`cb-badge ${s.status.toLowerCase()}`}>
+                        {s.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="cb-actions-col">
+                        <button
+                          className="edit-btn"
+                          onClick={() => openShiftEdit(s)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => deleteShift(s.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {shiftModalOpen && (
+            <div
+              className="cb-modal-backdrop"
+              onClick={(e) =>
+                e.target === e.currentTarget && setShiftModalOpen(false)
+              }
+            >
+              <div className="cb-modal">
+                <h2>{shiftEditing ? "Edit Shift" : "New Shift"}</h2>
+
+                <input
+                  type="text"
+                  placeholder="Shift ID (optional)"
+                  value={shiftForm.id}
+                  onChange={(e) =>
+                    setShiftForm({
+                      ...shiftForm,
+                      id: e.target.value ? Number(e.target.value) : "",
+                    })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Staff Name"
+                  value={shiftForm.staff}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, staff: e.target.value })
+                  }
+                />
+
+                <input
+                  type="text"
+                  placeholder="Role"
+                  value={shiftForm.role}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, role: e.target.value })
+                  }
+                />
+
+                <input
+                  type="date"
+                  value={shiftForm.date}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, date: e.target.value })
+                  }
+                />
+
+                <input
+                  type="time"
+                  value={shiftForm.start}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, start: e.target.value })
+                  }
+                />
+
+                <input
+                  type="time"
+                  value={shiftForm.end}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, end: e.target.value })
+                  }
+                />
+
+                <select
+                  value={shiftForm.status}
+                  onChange={(e) =>
+                    setShiftForm({ ...shiftForm, status: e.target.value })
+                  }
+                >
+                  <option>Scheduled</option>
+                  <option>Completed</option>
+                  <option>Off</option>
+                  <option>Sick</option>
+                </select>
+
+                <div className="cb-modal-actions">
+                  <button className="save-btn" onClick={saveShift}>
+                    {shiftEditing ? "Save Changes" : "Create"}
+                  </button>
+                  <button
+                    className="cancel-btn"
+                    onClick={() => setShiftModalOpen(false)}
                   >
                     Cancel
                   </button>
