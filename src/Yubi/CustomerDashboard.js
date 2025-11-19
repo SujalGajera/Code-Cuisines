@@ -205,18 +205,6 @@ function CustomerDashboard() {
           </button>
         </section>
 
-        {/* -------- FEEDBACK CARD ---------- */}
-        <section className="cd-card cd-feedback-card">
-          <h3>My Feedback</h3>
-          <p>Share your dining experience with us.</p>
-
-          <button
-            className="cd-btn-primary"
-            onClick={() => navigate("/customer/feedback")}
-          >
-            Give Feedback
-          </button>
-        </section>
 
         {showToast && <div className="cd-toast">Profile Updated Successfully!</div>}
       </main>
