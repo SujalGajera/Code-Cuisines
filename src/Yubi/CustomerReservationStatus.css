@@ -206,3 +206,47 @@
     font-size: 1.6rem;
   }
 }
+.back-btn:hover {
+  background: linear-gradient(90deg, #c35a0c, #ffd466);
+  box-shadow: 0 8px 20px rgba(169, 76, 10, 0.3);
+}
+.edit-form {
+  margin: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-edit {
+  margin-right: 8px;
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-delete {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}

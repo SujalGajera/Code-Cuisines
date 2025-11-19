@@ -1,0 +1,79 @@
+/* src/components/EditProfileModal.css */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+  z-index: 5000;
+}
+
+.modal {
+  width: 550px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 14px 45px rgba(0,0,0,0.12);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal h2 {
+  margin: 0 0 15px;
+  color: #b5460f;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.modal label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-top: 12px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 15px;
+}
+
+.modal input:focus {
+  border-color: #c94f17;
+  box-shadow: 0 0 0 3px rgba(201,79,23,0.12);
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel {
+  background: #f3f4f6;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.save {
+  background: #b5460f;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}

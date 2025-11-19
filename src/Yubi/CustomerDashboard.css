@@ -1,302 +1,308 @@
-/* Use the same site theme */
-:root {
-  --brand: #a94c0a;
-  --brand-200: #c35a0c;
-  --ink: #111;
-  --muted: #666;
-  --paper: #ffffff;
-  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --radius: 14px;
-}
+/* CustomerDashboard.css */
 
-/* === Base Layout === */
-.cd-dashboard {
-  display: flex;
+/* ===========================
+   MAIN WRAPPER
+=========================== */
+.cd-wrapper {
+  background: #f8f5f1;
   min-height: 100vh;
-  background: #f9f8f6;
-  color: var(--ink);
-  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-family: "Poppins", sans-serif;
+  color: #2b1a13;
 }
 
-/* === Sidebar === */
-.cd-sidebar {
-  background: #fff;
-  width: 230px;
-  box-shadow: var(--shadow);
+/* ===========================
+   TOP NAVBAR
+=========================== */
+.cd-navbar {
+  width: 100%;
+  background: #b5460f;   /* CHANGED — SAME AS LOGOUT */
+  padding: 15px 40px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
-  border-right: 1px solid #eee;
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.25);
 }
 
-.cd-logo-box {
-  margin-bottom: 2rem;
-}
-
-.cd-logo {
-  width: 120px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
-
-.cd-nav {
+.cd-nav-left {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cd-top-logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.cd-nav-left h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f6b400;
+}
+
+.cd-nav-links {
+  display: flex;
+  gap: 25px;
+  flex-wrap: nowrap;
+}
+
+.cd-nav-links button {
+  background: #b5460f;   /* SAME AS LOGOUT */
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.cd-nav-links button:hover,
+.cd-nav-links .active {
+  background: #cc5b22;  /* SAME HOVER AS LOGOUT */
+}
+
+/* 🔥 NEW — navbar button same as Logout */
+.cd-nav-btn {
+  background: #b5460f;   /* same colour as Logout */
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.cd-nav-btn:hover {
+  background: #cc5b22;   /* same hover as Logout */
+}
+
+.cd-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cd-logout-btn {
+  background: #b5460f;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.cd-logout-btn:hover {
+  background: #cc5b22;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
   flex-direction: column;
-  width: 100%;
-  gap: 0.6rem;
-}
-
-.cd-nav-item {
-  background: transparent;
-  border: none;
-  padding: 0.9rem 1rem;
-  text-align: left;
-  width: 100%;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--muted);
-  transition: 0.3s ease;
   cursor: pointer;
+  gap: 5px;
 }
 
-.cd-nav-item:hover {
-  background: #f6efe9;
-  color: var(--brand);
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #fff6e9;
 }
 
-.cd-nav-item.active {
-  background: var(--brand);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(169, 76, 10, 0.25);
-}
-
-.cd-logout {
-  margin-top: auto;
-  background: #f3e5db;
-  color: var(--brand);
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-.cd-logout:hover {
-  background: var(--brand-200);
-  color: #fff;
-}
-
-/* === Main Area === */
+/* ===========================
+   MAIN CONTENT
+=========================== */
 .cd-main {
-  flex: 1;
-  padding: 2.5rem 3rem;
-}
-
-.cd-header {
-  margin-bottom: 2rem;
+  padding: 40px 70px;
 }
 
 .cd-header h1 {
-  font-size: 1.8rem;
-  color: var(--brand);
+  font-size: 28px;
+  color: #2b1a13;
   font-weight: 700;
+  margin-bottom: 3px;
 }
 
 .cd-header p {
-  color: var(--muted);
-  font-size: 0.95rem;
+  color: #7a6a63;
+  margin-bottom: 25px;
 }
 
-/* === Card Styling === */
+/* ===========================
+   CARDS
+=========================== */
 .cd-card {
-  background: var(--paper);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.8rem 2rem;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.cd-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-}
-
-/* === Profile Card === */
+/* ===========================
+   PROFILE CARD
+=========================== */
 .cd-profile-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
+  gap: 25px;
+  align-items: flex-start;
 }
 
 .cd-avatar-box {
-  flex: 0 0 140px;
   text-align: center;
 }
 
 .cd-avatar {
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #f6efe9;
-  box-shadow: var(--shadow);
+  border: 4px solid #f6b400;
 }
 
 .cd-upload-btn {
-  display: inline-block;
-  margin-top: 0.8rem;
-  font-size: 0.85rem;
-  color: var(--brand);
-  font-weight: 600;
+  display: block;
+  margin-top: 10px;
+  background: #f6b400;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
   cursor: pointer;
-  background: #f6efe9;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+  color: #2b1a13;
+  font-weight: 600;
 }
 
 .cd-upload-btn input {
   display: none;
 }
 
+/* Profile Details */
 .cd-details {
   flex: 1;
 }
 
 .cd-details h3 {
-  color: var(--brand);
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
 .cd-details p {
-  color: var(--ink);
-  margin: 0.5rem 0;
-  font-size: 0.95rem;
+  font-size: 15px;
+  margin: 8px 0;
 }
 
-.cd-details strong {
-  color: var(--brand-200);
+.cd-details label {
+  font-weight: 600;
+  margin-top: 10px;
 }
 
-/* === Form Fields === */
 .cd-details input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1.5px solid #eee;
-  border-radius: 8px;
-  margin-bottom: 0.9rem;
-  font-size: 0.9rem;
-  transition: 0.3s;
+  background: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  margin-bottom: 10px;
 }
 
-.cd-details input:focus {
-  border-color: var(--brand-200);
-  box-shadow: 0 0 0 2px rgba(195, 90, 12, 0.15);
-  outline: none;
+/* Buttons */
+.cd-edit-btn,
+.cd-save-btn,
+.cd-cancel-btn,
+.cd-btn-primary {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.cd-edit-btn {
+  background: #d46a00;   /* SAME AS RESERVATION BUTTON */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.cd-edit-btn:hover {
+  background: #e67a12;   /* SAME HOVER AS RESERVATIONS */
+}
+
+.cd-save-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.cd-save-btn:hover {
+  background: #5ec761;
+}
+
+.cd-cancel-btn {
+  background: #b5460f;
+  color: white;
+}
+
+.cd-cancel-btn:hover {
+  background: #cc5b22;
 }
 
 .cd-btn-row {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 15px;
 }
 
-.cd-save-btn {
-  background: var(--brand);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1.4rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cd-save-btn:hover {
-  background: var(--brand-200);
-}
-
-.cd-cancel-btn {
-  background: #f6efe9;
-  color: var(--brand);
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1.4rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.cd-cancel-btn:hover {
-  background: #f3e5db;
-}
-
-.cd-edit-btn {
-  background: #f6efe9;
-  color: var(--brand);
-  border: none;
-  border-radius: 10px;
-  padding: 0.7rem 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-}
-
-.cd-edit-btn:hover {
-  background: var(--brand);
-  color: #fff;
-}
-
-/* === Reservation Section === */
+/* ===========================
+   RESERVATIONS CARD
+=========================== */
 .cd-res-card h3 {
-  font-size: 1.2rem;
-  color: var(--brand);
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
 }
 
 .cd-res-card p {
-  color: var(--muted);
-  margin-bottom: 1rem;
+  color: #555;
+  margin-bottom: 15px;
 }
 
 .cd-btn-primary {
-  background: var(--brand);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1.4rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: #d46a00;
+  color: white;
 }
 
 .cd-btn-primary:hover {
-  background: var(--brand-200);
+  background: #e67a12;
 }
 
-/* === Toast === */
+/* ===========================
+   TOAST SUCCESS MESSAGE
+=========================== */
 .cd-toast {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background: var(--brand);
-  color: #fff;
-  padding: 1rem 1.6rem;
-  border-radius: 8px;
+  background: #4caf50;
+  padding: 12px 22px;
+  border-radius: 10px;
+  color: white;
   font-weight: 600;
-  box-shadow: var(--shadow);
+  font-size: 16px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
   animation: fadeIn 0.3s ease;
 }
 
-/* === Animation === */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -308,27 +314,29 @@
   }
 }
 
-/* === Responsive === */
-@media (max-width: 900px) {
-  .cd-dashboard {
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .cd-nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: #2b1a13;
     flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    display: none;
   }
 
-  .cd-sidebar {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-right: none;
-    border-bottom: 1px solid #eee;
+  .cd-nav-links.active {
+    display: flex;
   }
 
-  .cd-nav {
-    flex-direction: row;
-    gap: 1rem;
-  }
-
-  .cd-main {
-    padding: 1.5rem;
+  .hamburger {
+    display: flex;
   }
 }
+
