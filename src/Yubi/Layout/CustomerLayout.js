@@ -9,9 +9,11 @@ import {
   FaHistory,
   FaCommentDots,
   FaSignOutAlt,
+  FaShoppingCart,
 } from "react-icons/fa";
 import "./CustomerLayout.css";
 import avatarImg from "../../images/avatar.png";
+import { useCart } from "../Cart/CartContext";
 
 const navItems = [
   {
@@ -56,6 +58,24 @@ function CustomerLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ===== CART CONTEXT =====
+  const cart = useCart() || {};
+  const items = cart.items || [];
+  const clearCart = cart.clearCart;
+  const removeFromCart = cart.removeFromCart;
+  const updateQuantity = cart.updateQuantity;
+
+  const [showCart, setShowCart] = useState(false);
+
+  const cartCount = items.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0
+  );
+  const cartTotal = items.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
+
   const [user, setUser] = useState({
     firstName: "John",
     lastName: "Doe",
@@ -82,12 +102,26 @@ function CustomerLayout({ children }) {
     navigate("/customer/login");
   };
 
-  // pass user down into pages
-  const enhancedChild = React.cloneElement(children, { user });
+  const handleOpenCart = () => {
+    console.log("Opening cart drawer"); // just to see it in console
+    setShowCart(true);
+  };
+
+  const handleCheckout = () => {
+    alert("Checkout complete (mock only).");
+    if (typeof clearCart === "function") clearCart();
+    setShowCart(false);
+  };
+
+  // safely inject "user" into children
+  const enhancedChildren = React.Children.map(children, (child) => {
+    if (!React.isValidElement(child)) return child;
+    return React.cloneElement(child, { user });
+  });
 
   return (
     <div className="cc-layout">
-      {/* Topbar */}
+      {/* ===== TOPBAR ===== */}
       <header className="cc-topbar">
         <div className="cc-topbar-left">
           <div className="cc-brand">
@@ -111,6 +145,18 @@ function CustomerLayout({ children }) {
         </div>
 
         <div className="cc-topbar-right">
+          {/* 🛒 CART BUTTON */}
+          <button
+            type="button"
+            className="cc-cart-btn"
+            onClick={handleOpenCart}
+          >
+            <FaShoppingCart className="cc-cart-icon" />
+            {cartCount > 0 && (
+              <span className="cc-cart-badge">{cartCount}</span>
+            )}
+          </button>
+
           <div className="cc-user-chip">
             <img
               src={avatarImg}
@@ -127,7 +173,7 @@ function CustomerLayout({ children }) {
         </div>
       </header>
 
-      {/* Shell */}
+      {/* ===== MAIN SHELL ===== */}
       <div className="cc-shell">
         <aside className="cc-sidebar">
           <div className="cc-sidebar-section">
@@ -152,8 +198,116 @@ function CustomerLayout({ children }) {
           </ul>
         </aside>
 
-        <main className="cc-main">{enhancedChild}</main>
+        <main className="cc-main">{enhancedChildren}</main>
       </div>
+
+      {/* ===== CART DRAWER ===== */}
+      {showCart && (
+        <div
+          className="cc-cart-overlay"
+          onClick={() => setShowCart(false)}
+        >
+          <div
+            className="cc-cart-drawer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="cc-cart-header">
+              <h2>Your Cart</h2>
+              <button
+                type="button"
+                className="cc-cart-close"
+                onClick={() => setShowCart(false)}
+              >
+                ×
+              </button>
+            </div>
+
+            {items.length === 0 ? (
+              <p className="cc-cart-empty">Your cart is empty.</p>
+            ) : (
+              <>
+                <ul className="cc-cart-items">
+                  {items.map((item) => (
+                    <li key={item.id} className="cc-cart-item">
+                      <div>
+                        <div className="cc-cart-item-name">
+                          {item.name}
+                        </div>
+                        <div className="cc-cart-item-meta">
+                          ${item.price.toFixed(2)}
+                          {item.quantity ? ` × ${item.quantity}` : ""}
+                        </div>
+                      </div>
+                      <div className="cc-cart-item-right">
+                        {typeof updateQuantity === "function" &&
+                          typeof item.quantity === "number" && (
+                            <div className="cc-cart-qty">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.id,
+                                    Math.max(1, item.quantity - 1)
+                                  )
+                                }
+                              >
+                                −
+                              </button>
+                              <span>{item.quantity}</span>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
+
+                        {typeof removeFromCart === "function" && (
+                          <button
+                            type="button"
+                            className="cc-cart-remove"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="cc-cart-footer">
+                  <div className="cc-cart-total-row">
+                    <span>Total</span>
+                    <span>${cartTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="cc-cart-footer-actions">
+                    {typeof clearCart === "function" && (
+                      <button
+                        type="button"
+                        className="cc-cart-clear"
+                        onClick={clearCart}
+                      >
+                        Clear Cart
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      className="cc-cart-checkout"
+                      onClick={handleCheckout}
+                    >
+                      Checkout
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

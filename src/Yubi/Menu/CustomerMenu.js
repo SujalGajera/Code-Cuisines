@@ -1,116 +1,153 @@
 // src/Yubi/Menu/CustomerMenu.js
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import CustomerLayout from "../Layout/CustomerLayout";
 import "./CustomerMenu.css";
+import { useCart } from "../Cart/CartContext";
 
-const ITEMS = [
+// Map each menu item id to an image URL.
+// You can replace these URLs with your own images later.
+const IMAGE_MAP = {
+  capuccino:
+    "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800",
+  croissant:
+    "https://images.pexels.com/photos/2135/bread-food-restaurant-people.jpg?auto=compress&cs=tinysrgb&w=800",
+  "avocado-toast":
+    "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "fresh-lemonade":
+    "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=800",
+  espresso:
+    "https://images.pexels.com/photos/748741/pexels-photo-748741.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "blueberry-muffin":
+    "https://images.pexels.com/photos/2903167/pexels-photo-2903167.jpeg?auto=compress&cs=tinysrgb&w=800",
+};
+
+const MENU_ITEMS = [
   {
-    id: 1,
+    id: "capuccino",
     name: "Cappuccino",
-    description: "Rich espresso with steamed milk",
+    category: "Coffee",
     price: 4.5,
-    category: "Coffee",
+    description: "Rich espresso with steamed milk",
   },
   {
-    id: 2,
+    id: "croissant",
     name: "Croissant",
-    description: "Buttery, flaky French pastry",
+    category: "Pastry",
     price: 3.5,
-    category: "Pastry",
+    description: "Buttery, flaky French pastry",
   },
   {
-    id: 3,
+    id: "avocado-toast",
     name: "Avocado Toast",
-    description: "Fresh avocado on sourdough",
-    price: 8.5,
     category: "Snacks",
+    price: 8.5,
+    description: "Fresh avocado on sourdough",
   },
   {
-    id: 4,
+    id: "fresh-lemonade",
     name: "Fresh Lemonade",
-    description: "Refreshing house-made lemonade",
-    price: 3.0,
     category: "Drinks",
-  },
-  {
-    id: 5,
-    name: "Espresso",
-    description: "Classic, intense espresso shot",
     price: 3.0,
-    category: "Coffee",
+    description: "Refreshing lemon drink",
   },
   {
-    id: 6,
+    id: "espresso",
+    name: "Espresso",
+    category: "Coffee",
+    price: 3.0,
+    description: "Strong and bold shot",
+  },
+  {
+    id: "blueberry-muffin",
     name: "Blueberry Muffin",
-    description: "Soft muffin with fresh blueberries",
-    price: 4.0,
     category: "Pastry",
+    price: 4.0,
+    description: "Soft muffin with blueberries",
   },
 ];
 
-const CATEGORIES = ["All Items", "Coffee", "Pastry", "Snacks", "Drinks"];
+const FILTERS = ["All Items", "Coffee", "Pastry", "Snacks", "Drinks"];
 
 function CustomerMenu() {
-  const [activeCategory, setActiveCategory] = useState("All Items");
+  const { addToCart } = useCart();
+  const [activeFilter, setActiveFilter] = useState("All Items");
+  const [toast, setToast] = useState("");
 
   const filteredItems = useMemo(() => {
-    if (activeCategory === "All Items") return ITEMS;
-    return ITEMS.filter((i) => i.category === activeCategory);
-  }, [activeCategory]);
+    if (activeFilter === "All Items") return MENU_ITEMS;
+    return MENU_ITEMS.filter((item) => item.category === activeFilter);
+  }, [activeFilter]);
 
-  const handleAddToCart = (item) => {
-    alert(`Added ${item.name} to cart (mock only).`);
+  const handleAdd = (item) => {
+    addToCart({ id: item.id, name: item.name, price: item.price });
+    setToast(`${item.name} added to cart`);
+    setTimeout(() => setToast(""), 2000);
   };
 
   return (
     <CustomerLayout>
       <div className="cc-menu-page">
-        <header className="cc-menu-header">
-          <h1 className="cc-page-title">Menu</h1>
-          <p className="cc-page-subtitle">
-            Browse our delicious offerings and add them to your cart.
-          </p>
-        </header>
+        <div className="cc-menu-header">
+          <div>
+            <h1 className="cc-page-title">Menu</h1>
+            <p className="cc-page-subtitle">Browse our delicious offerings.</p>
+          </div>
+        </div>
 
-        <div className="cc-menu-tabs">
-          {CATEGORIES.map((cat) => (
+        {/* Filters */}
+        <div className="cc-menu-filters">
+          {FILTERS.map((f) => (
             <button
-              key={cat}
-              className={`cc-menu-tab ${
-                activeCategory === cat ? "cc-menu-tab-active" : ""
+              key={f}
+              type="button"
+              className={`cc-menu-filter-btn ${
+                activeFilter === f ? "cc-menu-filter-btn-active" : ""
               }`}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => setActiveFilter(f)}
             >
-              {cat}
+              {f}
             </button>
           ))}
         </div>
 
-        <section className="cc-menu-grid">
-          {filteredItems.map((item) => (
-            <article key={item.id} className="cc-card cc-menu-card">
-              <div className="cc-menu-image-placeholder" />
-              <div className="cc-menu-main">
-                <div className="cc-menu-header-row">
-                  <h2 className="cc-menu-item-name">{item.name}</h2>
-                  <span className="cc-menu-price">
-                    ${item.price.toFixed(2)}
-                  </span>
-                </div>
-                <p className="cc-menu-desc">{item.description}</p>
-              </div>
+        {/* Grid */}
+        <div className="cc-menu-grid">
+          {filteredItems.map((item) => {
+            const imgSrc = IMAGE_MAP[item.id];
 
-              <button
-                className="cc-menu-add-btn"
-                type="button"
-                onClick={() => handleAddToCart(item)}
-              >
-                <span className="cc-menu-add-icon">🛒</span>
-                <span>Add to Cart</span>
-              </button>
-            </article>
-          ))}
-        </section>
+            return (
+              <article key={item.id} className="cc-card cc-menu-card">
+                <div
+                  className="cc-menu-card-image"
+                  style={
+                    imgSrc
+                      ? { backgroundImage: `url(${imgSrc})` }
+                      : undefined
+                  }
+                  aria-hidden="true"
+                />
+                <div className="cc-menu-card-body">
+                  <div className="cc-menu-card-top">
+                    <h3 className="cc-menu-card-title">{item.name}</h3>
+                    <span className="cc-menu-card-price">
+                      ${item.price.toFixed(2)}
+                    </span>
+                  </div>
+                  <p className="cc-menu-card-desc">{item.description}</p>
+                  <button
+                    type="button"
+                    className="cc-menu-add-btn"
+                    onClick={() => handleAdd(item)}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        {toast && <div className="cc-menu-toast">{toast}</div>}
       </div>
     </CustomerLayout>
   );

@@ -30,7 +30,8 @@
   color: var(--cc-text);
 }
 
-/* Topbar */
+/* ───────── Topbar ───────── */
+
 .cc-topbar {
   position: sticky;
   top: 0;
@@ -51,6 +52,7 @@
 }
 
 /* Brand */
+
 .cc-brand {
   display: flex;
   align-items: center;
@@ -73,6 +75,7 @@
 }
 
 /* Top nav links */
+
 .cc-topnav-links {
   display: flex;
   align-items: center;
@@ -91,6 +94,7 @@
 }
 
 /* Topbar right */
+
 .cc-topbar-right {
   display: flex;
   align-items: center;
@@ -119,6 +123,7 @@
 }
 
 /* Logout button */
+
 .cc-logout-btn {
   display: inline-flex;
   align-items: center;
@@ -144,7 +149,8 @@
   font-size: 0.9rem;
 }
 
-/* Shell */
+/* ───────── Shell ───────── */
+
 .cc-shell {
   display: flex;
   padding: 1.75rem 3rem 3rem;
@@ -152,6 +158,7 @@
 }
 
 /* Sidebar */
+
 .cc-sidebar {
   width: 230px;
   background: #f7eee5;
@@ -211,7 +218,8 @@
   min-width: 0;
 }
 
-/* reusable helpers */
+/* Reusable helpers */
+
 .cc-card {
   background: var(--cc-paper);
   border-radius: var(--cc-radius-md);
@@ -244,7 +252,8 @@
   color: #4b5563;
 }
 
-/* responsive */
+/* ───────── Responsive ───────── */
+
 @media (max-width: 1024px) {
   .cc-topbar {
     padding: 0 1.5rem;
@@ -307,4 +316,274 @@
   .cc-user-chip {
     padding-inline: 0.4rem;
   }
+}
+
+/* ==================================================================
+   CART ICON (TOPBAR)
+   ================================================================== */
+
+.cc-cart-btn {
+  position: relative;
+  border: none;
+  outline: none;
+  background: transparent;
+  margin-right: 0.5rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cc-cart-icon {
+  font-size: 1.25rem;
+  color: #f97316;
+}
+
+.cc-cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  min-width: 18px;
+  padding: 0 6px;
+  height: 18px;
+  border-radius: 999px;
+  background: #f97316;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================================================================
+   CART DRAWER & CHECKOUT
+   Works with:
+   - .cc-cart-overlay OR .cc-cart-backdrop
+   - .cc-cart-items OR .cc-cart-body
+   - .cc-cart-clear / .cc-cart-clear-btn
+   - .cc-cart-checkout / .cc-cart-checkout-btn
+   - .cc-cart-close / .cc-cart-close-btn
+   ================================================================== */
+
+/* Overlay / Backdrop */
+.cc-cart-overlay,
+.cc-cart-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 60;
+}
+
+/* Drawer panel */
+.cc-cart-drawer {
+  width: 380px;
+  max-width: 90vw;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -16px 0 32px rgba(15, 23, 42, 0.18);
+}
+
+/* Header */
+.cc-cart-header {
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cc-cart-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cc-cart-header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.cc-cart-close,
+.cc-cart-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.cc-cart-close:hover,
+.cc-cart-close-btn:hover {
+  color: #111827;
+}
+
+/* Body / Items container */
+.cc-cart-items,
+.cc-cart-body {
+  padding: 1rem 1.75rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.cc-cart-empty {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* List of items (if using <ul>) */
+.cc-cart-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Single cart item */
+.cc-cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* Left side: thumbnail + name/price */
+.cc-cart-item-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cc-cart-item-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #fff7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.cc-cart-item-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.cc-cart-item-meta,
+.cc-cart-item-price {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Right side: qty + remove */
+.cc-cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cc-cart-qty {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.cc-cart-qty button {
+  border: none;
+  background: #f9fafb;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.cc-cart-qty span {
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+}
+
+.cc-cart-remove {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #ef4444;
+}
+
+/* Footer & summary */
+.cc-cart-footer {
+  padding: 1.25rem 1.75rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.cc-cart-summary-row,
+.cc-cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #4b5563;
+}
+
+.cc-cart-summary-total {
+  margin-top: 0.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cc-cart-footer-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* Buttons (Clear + Checkout) */
+
+.cc-cart-clear,
+.cc-cart-clear-btn,
+.cc-cart-checkout,
+.cc-cart-checkout-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  height: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cc-cart-clear,
+.cc-cart-clear-btn {
+  background: #f9fafb;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.cc-cart-checkout,
+.cc-cart-checkout-btn {
+  background: #f97316;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(248, 113, 22, 0.4);
+}
+
+.cc-cart-checkout:disabled,
+.cc-cart-clear:disabled,
+.cc-cart-checkout-btn:disabled,
+.cc-cart-clear-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  box-shadow: none;
 }
