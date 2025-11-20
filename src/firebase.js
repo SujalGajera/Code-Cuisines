@@ -1,6 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+// src/firebase.js
+// Replace with your real Firebase config if you want to use Firebase.
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZHpFWX2AQxsB7ib777pNxh_3QTJJm3Kg",
@@ -11,7 +10,6 @@ const firebaseConfig = {
   appId: "1:825079536627:web:96a87fb3b30c8318a95086"
 };
 
-const app = initializeApp(firebaseConfig);
-
-export const auth = getAuth(app);   // ✅ Add this
-export const db = getFirestore(app);
+// example init (commented so it doesn't break if not installed)
+// import { initializeApp } from "firebase/app";
+// export const firebaseApp = initializeApp(firebaseConfig);

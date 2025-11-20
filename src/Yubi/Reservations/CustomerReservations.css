@@ -1,0 +1,180 @@
+/* src/Yubi/Reservations/CustomerReservations.css */
+
+.cc-res-page {
+  width: 100%;
+}
+
+.cc-res-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.6rem;
+}
+
+.cc-res-new-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--cc-brand);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(248, 113, 22, 0.25);
+}
+
+.cc-res-new-btn:hover {
+  background: var(--cc-brand-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(248, 113, 22, 0.35);
+}
+
+.cc-res-new-icon {
+  font-size: 1rem;
+}
+
+.cc-res-section {
+  margin-bottom: 1.8rem;
+}
+
+.cc-res-section-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
+.cc-res-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.2rem;
+}
+
+.cc-res-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.2rem 1.5rem 1.15rem;
+  border-radius: 18px;
+}
+
+.cc-res-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cc-res-date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.cc-res-date-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: var(--cc-brand-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-res-date-icon-muted {
+  background: #f3f4f6;
+}
+
+.cc-res-date-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* details */
+.cc-res-details {
+  list-style: none;
+  margin: 0.4rem 0 0.4rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cc-res-details li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.cc-res-details-muted li {
+  color: #9ca3af;
+}
+
+.cc-res-detail-icon {
+  font-size: 0.9rem;
+}
+
+/* note */
+.cc-res-note-row {
+  margin-top: 0.4rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid #f3e7dc;
+  font-size: 0.82rem;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.cc-res-note-label {
+  font-weight: 600;
+  color: #9b5a2a;
+}
+
+.cc-res-note-text {
+  color: #6b7280;
+}
+
+/* actions */
+.cc-res-actions {
+  margin-top: 0.9rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.cc-res-action-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #f97316;
+  background: #ffffff;
+  color: #f97316;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+}
+
+.cc-res-action-btn-danger {
+  color: #dc2626;
+}
+
+.cc-res-card-muted {
+  background: #fbf9f5;
+}
+
+.cc-res-card-muted .cc-res-date-text {
+  color: #6b7280;
+}
+
+@media (max-width: 900px) {
+  .cc-res-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .cc-res-new-btn {
+    align-self: flex-end;
+  }
+}

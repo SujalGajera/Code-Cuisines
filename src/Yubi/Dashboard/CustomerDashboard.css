@@ -1,0 +1,108 @@
+/* src/Yubi/Dashboard/CustomerDashboard.css */
+
+.cc-dashboard-header {
+  margin-bottom: 1.5rem;
+}
+
+.cc-page-title {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cc-page-subtitle {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  color: var(--cc-muted);
+}
+
+/* metrics */
+.cc-dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.75rem;
+}
+
+.cc-dashboard-metric-card {
+  background: var(--cc-paper);
+  border-radius: var(--cc-radius-md);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--cc-shadow-soft);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cc-metric-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  background: var(--cc-brand-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-metric-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cc-metric-label {
+  font-size: 0.8rem;
+  color: var(--cc-muted);
+}
+
+/* activity */
+.cc-dashboard-activity-card h2 {
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+}
+
+.cc-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.cc-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cc-activity-icon-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #e5f5ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.cc-activity-main {
+  flex: 1;
+}
+
+.cc-activity-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.cc-activity-meta {
+  font-size: 0.8rem;
+  color: var(--cc-muted);
+}
+
+@media (max-width: 640px) {
+  .cc-dashboard-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+}

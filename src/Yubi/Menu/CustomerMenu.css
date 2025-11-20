@@ -1,0 +1,91 @@
+/* src/Yubi/Menu/CustomerMenu.css */
+
+.cc-menu-header {
+  margin-bottom: 1.2rem;
+}
+
+.cc-menu-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1.4rem;
+}
+
+.cc-menu-tab {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.cc-menu-tab-active {
+  background: var(--cc-brand);
+  border-color: var(--cc-brand);
+  color: #ffffff;
+}
+
+.cc-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.cc-menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-bottom: 1rem;
+}
+
+.cc-menu-image-placeholder {
+  height: 120px;
+  border-radius: 16px;
+  background: #f5eee6;
+}
+
+.cc-menu-header-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cc-menu-item-name {
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.cc-menu-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f97316;
+}
+
+.cc-menu-desc {
+  font-size: 0.86rem;
+  color: var(--cc-muted);
+}
+
+.cc-menu-add-btn {
+  margin-top: auto;
+  width: 100%;
+  border-radius: 999px;
+  border: none;
+  padding: 0.55rem 1rem;
+  background: var(--cc-brand);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.cc-menu-add-btn:hover {
+  background: var(--cc-brand-dark);
+  box-shadow: 0 14px 30px rgba(248, 113, 22, 0.3);
+  transform: translateY(-1px);
+}

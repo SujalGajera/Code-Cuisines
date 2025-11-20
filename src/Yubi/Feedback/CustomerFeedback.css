@@ -1,0 +1,113 @@
+/* src/Yubi/Feedback/CustomerFeedback.css */
+
+.cc-feedback-header {
+  margin-bottom: 1.5rem;
+}
+
+.cc-feedback-form-card {
+  margin-bottom: 1.8rem;
+}
+
+.cc-feedback-form-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.8rem;
+}
+
+.cc-feedback-stars {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.cc-star {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #e5e7eb;
+}
+
+.cc-star-filled {
+  color: #f59e0b;
+}
+
+.cc-feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cc-feedback-form .cc-form-field span {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.cc-feedback-form textarea {
+  margin-top: 0.35rem;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #fdfbf8;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.cc-feedback-form textarea:focus {
+  border-color: var(--cc-brand);
+  box-shadow: 0 0 0 1px rgba(248, 113, 22, 0.4);
+  background: #ffffff;
+}
+
+.cc-feedback-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cc-feedback-list-section {
+  margin-top: 0.4rem;
+}
+
+.cc-feedback-list-title {
+  font-size: 1.02rem;
+  margin-bottom: 0.9rem;
+}
+
+.cc-feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cc-feedback-item {
+  padding: 1rem 1.3rem;
+}
+
+.cc-feedback-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.cc-feedback-stars-small {
+  display: flex;
+  gap: 0.12rem;
+}
+
+.cc-star-small {
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
+.cc-star-small-filled {
+  color: #f59e0b;
+}
+
+.cc-feedback-date {
+  font-size: 0.78rem;
+  color: var(--cc-muted);
+}
+
+.cc-feedback-message {
+  font-size: 0.9rem;
+}

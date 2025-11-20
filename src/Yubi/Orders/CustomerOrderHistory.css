@@ -1,0 +1,52 @@
+/* src/Yubi/Orders/CustomerOrderHistory.css */
+
+.cc-orders-header {
+  margin-bottom: 1.5rem;
+}
+
+.cc-orders-table-wrap {
+  padding: 1.1rem 1.4rem;
+}
+
+.cc-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.cc-orders-table thead tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cc-orders-table th,
+.cc-orders-table td {
+  text-align: left;
+  padding: 0.65rem 0.4rem;
+}
+
+.cc-orders-table th {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cc-muted);
+}
+
+.cc-orders-table tbody tr:hover {
+  background: #fff7f0;
+}
+
+.cc-link-btn {
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: var(--cc-brand-dark);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .cc-orders-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

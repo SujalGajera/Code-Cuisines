@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+/* src/App.css */
+/* mostly empty – layout styling lives in component css files */
+
+.app-root {
+  min-height: 100vh;
+}
