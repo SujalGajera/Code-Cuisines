@@ -98,12 +98,12 @@ export default function ReceptionistDashboard() {
   };
 
   // =======================
-  // HEADER DATE (CALENDAR)
+  // HEADER DATE
   // =======================
 
   const [selectedDate, setSelectedDate] = useState(() => {
     const saved = localStorage.getItem("receptionDate");
-    return saved || "2025-11-07"; // default date
+    return saved || "2025-11-07";
   });
 
   useEffect(() => {
@@ -122,7 +122,6 @@ export default function ReceptionistDashboard() {
 
   const openDatePicker = () => {
     if (!dateInputRef.current) return;
-    // try showPicker (newer browsers), fall back to click
     if (dateInputRef.current.showPicker) {
       dateInputRef.current.showPicker();
     } else {
@@ -560,7 +559,7 @@ export default function ReceptionistDashboard() {
             style={{ display: "none" }}
           />
 
-          {/* name pill that opens profile */}
+          {/* name pill */}
           <span
             className="cb-pill"
             style={{ cursor: "pointer" }}
@@ -568,12 +567,31 @@ export default function ReceptionistDashboard() {
           >
             {profile.name || "Receptionist"}
           </span>
+
+          {/* 🔹 NEW LOGOUT BUTTON 🔹 */}
+          <button
+            className="cb-pill"
+            style={{
+              marginLeft: "8px",
+              background: "#9b4a0f",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              padding: "0 14px",
+              fontSize: "14px",
+              borderRadius: "20px",
+            }}
+            onClick={() => {
+              localStorage.clear();
+              window.location.href = "/";
+            }}
+          >
+            Logout
+          </button>
         </div>
       </header>
 
-      {/* -------------------------
-          TAB 0: PROFILE
-          ------------------------- */}
+      {/* PROFILE */}
       {activeTab === "profile" && (
         <div
           className="cb-tablecard"
@@ -587,7 +605,7 @@ export default function ReceptionistDashboard() {
               flexWrap: "wrap",
             }}
           >
-            {/* Avatar + change photo */}
+            {/* Avatar */}
             <div style={{ minWidth: 180, textAlign: "center" }}>
               <div
                 style={{
@@ -635,7 +653,7 @@ export default function ReceptionistDashboard() {
               </label>
             </div>
 
-            {/* Main profile form */}
+            {/* Profile form */}
             <div style={{ flex: 1, minWidth: 260 }}>
               <h2
                 style={{
@@ -744,7 +762,7 @@ export default function ReceptionistDashboard() {
                 </div>
               </div>
 
-              {/* Skills / responsibilities */}
+              {/* Skills */}
               <div style={{ marginTop: 24 }}>
                 <label
                   style={{
@@ -837,7 +855,7 @@ export default function ReceptionistDashboard() {
                 </div>
               </div>
 
-              {/* Actions */}
+              {/* Buttons */}
               <div
                 className="cb-modal-actions"
                 style={{ marginTop: 28, justifyContent: "flex-end" }}
@@ -862,9 +880,7 @@ export default function ReceptionistDashboard() {
         </div>
       )}
 
-      {/* -------------------------
-          TAB 1: CUSTOMER BOOKINGS
-          ------------------------- */}
+      {/* BOOKINGS */}
       {activeTab === "bookings" && (
         <>
           <div className="cb-actionbar">
@@ -1035,9 +1051,7 @@ export default function ReceptionistDashboard() {
         </>
       )}
 
-      {/* -------------------------
-          TAB 2: STAFF ORDERS
-          ------------------------- */}
+      {/* STAFF */}
       {activeTab === "staff" && (
         <>
           <div className="cb-actionbar">
@@ -1208,9 +1222,7 @@ export default function ReceptionistDashboard() {
         </>
       )}
 
-      {/* -------------------------
-          TAB 3: SHIFTS
-          ------------------------- */}
+      {/* SHIFTS */}
       {activeTab === "shifts" && (
         <>
           <div className="cb-actionbar">
