@@ -1032,6 +1032,8 @@ export default function ReceptionistDashboard() {
                   <option>Pending</option>
                   <option>Confirmed</option>
                   <option>Cancelled</option>
+                  <option>Fulfilled</option>
+
                 </select>
 
                 <div className="cb-modal-actions">
