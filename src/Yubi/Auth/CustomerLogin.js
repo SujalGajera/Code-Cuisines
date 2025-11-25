@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CustomerLogin.css";
+import "./login.css";
 
 function CustomerLogin() {
   const navigate = useNavigate();
@@ -13,26 +13,25 @@ function CustomerLogin() {
     const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
     const matchedUser = users.find(
-      (user) => user.email === email && user.password === password
+      (u) => u.email === email && u.password === password
     );
 
     if (matchedUser) {
-      alert(`✅ Welcome back, ${matchedUser.firstName}!`);
-      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+      alert(`Welcome back, ${matchedUser.firstName}!`);
+      localStorage.setItem("currentCustomer", JSON.stringify(matchedUser));
       navigate("/customer/dashboard");
     } else {
-      alert("❌ Invalid email or password. Please try again or register.");
+      alert("Invalid email or password.");
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2 style={{ color: "#111" }}>Welcome Back</h2>
+        <h2>Welcome Back</h2>
         <p>Access your profile and reservations</p>
 
         <form onSubmit={handleLogin}>
-          {/* Email */}
           <label>Email Address</label>
           <input
             type="email"
@@ -42,25 +41,9 @@ function CustomerLogin() {
             required
           />
 
-          {/* Password + Forgot link */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <label style={{ margin: 0 }}>Password</label>
-            <span
-              onClick={() => navigate("/customer/forgot-password")}
-              style={{
-                color: "#a94c0a",
-                cursor: "pointer",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-              }}
-            >
+          <div className="login-header-row">
+            <label>Password</label>
+            <span onClick={() => navigate("/customer/forgot-password")}>
               Forgot password?
             </span>
           </div>
@@ -73,14 +56,12 @@ function CustomerLogin() {
             required
           />
 
-          {/* Button */}
-          <button type="submit" className="login-btn">
+          <button className="login-btn" type="submit">
             Sign In
           </button>
 
-          {/* Register link */}
           <p className="link-prompt">
-            Not yet registered?{" "}
+            Not yet registered?
             <span onClick={() => navigate("/customer/register")}>
               Sign up here
             </span>
