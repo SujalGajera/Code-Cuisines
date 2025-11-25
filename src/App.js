@@ -32,6 +32,7 @@ import CustomerForgot from "./Yubi/ForgotPassword";
 import StaffLogin from "./Heli/staff-login";
 import StaffForgot from "./Heli/ForgotPassword";
 import SignUp from "./Roshan/SignUp";
+import ReceptionistDahboard from "./Roshan/ReceptionistDashboard";
 
 // Auth / role context + protected route
 import { AdminProvider } from "./Sujal/admin/AdminContext";
@@ -111,6 +112,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/staff-login" element={<StaffLogin />} />
           <Route path="/staff/forgot" element={<StaffForgot />} />
+          <Route path="/receptionist" element={<ReceptionistDahboard />} />
 
           {/* Catch-all */}
           <Route path="*" element={<Navigate to="/" replace />} />
