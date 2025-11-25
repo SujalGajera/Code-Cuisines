@@ -10,6 +10,7 @@ export default function StaffLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
@@ -29,7 +30,6 @@ export default function StaffLogin() {
       } else {
         setError("Unknown role!");
       }
-
     } catch (err) {
       setError("Wrong login details!");
     }
@@ -54,13 +54,35 @@ export default function StaffLogin() {
           />
 
           <label>Password</label>
-          <input
-            type="password"
-            className="input-clean"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              className="input-clean"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ paddingRight: "100px" }}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              style={{
+                position: "absolute",
+                right: "14px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                border: "none",
+                background: "transparent",
+                color: "#9b4a0f",
+                fontWeight: "600",
+                cursor: "pointer",
+                fontSize: "13px",
+              }}
+            >
+              {showPassword ? "Hide Password" : "Show Password"}
+            </button>
+          </div>
 
           {error && <p className="error-login">{error}</p>}
 
