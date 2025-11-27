@@ -32,19 +32,21 @@ import CustomerForgot from "./Yubi/ForgotPassword";
 import StaffLogin from "./Heli/staff-login";
 import StaffForgot from "./Heli/ForgotPassword";
 import SignUp from "./Roshan/SignUp";
-import ReceptionistDahboard from "./Roshan/ReceptionistDashboard";
 
-// Auth / role context + protected route
+// Receptionist Dashboard
+import ReceptionistDashboard from "./Roshan/ReceptionistDashboard";
+
+// Auth / role context + protected routes
 import { AdminProvider } from "./Sujal/admin/AdminContext";
-import ProtectedRoute from "./Sujal/admin/ProtectedRoute";
+import {
+  AdminRoute,
+  CustomerRoute,
+  StaffRoute,
+} from "./Sujal/admin/ProtectedRoute";
 
 // Placeholder pages
-const Explore = () => (
-  <div style={{ padding: 24 }}>Explore Page (placeholder)</div>
-);
-const About = () => (
-  <div style={{ padding: 24 }}>About Us Page (placeholder)</div>
-);
+const Explore = () => <div style={{ padding: 24 }}>Explore Page (placeholder)</div>;
+const About = () => <div style={{ padding: 24 }}>About Us Page (placeholder)</div>;
 
 function App() {
   return (
@@ -53,68 +55,76 @@ function App() {
         <Navbar />
 
         <Routes>
-          {/* Landing */}
+          {/* PUBLIC ROUTES */}
           <Route path="/" element={<Home />} />
-
-          {/* Simple pages */}
           <Route path="/explore" element={<Explore />} />
           <Route path="/about" element={<About />} />
 
-          {/* Admin Auth */}
+          {/* ADMIN AUTH */}
           <Route path="/login/admin" element={<AdminSignIn />} />
-          <Route
-            path="/admin/login"
-            element={<Navigate to="/login/admin" replace />}
-          />
+          <Route path="/admin/login" element={<Navigate to="/login/admin" replace />} />
           <Route path="/admin/forgot" element={<AdminForgot />} />
-          <Route path="/admin/verify" element={<AdminVerify />} />
 
-          {/* Admin Dashboard (PROTECTED) */}
+          {/* ADMIN VERIFY */}
           <Route
+            path="/admin/verify"
             element={
-              <ProtectedRoute requireAdmin={true} requireVerify={true} />
+              <AdminRoute>
+                <AdminVerify />
+              </AdminRoute>
+            }
+          />
+
+          {/* ADMIN DASHBOARD */}
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute requireVerify={true}>
+                <AdminLayout />
+              </AdminRoute>
             }
           >
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminOverview />} />
-              <Route path="staff" element={<StaffPage />} />
-              <Route path="receptionists" element={<ReceptionistsPage />} />
-              <Route path="customers" element={<CustomersPage />} />
-              <Route path="menu" element={<MenuPage />} />
-              <Route path="reservations" element={<ReservationsPage />} />
-              <Route path="payments" element={<PaymentsPage />} />
-            </Route>
+            <Route index element={<AdminOverview />} />
+            <Route path="staff" element={<StaffPage />} />
+            <Route path="receptionists" element={<ReceptionistsPage />} />
+            <Route path="customers" element={<CustomersPage />} />
+            <Route path="menu" element={<MenuPage />} />
+            <Route path="reservations" element={<ReservationsPage />} />
+            <Route path="payments" element={<PaymentsPage />} />
           </Route>
 
-          {/* Customer Auth */}
+          {/* CUSTOMER AUTH */}
           <Route path="/login/customer" element={<CustomerLogin />} />
-          <Route
-            path="/customer/login"
-            element={<Navigate to="/login/customer" replace />}
-          />
+          <Route path="/customer/login" element={<Navigate to="/login/customer" replace />} />
           <Route path="/customer/register" element={<CustomerRegister />} />
+          <Route path="/customer/forgot-password" element={<CustomerForgot />} />
 
-          {/* Customer dashboard (customer or admin) */}
+          {/* CUSTOMER DASHBOARD */}
           <Route
+            path="/customer/dashboard"
             element={
-              <ProtectedRoute allowedRoles={["admin", "customer"]} />
+              <CustomerRoute>
+                <CustomerDashboard />
+              </CustomerRoute>
             }
-          >
-            <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-          </Route>
-
-          <Route
-            path="/customer/forgot-password"
-            element={<CustomerForgot />}
           />
 
-          {/* Staff / Receptionist */}
+          {/* STAFF / RECEPTIONIST AUTH */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/staff-login" element={<StaffLogin />} />
           <Route path="/staff/forgot" element={<StaffForgot />} />
-          <Route path="/receptionist" element={<ReceptionistDahboard />} />
 
-          {/* Catch-all */}
+          {/* STAFF / RECEPTIONIST DASHBOARD */}
+          <Route
+            path="/staff/dashboard"
+            element={
+              <StaffRoute>
+                <ReceptionistDashboard />
+              </StaffRoute>
+            }
+          />
+
+          {/* CATCH ALL */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

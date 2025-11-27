@@ -1,65 +1,183 @@
 import React from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAdmin } from "./AdminContext";
 
-// General route guard for admin/staff/receptionist/customer
+// Admin Route - Only admin can access
 // Props:
-// - requireAdmin: only allow admin email
-// - requireVerify: also require admin verification code
-// - allowedRoles: optional array of roles (e.g. ["admin", "customer"])
-export default function ProtectedRoute({
-  requireAdmin = false,
-  requireVerify = false,
-  allowedRoles,
-}) {
+//   - requireVerify: if true, also check for admin verification code
+export const AdminRoute = ({ children, requireVerify = false }) => {
   const { user, role, loading } = useAdmin();
   const location = useLocation();
 
+  console.log("AdminRoute - User:", user?.email, "Role:", role, "RequireVerify:", requireVerify);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        height: "100vh" 
+      }}>
+        Loading...
+      </div>
+    );
   }
 
-  // ❌ Not logged in at all
+  // Step 1: Check if user is logged in
   if (!user) {
-    // For admin paths, go to admin login
-    if (location.pathname.startsWith("/admin")) {
-      return (
-        <Navigate
-          to="/login/admin"
-          replace
-          state={{ from: location.pathname }}
-        />
-      );
-    }
-
-    // For other protected routes, you can customise later
-    return <Navigate to="/" replace />;
+    console.log("No user - redirecting to login");
+    return <Navigate to="/login/admin" replace state={{ from: location }} />;
   }
 
-  // If allowedRoles is provided, enforce it
-  if (allowedRoles && !allowedRoles.includes(role)) {
-    return <Navigate to="/" replace />;
+  // Step 2: Check if user is admin
+  if (role !== "admin") {
+    console.log("Not admin role - access denied");
+    return (
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <p>Admin privileges required.</p>
+      </div>
+    );
   }
 
-  // If requireAdmin is true, only allow admin
-  if (requireAdmin && role !== "admin") {
-    return <Navigate to="/" replace />;
-  }
-
-  // If admin verification is required, check localStorage flag
+  // Step 3: Check verification if required for this route
   if (requireVerify) {
-    const verified = localStorage.getItem("isAdminVerified") === "true";
-    if (!verified) {
+    const isVerified = localStorage.getItem("isAdminVerified") === "true";
+    console.log("Verification required. Is verified?", isVerified);
+    
+    if (!isVerified) {
+      console.log("Not verified - redirecting to verify page");
       return (
-        <Navigate
-          to="/admin/verify"
-          replace
-          state={{ from: location.pathname }}
+        <Navigate 
+          to="/admin/verify" 
+          replace 
+          state={{ from: location.pathname }} 
         />
       );
     }
   }
 
-  // ✅ All good
-  return <Outlet />;
-}
+  // All checks passed
+  return children;
+};
+
+// Customer Route - Admin and Customer can access
+export const CustomerRoute = ({ children }) => {
+  const { user, role, loading } = useAdmin();
+  const location = useLocation();
+
+  console.log("CustomerRoute - User:", user?.email, "Role:", role);
+
+  if (loading) {
+    return (
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        height: "100vh" 
+      }}>
+        Loading...
+      </div>
+    );
+  }
+
+  // Not logged in
+  if (!user) {
+    return <Navigate to="/login/customer" replace state={{ from: location }} />;
+  }
+
+  // Check if user is admin or customer
+  if (role !== "admin" && role !== "customer") {
+    return (
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <p>Customer or Admin privileges required.</p>
+      </div>
+    );
+  }
+
+  return children;
+};
+
+// Staff Route - Admin, Staff, and Receptionist can access
+export const StaffRoute = ({ children }) => {
+  const { user, role, loading } = useAdmin();
+  const location = useLocation();
+
+  console.log("StaffRoute - User:", user?.email, "Role:", role);
+
+  if (loading) {
+    return (
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        height: "100vh" 
+      }}>
+        Loading...
+      </div>
+    );
+  }
+
+  // Not logged in
+  if (!user) {
+    return <Navigate to="/staff-login" replace state={{ from: location }} />;
+  }
+
+  // Check if user is admin, staff, or receptionist
+  if (role !== "admin" && role !== "staff" && role !== "receptionist") {
+    return (
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+        <p>Staff or Admin privileges required.</p>
+      </div>
+    );
+  }
+
+  return children;
+};
+
+// Staff and Customer Route - Admin, Staff, Receptionist, and Customer can access
+export const StaffAndCustomerRoute = ({ children }) => {
+  const { user, role, loading } = useAdmin();
+  const location = useLocation();
+
+  console.log("StaffAndCustomerRoute - User:", user?.email, "Role:", role);
+
+  if (loading) {
+    return (
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        height: "100vh" 
+      }}>
+        Loading...
+      </div>
+    );
+  }
+
+  // Not logged in
+  if (!user) {
+    return <Navigate to="/" replace state={{ from: location }} />;
+  }
+
+  // Allow admin, staff, receptionist, or customer
+  const allowedRoles = ["admin", "staff", "receptionist", "customer"];
+  if (!allowedRoles.includes(role)) {
+    return (
+      <div style={{ padding: "20px", textAlign: "center" }}>
+        <h2>Access Denied</h2>
+        <p>You do not have permission to access this page.</p>
+      </div>
+    );
+  }
+
+  return children;
+};
+
+export default AdminRoute;

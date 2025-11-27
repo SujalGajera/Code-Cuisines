@@ -1,13 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut as fbSignOut } from "firebase/auth";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
-// This context holds:
-// - user: Firebase Auth user (or null)
-// - role: "admin" | "staff" | "receptionist" | "customer" | null
-// - loading: true while checking auth
-// - signOut(): logs out user and clears admin verification flag
 const AdminContext = createContext(null);
 
 export function AdminProvider({ children }) {
@@ -18,47 +13,29 @@ export function AdminProvider({ children }) {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
       setLoading(true);
+      console.log("Auth state changed:", firebaseUser);
+
       try {
         if (!firebaseUser) {
           setUser(null);
           setRole(null);
+          setLoading(false);
           return;
         }
 
         setUser(firebaseUser);
 
-        // 🔐 ALWAYS treat this email as admin
-        if (firebaseUser.email === "admin@codecuisine.com") {
-          setRole("admin");
-
-          // Make sure a Firestore doc exists for admin
-          const userRef = doc(db, "users", firebaseUser.uid);
-          const snap = await getDoc(userRef);
-          if (!snap.exists()) {
-            await setDoc(userRef, {
-              email: firebaseUser.email,
-              role: "admin",
-              createdAt: serverTimestamp(),
-            });
-          }
-          return;
-        }
-
-        // For other users, read Firestore user doc for role
+        // Check Firestore for user role
         const userRef = doc(db, "users", firebaseUser.uid);
         const snap = await getDoc(userRef);
 
         if (snap.exists()) {
-          const data = snap.data();
-          setRole(data.role || null);
+          const userData = snap.data();
+          console.log("User role from Firestore:", userData.role);
+          setRole(userData.role || null);
         } else {
-          // fallback: treat as customer and create minimal doc
-          await setDoc(userRef, {
-            email: firebaseUser.email,
-            role: "customer",
-            createdAt: serverTimestamp(),
-          });
-          setRole("customer");
+          console.warn("User document not found in Firestore");
+          setRole(null);
         }
       } catch (err) {
         console.error("Error in AdminProvider:", err);
@@ -72,10 +49,15 @@ export function AdminProvider({ children }) {
   }, []);
 
   const signOut = async () => {
-    await fbSignOut(auth);
-    setUser(null);
-    setRole(null);
-    localStorage.removeItem("isAdminVerified");
+    try {
+      await fbSignOut(auth);
+      setUser(null);
+      setRole(null);
+      localStorage.removeItem("isAdminVerified");
+      localStorage.removeItem("pendingAdminVerify");
+    } catch (err) {
+      console.error("Error signing out:", err);
+    }
   };
 
   const value = { user, role, loading, signOut };
