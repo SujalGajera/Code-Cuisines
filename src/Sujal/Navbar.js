@@ -110,12 +110,16 @@ function Navbar() {
       )}
 
       {/* Mobile slide panel */}
+      {/* Mobile slide panel */}
       <div className={`cc-mobile ${mobileOpen ? 'open' : ''}`}>
         <NavLink to="/" className="cc-mobile-link" onClick={closeMobile}>Home</NavLink>
-        <NavLink to="/explore" className="cc-mobile-link" onClick={closeMobile}>Explore</NavLink>
-        <NavLink to="/about" className="cc-mobile-link" onClick={closeMobile}>About Us</NavLink>
+        
+        <a href="/#features" className="cc-mobile-link" onClick={closeMobile}>Explore</a>
+        <a href="/#about" className="cc-mobile-link" onClick={closeMobile}>About Us</a>
+
         <div className="cc-mobile-divider" />
         <div className="cc-mobile-label">Login / Register</div>
+        
         <Link to="/login/admin" className="cc-mobile-link" onClick={closeMobile}>Admin</Link>
         <Link to="/signup" className="cc-mobile-link" onClick={closeMobile}>Staff/Receptionist</Link>
         <Link to="/login/customer" className="cc-mobile-link" onClick={closeMobile}>Customer</Link>

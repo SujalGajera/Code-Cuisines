@@ -1,27 +1,90 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 import "./CustomerLogin.css";
 
 function CustomerLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
-    const users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    if (!email.trim() || !password.trim()) {
+      setError("⚠️ Please enter email and password.");
+      setIsLoading(false);
+      return;
+    }
 
-    const matchedUser = users.find(
-      (user) => user.email === email && user.password === password
-    );
+    try {
+      // Step 1: Authenticate with Firebase Auth
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    if (matchedUser) {
-      alert(`✅ Welcome back, ${matchedUser.firstName}!`);
-      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
-      navigate("/customer/dashboard");
-    } else {
-      alert("❌ Invalid email or password. Please try again or register.");
+      // Step 2: Check user role in Firestore
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      // ❌ Block if user doesn't exist in Firestore
+      if (!userSnap.exists()) {
+        await auth.signOut();
+        setError("⚠️ Access denied. User not found in system.");
+        setIsLoading(false);
+        return;
+      }
+
+      const userData = userSnap.data();
+
+      // ❌ Block if no role assigned
+      if (!userData.role) {
+        await auth.signOut();
+        setError("⚠️ Access denied. No role assigned.");
+        setIsLoading(false);
+        return;
+      }
+
+      // ✅ Allow admin or customer
+      if (userData.role === "admin" || userData.role === "customer") {
+        console.log(`✅ ${userData.role} logged in as customer`);
+        
+        // Store user info in localStorage (optional)
+        localStorage.setItem("loggedInUser", JSON.stringify({
+          email: userData.email,
+          name: userData.name,
+          role: userData.role,
+        }));
+
+        // Navigate to customer dashboard
+        navigate("/customer/dashboard");
+      } else {
+        // ❌ Block staff and receptionist from customer login
+        await auth.signOut();
+        setError("⚠️ Access denied. Customer or Admin privileges required.");
+        setIsLoading(false);
+      }
+
+    } catch (err) {
+      console.error("Login error:", err);
+      
+      if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
+        setError("⚠️ Invalid email or password. Please try again.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("⚠️ Invalid email format.");
+      } else if (err.code === "auth/too-many-requests") {
+        setError("⚠️ Too many failed attempts. Try again later.");
+      } else if (err.code === "auth/invalid-credential") {
+        setError("⚠️ Invalid credentials.");
+      } else {
+        setError("⚠️ Login failed. Please try again.");
+      }
+      setIsLoading(false);
     }
   };
 
@@ -39,6 +102,7 @@ function CustomerLogin() {
             placeholder="you@codecuisine.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
             required
           />
 
@@ -70,12 +134,28 @@ function CustomerLogin() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
             required
           />
 
+          {/* Error message */}
+          {error && (
+            <p style={{ 
+              color: "#d32f2f", 
+              fontSize: "0.9rem", 
+              marginTop: "0.5rem" 
+            }}>
+              {error}
+            </p>
+          )}
+
           {/* Button */}
-          <button type="submit" className="login-btn">
-            Sign In
+          <button 
+            type="submit" 
+            className="login-btn"
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing in..." : "Sign In"}
           </button>
 
           {/* Register link */}
