@@ -1,6 +1,6 @@
 // src/Yubi/Layout/CustomerLayout.js
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   FaHome,
@@ -16,11 +16,11 @@ import {
 import "./CustomerLayout.css";
 
 import avatarImg from "../images/avatar.png";
-import logo from "../images/logo.png"; // ✅ FIXED LOGO IMPORT (no space)
+import logo from "../images/logo.png";
 
 import { useCart } from "../Cart/CartContext";
 
-// ░░ Side Navigation Items ░░
+//Side Navigation Items 
 const navItems = [
   { id: "dashboard", label: "Dashboard Overview", icon: <FaHome />, path: "/customer/dashboard" },
   { id: "profile", label: "Profile", icon: <FaUser />, path: "/customer/profile" },
@@ -34,7 +34,7 @@ function CustomerLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ░░ CART LOGIC ░░
+  //  CART LOGIC//
   const cart = useCart() || {};
   const items = cart.items || [];
   const clearCart = cart.clearCart;
@@ -44,9 +44,12 @@ function CustomerLayout({ children }) {
   const [showCart, setShowCart] = useState(false);
 
   const cartCount = items.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const cartTotal = items.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+  const cartTotal = items.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
 
-  // ░░ USER ░░
+  // USER//
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "" });
 
   useEffect(() => {
@@ -54,19 +57,21 @@ function CustomerLayout({ children }) {
     if (stored) {
       try {
         setUser(JSON.parse(stored));
-      } catch (err) {}
+      } catch (err) {
+        // ignore
+      }
     }
   }, []);
 
   const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
-  // ░░ Logout ░░
+  //  Logout //
   const handleLogout = () => {
     localStorage.removeItem("currentCustomer");
     navigate("/customer/login");
   };
 
-  // ░░ Checkout ░░
+  // Checkout
   const handleCheckout = () => {
     alert("Checkout complete (mock only).");
     if (typeof clearCart === "function") clearCart();
@@ -80,7 +85,7 @@ function CustomerLayout({ children }) {
 
   return (
     <div className="cc-layout">
-      {/* ░░ TOPBAR ░░ */}
+      {/*TOPBAR */}
       <header className="cc-topbar">
         <div className="cc-topbar-left">
           {/* BRAND */}
@@ -93,18 +98,17 @@ function CustomerLayout({ children }) {
             </div>
           </div>
 
-          {/* LINKS */}
-          <nav className="cc-topnav-links">
-            <Link to="/" className="cc-topnav-link">Home</Link>
-            <Link to="/" className="cc-topnav-link">Explore</Link>
-            <Link to="/" className="cc-topnav-link">About Us</Link>
-          </nav>
+         
         </div>
 
         {/* RIGHT PART */}
         <div className="cc-topbar-right">
           {/* CART BUTTON */}
-          <button type="button" className="cc-cart-btn" onClick={() => setShowCart(true)}>
+          <button
+            type="button"
+            className="cc-cart-btn"
+            onClick={() => setShowCart(true)}
+          >
             <FaShoppingCart className="cc-cart-icon" />
             {cartCount > 0 && <span className="cc-cart-badge">{cartCount}</span>}
           </button>
@@ -123,7 +127,7 @@ function CustomerLayout({ children }) {
         </div>
       </header>
 
-      {/* ░░ MAIN SHELL ░░ */}
+      {/* MAIN SHELL*/}
       <div className="cc-shell">
         {/* SIDEBAR */}
         <aside className="cc-sidebar">
@@ -137,7 +141,9 @@ function CustomerLayout({ children }) {
               return (
                 <li
                   key={item.id}
-                  className={`cc-sidebar-item ${isActive ? "cc-sidebar-item-active" : ""}`}
+                  className={`cc-sidebar-item ${
+                    isActive ? "cc-sidebar-item-active" : ""
+                  }`}
                   onClick={() => navigate(item.path)}
                 >
                   <div className="cc-sidebar-icon">{item.icon}</div>
@@ -152,13 +158,21 @@ function CustomerLayout({ children }) {
         <main className="cc-main">{enhancedChildren}</main>
       </div>
 
-      {/* ░░ CART DRAWER ░░ */}
+      {/* CART DRAWER */}
       {showCart && (
         <div className="cc-cart-overlay" onClick={() => setShowCart(false)}>
-          <div className="cc-cart-drawer" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="cc-cart-drawer"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="cc-cart-header">
               <h2>Your Cart</h2>
-              <button className="cc-cart-close" onClick={() => setShowCart(false)}>×</button>
+              <button
+                className="cc-cart-close"
+                onClick={() => setShowCart(false)}
+              >
+                ×
+              </button>
             </div>
 
             {items.length === 0 ? (
@@ -179,14 +193,37 @@ function CustomerLayout({ children }) {
                       <div className="cc-cart-item-right">
                         {typeof updateQuantity === "function" && (
                           <div className="cc-cart-qty">
-                            <button type="button" onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}>−</button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  Math.max(1, item.quantity - 1)
+                                )
+                              }
+                            >
+                              −
+                            </button>
                             <span>{item.quantity}</span>
-                            <button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                updateQuantity(item.id, item.quantity + 1)
+                              }
+                            >
+                              +
+                            </button>
                           </div>
                         )}
 
                         {typeof removeFromCart === "function" && (
-                          <button type="button" className="cc-cart-remove" onClick={() => removeFromCart(item.id)}>×</button>
+                          <button
+                            type="button"
+                            className="cc-cart-remove"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            ×
+                          </button>
                         )}
                       </div>
                     </li>
@@ -200,8 +237,16 @@ function CustomerLayout({ children }) {
                   </div>
 
                   <div className="cc-cart-footer-actions">
-                    <button className="cc-cart-clear" onClick={clearCart}>Clear Cart</button>
-                    <button className="cc-cart-checkout" onClick={handleCheckout}>Checkout</button>
+                    <button className="cc-cart-clear" onClick={clearCart}>
+                      Clear Cart
+                    </button>
+                    <button
+                      type="button"
+                      className="checkout-btn"
+                      onClick={() => navigate("/customer/payment")}
+                    >
+                      Checkout
+                    </button>
                   </div>
                 </div>
               </>

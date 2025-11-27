@@ -34,6 +34,7 @@ function Home() {
             efficient kitchen operations, Code Cuisine transforms how restaurants serve their
             customers with cutting-edge technology and intuitive design.
           </p>
+          
 
           <div className="cc-hero-cta">
             <button className="cc-btn cc-btn-primary" onClick={handleGetStarted}>Get Started</button>
@@ -45,6 +46,7 @@ function Home() {
       <section className="cc-features" id="features">
         <div className="cc-container">
           <h2 className="cc-section-title">Explore Our Features</h2>
+
           <p className="cc-section-sub">
             Discover how Code Cuisine streamlines every aspect of your dining experience
           </p>
@@ -65,7 +67,8 @@ function Home() {
                   Browse our extensive digital menu with beautiful images, detailed descriptions,
                   and real-time availability updates.
                 </p>
-                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Explore Menu</button>
+               <button className="feature-btn" onClick={handleFeatureClick}>Explore Menu</button>
+
               </div>
             </article>
 
@@ -84,7 +87,8 @@ function Home() {
                   Book your table instantly with our smart reservation system. Choose your
                   preferred time, party size, and seating preferences.
                 </p>
-                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Book Now</button>
+             <button className="feature-btn" onClick={handleFeatureClick}>Book Now</button>
+
               </div>
             </article>
 
@@ -103,7 +107,8 @@ function Home() {
                   Enjoy your favorite dishes at home. Order online for delivery or pickup with
                   real-time order tracking and updates.
                 </p>
-                <button className="cc-btn cc-btn-secondary" onClick={handleFeatureClick}>Order Now</button>
+                <button className="feature-btn" onClick={handleFeatureClick}>Order Now</button>
+
               </div>
             </article>
           </div>

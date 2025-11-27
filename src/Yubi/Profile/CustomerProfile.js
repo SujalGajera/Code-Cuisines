@@ -119,9 +119,7 @@ function CustomerProfile({ user }) {
                   placeholder="Any allergies or special requests?"
                 />
               </div>
-// after building updatedUser
-localStorage.setItem("currentCustomer", JSON.stringify(updatedUser));
-window.location.reload();  // forces header to re-read the new name
+
 
               <div className="cc-profile-actions">
                 <button type="submit" className="cc-primary-btn">

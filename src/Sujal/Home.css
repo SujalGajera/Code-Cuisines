@@ -427,3 +427,36 @@ body, html {
     gap: 32px;
   }
 }
+.feature-btn {
+  background-color: #ff7a00 !important;  
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 10px 22px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3) !important;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.feature-btn:hover {
+  background-color: #d76600 !important;
+  box-shadow: 0 6px 16px rgba(215, 102, 0, 0.4) !important;
+}
+/* ===========================
+   FIX: Make Feature Buttons Clickable
+   =========================== */
+
+.cc-card-media {
+  pointer-events: none !important; /* Image will NOT block clicks */
+}
+
+.cc-card-body {
+  position: relative;
+  z-index: 10 !important; /* Buttons stay above image layer */
+}
+
+.feature-btn {
+  position: relative;
+  z-index: 20 !important; /* Ensures button is fully clickable */
+}

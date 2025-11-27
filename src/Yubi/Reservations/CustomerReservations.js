@@ -248,12 +248,13 @@ function CustomerReservations() {
             <label className="cc-field">
               <span className="cc-field-label">Date</span>
               <input
-                type="text"
+                type="date"
                 name="date"
                 placeholder="mm/dd/yyyy"
                 className="cc-input"
                 value={form.date}
                 onChange={handleChange}
+                min={new Date().toISOString().split("T")[0]}   // 🔥 BLOCK PAST DATES
                 required
               />
             </label>

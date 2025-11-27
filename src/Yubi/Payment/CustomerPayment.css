@@ -1,0 +1,187 @@
+.pay-wrap {
+  padding: 20px;
+  max-width: 650px;
+  margin: 0 auto;
+  font-family: "Poppins", sans-serif;
+}
+
+.pay-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ff7a00;
+  margin-bottom: 20px;
+}
+
+.pay-method-grid {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.pay-option {
+  flex: 1;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.pay-option:hover {
+  background: #fff3e7;
+  border-color: #ff7a00;
+}
+
+.pay-option.active {
+  background: #ff7a00;
+  color: white;
+  border-color: #ff7a00;
+}
+
+.pay-method-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Card form styles */
+.card-form {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-row-two {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.card-row-two > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-form label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.card-form input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  outline: none;
+  transition: 0.15s ease;
+}
+
+.card-form input:focus {
+  border-color: #ff7a00;
+  box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.15);
+}
+
+.card-hint {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.pay-summary {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
+}
+
+.pay-summary h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pay-confirm {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background: #ff7a00;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pay-confirm:hover {
+  background: #e76b00;
+}
+
+.pay-msg {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pay-error {
+  color: #ff3b3b;
+}
+
+.pay-success {
+  color: #22c55e;
+}
+
+/* QR Styles */
+.qr-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+  padding: 20px;
+  background: #fffdf8;
+  border-radius: 16px;
+  border: 2px solid #ffe3c2;
+}
+
+.qr-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.qr-value {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.qr-paid-btn {
+  width: 100%;
+  padding: 14px;
+  background: #22c55e;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.qr-paid-btn:hover {
+  background: #1ba44d;
+}

@@ -4,22 +4,22 @@ import CustomerLayout from "../Layout/CustomerLayout";
 import "./CustomerMenu.css";
 import { useCart } from "../Cart/CartContext";
 
-// Map each menu item id to an image URL.
-// You can replace these URLs with your own images later.
+// Map each menu item id to an image URL (GUARANTEED TO LOAD)
 const IMAGE_MAP = {
   capuccino:
-    "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://cdn.pixabay.com/photo/2016/08/09/13/21/coffee-1580595_1280.jpg",
   croissant:
-    "https://images.pexels.com/photos/2135/bread-food-restaurant-people.jpg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/4038314/pexels-photo-4038314.jpeg?auto=compress&cs=tinysrgb&w=800",
   "avocado-toast":
-    "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/573722/pexels-photo-573722.jpeg?auto=compress&cs=tinysrgb&w=800",
   "fresh-lemonade":
     "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=800",
   espresso:
-    "https://images.pexels.com/photos/748741/pexels-photo-748741.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800",
   "blueberry-muffin":
-    "https://images.pexels.com/photos/2903167/pexels-photo-2903167.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800",
 };
+
 
 const MENU_ITEMS = [
   {
@@ -66,7 +66,7 @@ const MENU_ITEMS = [
   },
 ];
 
-const FILTERS = ["All Items", "Coffee", "Pastry", "Snacks", "Drinks"];
+const FILTERS = ["All Items", "Appetisers", "Mains", "Slides", "Drinks"];
 
 function CustomerMenu() {
   const { addToCart } = useCart();
@@ -154,15 +154,3 @@ function CustomerMenu() {
 }
 
 export default CustomerMenu;
-
-
-
-
-
-
-
-
-
-
-
-
