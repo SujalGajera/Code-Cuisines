@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // Global UI
 import Navbar from "./Sujal/Navbar";
@@ -46,77 +46,75 @@ const About = () => (
   <div style={{ padding: 24 }}>About Us Page (placeholder)</div>
 );
 
+function MainRoutes() {
+  const location = useLocation();
+
+  // Hide navbar ONLY on these screens:
+  const hideNavbarRoutes = ["/receptionist"];
+
+  return (
+    <>
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+
+      <Routes>
+        {/* Landing */}
+        <Route path="/" element={<Home />} />
+
+        {/* Simple pages */}
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/about" element={<About />} />
+
+        {/* Admin Auth */}
+        <Route path="/login/admin" element={<AdminSignIn />} />
+        <Route path="/admin/login" element={<Navigate to="/login/admin" replace />} />
+        <Route path="/admin/forgot" element={<AdminForgot />} />
+        <Route path="/admin/verify" element={<AdminVerify />} />
+
+        {/* Admin Dashboard (PROTECTED) */}
+        <Route
+          element={<ProtectedRoute requireAdmin={true} requireVerify={true} />}
+        >
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminOverview />} />
+            <Route path="staff" element={<StaffPage />} />
+            <Route path="receptionists" element={<ReceptionistsPage />} />
+            <Route path="customers" element={<CustomersPage />} />
+            <Route path="menu" element={<MenuPage />} />
+            <Route path="reservations" element={<ReservationsPage />} />
+            <Route path="payments" element={<PaymentsPage />} />
+          </Route>
+        </Route>
+
+        {/* Customer Auth */}
+        <Route path="/login/customer" element={<CustomerLogin />} />
+        <Route path="/customer/login" element={<Navigate to="/login/customer" replace />} />
+        <Route path="/customer/register" element={<CustomerRegister />} />
+
+        {/* Customer Dashboard */}
+        <Route element={<ProtectedRoute allowedRoles={["admin", "customer"]} />}>
+          <Route path="/customer/dashboard" element={<CustomerDashboard />} />
+        </Route>
+
+        <Route path="/customer/forgot-password" element={<CustomerForgot />} />
+
+        {/* Staff / Receptionist */}
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/staff/forgot" element={<StaffForgot />} />
+        <Route path="/receptionist" element={<ReceptionistDahboard />} />
+
+        {/* Catch-all */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
+  );
+}
+
 function App() {
   return (
     <AdminProvider>
       <BrowserRouter>
-{window.location.pathname !== "/receptionist" && <Navbar />}
-
-        <Routes>
-          {/* Landing */}
-          <Route path="/" element={<Home />} />
-
-          {/* Simple pages */}
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/about" element={<About />} />
-
-          {/* Admin Auth */}
-          <Route path="/login/admin" element={<AdminSignIn />} />
-          <Route
-            path="/admin/login"
-            element={<Navigate to="/login/admin" replace />}
-          />
-          <Route path="/admin/forgot" element={<AdminForgot />} />
-          <Route path="/admin/verify" element={<AdminVerify />} />
-
-          {/* Admin Dashboard (PROTECTED) */}
-          <Route
-            element={
-              <ProtectedRoute requireAdmin={true} requireVerify={true} />
-            }
-          >
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<AdminOverview />} />
-              <Route path="staff" element={<StaffPage />} />
-              <Route path="receptionists" element={<ReceptionistsPage />} />
-              <Route path="customers" element={<CustomersPage />} />
-              <Route path="menu" element={<MenuPage />} />
-              <Route path="reservations" element={<ReservationsPage />} />
-              <Route path="payments" element={<PaymentsPage />} />
-            </Route>
-          </Route>
-
-          {/* Customer Auth */}
-          <Route path="/login/customer" element={<CustomerLogin />} />
-          <Route
-            path="/customer/login"
-            element={<Navigate to="/login/customer" replace />}
-          />
-          <Route path="/customer/register" element={<CustomerRegister />} />
-
-          {/* Customer dashboard (customer or admin) */}
-          <Route
-            element={
-              <ProtectedRoute allowedRoles={["admin", "customer"]} />
-            }
-          >
-            <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-          </Route>
-
-          <Route
-            path="/customer/forgot-password"
-            element={<CustomerForgot />}
-          />
-
-          {/* Staff / Receptionist */}
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/staff-login" element={<StaffLogin />} />
-          <Route path="/staff/forgot" element={<StaffForgot />} />
-          <Route path="/receptionist" element={<ReceptionistDahboard />} />
-
-          {/* Catch-all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <MainRoutes />
       </BrowserRouter>
     </AdminProvider>
   );
