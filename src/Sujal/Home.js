@@ -47,6 +47,24 @@ const previewItems = [
     // dessert / brownie image
     image: 'https://cdn.pixabay.com/photo/2017/08/31/15/49/banana-split-2701128_1280.jpg',
   },
+  {
+    id: 5,
+    name: 'Avocado Toast Deluxe',
+    description:
+      'Sourdough bread topped with smashed avocado, cherry tomatoes, and feta cheese.',
+    price: 'NZ$16.00',
+    // avocado toast image
+    image: 'https://cdn.pixabay.com/photo/2016/04/07/18/09/breakfast-1314355_1280.jpg',
+  },
+  {
+    id: 6,
+    name: 'Classic Cheeseburger',
+    description:
+      'Juicy beef patty, cheddar cheese, lettuce, tomato, and our special sauce.',
+    price: 'NZ$22.00',
+    // burger image
+    image: 'https://cdn.pixabay.com/photo/2017/11/16/05/50/classic-burger-2953387_1280.jpg',
+  }
 ];
 
 
