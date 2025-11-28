@@ -1,10 +1,10 @@
 :root {
-  --brand: #a94c0a; 
+  --brand: #a94c0a;
   --brand-200: #c35a0c;
   --ink: #111;
   --muted: #666;
   --paper: #ffffff;
-  --nav: #f2f2f2; /* light navbar background (matches screenshot) */
+  --nav: #f2f2f2;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   --radius: 14px;
 }
@@ -43,14 +43,11 @@
 }
 
 .cc-logo-img {
-  place-items: center;
   width: 60px;
   height: 60px;
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: .5px;
   object-fit: contain;
 }
+
 .cc-brand-text {
   font-weight: 700;
   font-size: 20px;
@@ -64,6 +61,7 @@
   gap: 32px;
 }
 
+/* Standard Nav Links (Home, Explore, About) */
 .cc-link {
   color: var(--ink);
   text-decoration: none;
@@ -85,99 +83,96 @@
   transition: width 0.3s ease;
 }
 
+/* FIXED: This is now just a simple underline on hover */
 .cc-link:hover::after {
   width: 100%;
 }
 
-.cc-link:hover {
-  color: var(--brand);
+/* =========================================
+   NEW DROPDOWN BUTTON STYLES
+   ========================================= */
+
+/* The Wrapper */
+.cc-dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.cc-link.active {
-  color: var(--brand);
-}
-
-.cc-link.active::after {
-  width: 100%;
-}
-
-/* Primary button (Login/Register) */
+/* The Main Button (Orange Pill) */
 .cc-primary-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   background: var(--brand);
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
   font-size: 15px;
   cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .cc-primary-btn:hover {
   background: var(--brand-200);
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(0,0,0,.18);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(169, 76, 10, 0.3);
 }
 
-.cc-primary-btn .caret {
-  transition: transform .2s ease;
-}
-
-.cc-primary-btn .caret.up {
-  transform: rotate(180deg);
-}
-
-/* Dropdown */
-.cc-dropdown {
-  position: relative;
-}
-
-
+/* The Dropdown Menu Box */
 .cc-menu {
   position: absolute;
-  top: 52px;
+  top: 120%; /* Pushes it slightly below the button */
   right: 0;
+  width: 220px;
   background: var(--paper);
-  border-radius: 12px;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 8px;
-  min-width: 220px;
-  animation: slideDown 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  animation: slideDown 0.2s ease;
+  border: 1px solid #f0f0f0;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Dropdown Menu Items */
 .cc-menu-item {
   display: block;
-  padding: 10px 14px;
-  color: #222;
+  padding: 12px 16px;
+  color: var(--ink);
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 500;
   transition: all 0.2s ease;
+  text-align: left;
 }
 
 .cc-menu-item:hover {
-  background: #f6f6f6;
+  background: #fff4ec; /* Light orange background */
   color: var(--brand);
-  transform: translateX(5px);
+  padding-left: 20px;
 }
 
-/* Hamburger (mobile only) */
+/* The little arrow icon rotation */
+.caret {
+  transition: transform 0.3s ease;
+}
+.caret.up {
+  transform: rotate(180deg);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================================
+   MOBILE / RESPONSIVE (Remains untouched)
+   ========================================= */
+
 .cc-hamburger {
   display: none;
   width: 42px;
@@ -206,15 +201,12 @@
   border-radius: 2px;
 }
 
-/* Hamburger animation when open */
 .cc-hamburger.active span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
-
 .cc-hamburger.active span:nth-child(2) {
   opacity: 0;
 }
-
 .cc-hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translate(7px, -7px);
 }
@@ -231,7 +223,7 @@
   background: #fff;
   color: var(--ink);
   padding: 24px;
-  box-shadow: -5px 0 20px rgba(0,0,0,.2);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, .2);
   overflow-y: auto;
   transition: right 0.4s ease;
   z-index: 999;
@@ -296,12 +288,8 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Responsive */
@@ -322,22 +310,18 @@
     padding: 0 16px;
     height: 70px;
   }
-  
   .cc-logo-img {
     width: 50px;
     height: 50px;
   }
-  
   .cc-brand-text {
     font-size: 18px;
   }
-  
   .cc-mobile {
     width: 85%;
     top: 70px;
     height: calc(100vh - 70px);
   }
-  
   .cc-mobile-overlay {
     top: 70px;
     height: calc(100vh - 70px);

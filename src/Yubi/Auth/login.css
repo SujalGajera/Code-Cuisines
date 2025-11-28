@@ -1,0 +1,141 @@
+/* ====== GLOBAL AUTH FORM STYLE (Login + Register + Forgot) ====== */
+
+.auth-container,
+.login-container,
+.register-container,
+.forgot-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #faf7f4;
+  padding: 2rem;
+}
+
+/* Main box */
+.auth-box,
+.login-box,
+.register-box,
+.forgot-box {
+  background: #ffffff;
+  width: 420px;
+  padding: 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* Headings */
+.auth-box h2,
+.login-box h2,
+.register-box h2,
+.forgot-box h2 {
+  margin-bottom: 10px;
+  color: #a94c0a;
+  font-weight: 700;
+}
+
+/* Subtext */
+.auth-box p,
+.login-box p,
+.register-box p,
+.forgot-box p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Label */
+.auth-box label,
+.login-box label,
+.register-box label,
+.forgot-box label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin: 10px 0 6px;
+  color: #333;
+}
+
+/* Inputs */
+.auth-box input,
+.login-box input,
+.register-box input,
+.forgot-box input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.6px solid #e5e5e5;
+  background: #eef3ff;
+  outline: none;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+
+.auth-box input:focus,
+.login-box input:focus,
+.register-box input:focus,
+.forgot-box input:focus {
+  border-color: #a94c0a;
+  box-shadow: 0 0 0 3px rgba(169, 76, 10, 0.15);
+}
+
+/* Forgot password link */
+.login-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-header-row span {
+  color: #a94c0a;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.login-header-row span:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.auth-btn,
+.login-btn,
+.register-btn,
+.forgot-btn {
+  width: 100%;
+  margin-top: 1.4rem;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #a94c0a;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.auth-btn:hover,
+.login-btn:hover,
+.register-btn:hover,
+.forgot-btn:hover {
+  background: #c35a0c;
+}
+
+/* Bottom link */
+.link-prompt {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.link-prompt span {
+  color: #a94c0a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link-prompt span:hover {
+  text-decoration: underline;
+}

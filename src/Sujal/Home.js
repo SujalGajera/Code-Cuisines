@@ -150,10 +150,6 @@ const previewItems = [
       <section className="cc-features" id="features">
         <div className="cc-container">
           <h2 className="cc-section-title">Explore Our Features</h2>
-          <p className="cc-section-sub">
-            Discover how Code Cuisine streamlines every aspect of your dining experience
-          </p>
-
           <div className="cc-feature-grid">
             {/* Card 1 */}
             <article className="cc-card">
@@ -173,8 +169,8 @@ const previewItems = [
               <div className="cc-card-body">
                 <h3 className="cc-card-title">View Menu</h3>
                 <p className="cc-card-text">
-                  Browse our extensive digital menu with beautiful images, detailed
-                  descriptions, and real-time availability updates.
+                  Explore our immersive digital menu, featuring stunning images, detailed descriptions, 
+                  and real-time availability for a seamless ordering experience.
                 </p>
                 <button className="cc-btn cc-btn-secondary" onClick={openMenuPreview}>
                   Explore Menu
@@ -429,7 +425,7 @@ const previewItems = [
       <section className="cc-cta-strip">
         <div className="cc-container cc-cta-inner">
           <div>
-            <h2 className="cc-cta-title">Ready to Upgrade Your Restaurant?</h2>
+            <h2 className="cc-cta-title">Ready to Upgrade Your Restaurant Experience?</h2>
             <p className="cc-cta-sub">
               Join Code Cuisine today and give your guests the seamless dining experience they
               deserve.
