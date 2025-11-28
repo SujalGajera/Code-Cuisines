@@ -50,7 +50,7 @@ function App() {
   return (
     <AdminProvider>
       <BrowserRouter>
-        <Navbar />
+{window.location.pathname !== "/receptionist" && <Navbar />}
 
         <Routes>
           {/* Landing */}
