@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAdmin } from "./admin/AdminContext";
 import "./AdminSignIn.css";
 
@@ -91,17 +91,20 @@ export default function AdminVerify() {
         </p>
 
         <form onSubmit={handleVerify} className="verify-form">
-          <label htmlFor="code">6-Digit Code</label>
-          <input
-            id="code"
-            type="text"
-            placeholder="Enter code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            maxLength={6}
-            disabled={isLoading}
-            autoFocus
-          />
+          {/* FIX: Wrapped label and input in .input-group for correct spacing */}
+          <div className="input-group"> 
+            <label htmlFor="code">6-Digit Code</label>
+            <input
+              id="code"
+              type="text"
+              placeholder="Enter code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              maxLength={6}
+              disabled={isLoading}
+              autoFocus
+            />
+          </div>
 
           {error && <p className="error-text">{error}</p>}
 

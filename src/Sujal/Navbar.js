@@ -64,7 +64,7 @@ function Navbar() {
           <a href="/#features" className="cc-link">Explore</a>
           <a href="/#about" className="cc-link">About Us</a>
 
-          {/* Dropdown */}
+          {/* Dropdown Container */}
           <div className="cc-dropdown" ref={dropdownRef}>
             <button
               className="cc-primary-btn"
@@ -73,19 +73,24 @@ function Navbar() {
               onClick={() => setDropOpen((v) => !v)}
             >
               Login/Register
-              <svg className={`caret ${dropOpen ? 'up' : ''}`} width="14" height="14" viewBox="0 0 24 24">
-                <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2" />
+              <svg 
+                className={`caret ${dropOpen ? 'up' : ''}`} 
+                width="14" 
+                height="14" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
 
-           {dropOpen && (
-                <div className="cc-menu" role="menu">
+            {/* Dropdown Menu Box */}
+            {dropOpen && (
+              <div className="cc-menu" role="menu">
                 <Link to="/login/admin" className="cc-menu-item" role="menuitem">Admin</Link>
                 <Link to="/signup" className="cc-menu-item" role="menuitem">Staff/Receptionist</Link>
                 <Link to="/login/customer" className="cc-menu-item" role="menuitem">Customer</Link>
-            </div>
-          )}
-
+              </div>
+            )}
           </div>
         </nav>
 
@@ -109,7 +114,6 @@ function Navbar() {
         />
       )}
 
-      {/* Mobile slide panel */}
       {/* Mobile slide panel */}
       <div className={`cc-mobile ${mobileOpen ? 'open' : ''}`}>
         <NavLink to="/" className="cc-mobile-link" onClick={closeMobile}>Home</NavLink>
