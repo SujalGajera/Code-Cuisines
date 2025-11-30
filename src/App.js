@@ -124,11 +124,46 @@ function AppWrapper() {
         />
 
         {/* CUSTOMER PAGES */}
-        <Route path="/customer/profile" element={<CustomerProfile />} />
-        <Route path="/customer/menu" element={<CustomerMenu />} />
-        <Route path="/customer/reservations" element={<CustomerReservations />} />
-        <Route path="/customer/orders" element={<CustomerOrderHistory />} />
-        <Route path="/customer/feedback" element={<CustomerFeedback />} />
+        <Route
+          path="/customer/profile"
+          element={
+            <CustomerRoute>
+              <CustomerProfile />
+            </CustomerRoute>
+          }
+        />
+        <Route
+          path="/customer/menu"
+          element={
+            <CustomerRoute>
+              <CustomerMenu />
+            </CustomerRoute>
+          }
+        />
+        <Route
+          path="/customer/reservations"
+          element={
+            <CustomerRoute>
+              <CustomerReservations />
+            </CustomerRoute>
+          }
+        />
+        <Route
+          path="/customer/orders"
+          element={
+            <CustomerRoute>
+              <CustomerOrderHistory />
+            </CustomerRoute>
+          }
+        />
+        <Route
+          path="/customer/feedback"
+          element={
+            <CustomerRoute>
+              <CustomerFeedback />
+            </CustomerRoute>
+          }
+        />
 
         {/* STAFF / RECEPTIONIST AUTH */}
         <Route path="/signup" element={<SignUp />} />
