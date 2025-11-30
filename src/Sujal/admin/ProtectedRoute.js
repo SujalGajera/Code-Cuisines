@@ -13,11 +13,11 @@ export const AdminRoute = ({ children, requireVerify = false }) => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        height: "100vh" 
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh"
       }}>
         Loading...
       </div>
@@ -46,14 +46,14 @@ export const AdminRoute = ({ children, requireVerify = false }) => {
   if (requireVerify) {
     const isVerified = localStorage.getItem("isAdminVerified") === "true";
     console.log("Verification required. Is verified?", isVerified);
-    
+
     if (!isVerified) {
       console.log("Not verified - redirecting to verify page");
       return (
-        <Navigate 
-          to="/admin/verify" 
-          replace 
-          state={{ from: location.pathname }} 
+        <Navigate
+          to="/admin/verify"
+          replace
+          state={{ from: location.pathname }}
         />
       );
     }
@@ -68,37 +68,46 @@ export const CustomerRoute = ({ children }) => {
   const { user, role, loading } = useAdmin();
   const location = useLocation();
 
-  console.log("CustomerRoute - User:", user?.email, "Role:", role);
+  console.log("🔒 CustomerRoute Check:", {
+    user: user?.email || "NO USER",
+    role: role || "NO ROLE",
+    loading
+  });
 
   if (loading) {
+    console.log("⏳ Still loading auth state...");
     return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        height: "100vh" 
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh"
       }}>
         Loading...
       </div>
     );
   }
 
-  // Not logged in
+  // Not logged in - MUST redirect
   if (!user) {
+    console.log("❌ NO USER - Redirecting to /login/customer");
     return <Navigate to="/login/customer" replace state={{ from: location }} />;
   }
 
   // Check if user is admin or customer
   if (role !== "admin" && role !== "customer") {
+    console.log("❌ WRONG ROLE - User role:", role);
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
         <h2>Access Denied</h2>
         <p>You do not have permission to access this page.</p>
         <p>Customer or Admin privileges required.</p>
+        <p>Your role: {role || "none"}</p>
       </div>
     );
   }
 
+  console.log("✅ Access GRANTED - User:", user.email, "Role:", role);
   return children;
 };
 
@@ -107,37 +116,46 @@ export const StaffRoute = ({ children }) => {
   const { user, role, loading } = useAdmin();
   const location = useLocation();
 
-  console.log("StaffRoute - User:", user?.email, "Role:", role);
+  console.log("🔒 StaffRoute Check:", {
+    user: user?.email || "NO USER",
+    role: role || "NO ROLE",
+    loading
+  });
 
   if (loading) {
+    console.log("⏳ Still loading auth state...");
     return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        height: "100vh" 
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh"
       }}>
         Loading...
       </div>
     );
   }
 
-  // Not logged in
+  // Not logged in - MUST redirect
   if (!user) {
+    console.log("❌ NO USER - Redirecting to /staff-login");
     return <Navigate to="/staff-login" replace state={{ from: location }} />;
   }
 
   // Check if user is admin, staff, or receptionist
   if (role !== "admin" && role !== "staff" && role !== "receptionist") {
+    console.log("❌ WRONG ROLE - User role:", role);
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
         <h2>Access Denied</h2>
         <p>You do not have permission to access this page.</p>
         <p>Staff or Admin privileges required.</p>
+        <p>Your role: {role || "none"}</p>
       </div>
     );
   }
 
+  console.log("✅ Access GRANTED - User:", user.email, "Role:", role);
   return children;
 };
 
@@ -150,11 +168,11 @@ export const StaffAndCustomerRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        height: "100vh" 
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh"
       }}>
         Loading...
       </div>
