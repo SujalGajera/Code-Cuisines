@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { collection, query, where, onSnapshot, doc, deleteDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { db, auth as firebaseAuth } from "../../../firebase";
-import { setDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, doc, deleteDoc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { createSecondaryUser } from "../data/fireUtils";
 import "./AdminPages.css";
 
 export default function CustomersPage() {
@@ -40,9 +39,8 @@ export default function CustomersPage() {
                 setEditingId(null);
                 setForm({ name: "", email: "", phone: "", password: "" });
             } else {
-                // Create new customer with Firebase Authentication
-                const userCredential = await createUserWithEmailAndPassword(firebaseAuth, form.email, form.password);
-                const user = userCredential.user;
+                // Create new customer with Secondary App (prevents admin logout)
+                const user = await createSecondaryUser(form.email, form.password);
 
                 // Create user document in Firestore
                 await setDoc(doc(db, "users", user.uid), {

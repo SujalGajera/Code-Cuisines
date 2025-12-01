@@ -25,8 +25,6 @@ const IMAGE_MAP = {
 // Default image for menu items without specific image
 const DEFAULT_IMAGE = "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800";
 
-const FILTERS = ["All Items", "Appetisers", "Mains", "Slides", "Drinks"];
-
 function CustomerMenu() {
   const { addToCart } = useCart();
   const [activeFilter, setActiveFilter] = useState("All Items");
@@ -35,10 +33,10 @@ function CustomerMenu() {
 
   // Real-time listener for menu items from Firebase
   useEffect(() => {
+    // Removed orderBy to avoid "Missing Index" error until index is created
     const q = query(
       collection(db, "menu"),
-      where("availability", "==", "Available"),
-      orderBy("createdAt", "desc")
+      where("availability", "==", "Available")
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -57,6 +55,12 @@ function CustomerMenu() {
 
     return () => unsubscribe();
   }, []);
+
+  // Dynamic filters based on available items
+  const filters = useMemo(() => {
+    const categories = new Set(menuItems.map(i => i.category));
+    return ["All Items", ...Array.from(categories).sort()];
+  }, [menuItems]);
 
   const filteredItems = useMemo(() => {
     if (activeFilter === "All Items") return menuItems;
@@ -81,7 +85,7 @@ function CustomerMenu() {
 
         {/* Filters */}
         <div className="cc-menu-filters">
-          {FILTERS.map((f) => (
+          {filters.map((f) => (
             <button
               key={f}
               type="button"

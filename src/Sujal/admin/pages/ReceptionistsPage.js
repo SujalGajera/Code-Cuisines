@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { collection, query, where, onSnapshot, doc, deleteDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { db, auth as firebaseAuth } from "../../../firebase";
-import { setDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, doc, deleteDoc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { createSecondaryUser } from "../data/fireUtils";
 import "./AdminPages.css";
 
 export default function ReceptionistsPage() {
@@ -45,9 +44,8 @@ export default function ReceptionistsPage() {
                 setEditingId(null);
                 setForm({ name: "", email: "", role: "Front Desk", password: "" });
             } else {
-                // Create new receptionist with Firebase Authentication
-                const userCredential = await createUserWithEmailAndPassword(firebaseAuth, form.email, form.password);
-                const user = userCredential.user;
+                // Create new receptionist with Secondary App (prevents admin logout)
+                const user = await createSecondaryUser(form.email, form.password);
 
                 // Create user document in Firestore
                 await setDoc(doc(db, "users", user.uid), {

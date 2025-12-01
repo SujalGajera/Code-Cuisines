@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import "./login.css";
@@ -34,6 +34,9 @@ function CustomerRegister() {
         role: "customer",
         createdAt: new Date().toISOString(),
       });
+
+      // Sign out to force fresh login and avoid race conditions with AdminContext
+      await signOut(auth);
 
       alert("Account created successfully! Please login.");
       navigate("/login/customer");

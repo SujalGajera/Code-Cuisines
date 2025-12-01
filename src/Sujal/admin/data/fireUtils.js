@@ -2,7 +2,9 @@ import {
   collection, doc, addDoc, updateDoc, deleteDoc,
   serverTimestamp, onSnapshot, query, orderBy, getCountFromServer, where
 } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { db, firebaseConfig } from "../../../firebase";
 
 // Generic helpers per collection
 export const col = (name) => collection(db, name);
@@ -32,4 +34,18 @@ export async function countByRole(role) {
   const q = query(col("users"), where("role", "==", role));
   const c = await getCountFromServer(q);
   return c.data().count;
+}
+
+// Create user without logging out current admin
+export async function createSecondaryUser(email, password) {
+  const secondaryApp = initializeApp(firebaseConfig, "SecondaryApp");
+  const secondaryAuth = getAuth(secondaryApp);
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+    await signOut(secondaryAuth); // clean up
+    return userCredential.user;
+  } catch (error) {
+    throw error;
+  }
 }
