@@ -92,7 +92,7 @@ export default function ReceptionistsPage() {
             <p className="adm-sub">Add, edit, or manage front desk team and their access.</p>
 
             <div className="adm-list-head">
-                <div className="adm-search">🔎 <input placeholder="Search..." value={filter} onChange={e => setFilter(e.target.value)} /></div>
+                <div className="adm-search"> <input placeholder="Search..." value={filter} onChange={e => setFilter(e.target.value)} /></div>
             </div>
 
             {error && <div style={{ color: "#ff4444", padding: "10px", marginTop: "10px", background: "#ffe0e0", borderRadius: "4px" }}>{error}</div>}

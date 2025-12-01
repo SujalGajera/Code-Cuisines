@@ -20,13 +20,13 @@ export default function ReceptionistDashboard() {
     return saved
       ? JSON.parse(saved)
       : {
-          name: "Roshan Dhakal",
-          email: "roshandhakal788@gmail.com",
-          phone: "021 000 0000",
-          role: "Receptionist",
-          avatar: "",
-          skills: ["Front Counter", "Table Bookings"],
-        };
+        name: "Roshan Dhakal",
+        email: "roshandhakal788@gmail.com",
+        phone: "021 000 0000",
+        role: "Receptionist",
+        avatar: "",
+        skills: ["Front Counter", "Table Bookings"],
+      };
   });
 
   const [profileDraft, setProfileDraft] = useState(profile);
@@ -138,46 +138,8 @@ export default function ReceptionistDashboard() {
 
   const [bookings, setBookings] = useState(() => {
     const saved = localStorage.getItem("bookings");
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            name: "John Smith",
-            contact: "021 456 98724",
-            date: "Oct 7",
-            time: "7:30 PM",
-            table: "Table 3",
-            status: "Confirmed",
-          },
-          {
-            id: 2,
-            name: "Alice Brown",
-            contact: "027 321 65425",
-            date: "Oct 1",
-            time: "1:00 PM",
-            table: "Table 5",
-            status: "Pending",
-          },
-          {
-            id: 3,
-            name: "David Clark",
-            contact: "020 345 78926",
-            date: "Oct 6",
-            time: "6:45 PM",
-            table: "Table 1",
-            status: "Cancelled",
-          },
-          {
-            id: 4,
-            name: "Maria Lopez",
-            contact: "029 876 54326",
-            date: "Oct 8",
-            time: "8:00 PM",
-            table: "Table 7",
-            status: "Confirmed",
-          },
-        ];
+    // Bookings will be managed from Admin dashboard - reservations collection
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -266,34 +228,8 @@ export default function ReceptionistDashboard() {
 
   const [orders, setOrders] = useState(() => {
     const saved = localStorage.getItem("staffOrders");
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            customer: "John Smith",
-            item: "Pizza",
-            qty: 2,
-            table: "Table 3",
-            status: "Confirmed",
-          },
-          {
-            id: 2,
-            customer: "Alice Brown",
-            item: "Burger",
-            qty: 1,
-            table: "Table 5",
-            status: "Served",
-          },
-          {
-            id: 3,
-            customer: "David Clark",
-            item: "Pasta",
-            qty: 1,
-            table: "Table 1",
-            status: "Pending",
-          },
-        ];
+    // Orders will be managed from Admin dashboard or Firebase
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -379,37 +315,8 @@ export default function ReceptionistDashboard() {
 
   const [shifts, setShifts] = useState(() => {
     const saved = localStorage.getItem("receptionShifts");
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            staff: "Roshan Dhakal",
-            role: "Receptionist",
-            date: "2025-11-07",
-            start: "09:00",
-            end: "17:00",
-            status: "Scheduled",
-          },
-          {
-            id: 2,
-            staff: "Alice Brown",
-            role: "Wait Staff",
-            date: "2025-11-07",
-            start: "12:00",
-            end: "20:00",
-            status: "Completed",
-          },
-          {
-            id: 3,
-            staff: "David Clark",
-            role: "Host",
-            date: "2025-11-08",
-            start: "10:00",
-            end: "18:00",
-            status: "Scheduled",
-          },
-        ];
+    // Shifts will be managed from Admin dashboard
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -501,9 +408,8 @@ export default function ReceptionistDashboard() {
         {/* TABS inside navbar */}
         <div className="cb-tabs-inside">
           <button
-            className={`cb-chip ${
-              activeTab === "profile" ? "cb-chip--active" : ""
-            }`}
+            className={`cb-chip ${activeTab === "profile" ? "cb-chip--active" : ""
+              }`}
             onClick={() => {
               setProfileDraft(profile);
               setActiveTab("profile");
@@ -513,27 +419,24 @@ export default function ReceptionistDashboard() {
           </button>
 
           <button
-            className={`cb-chip ${
-              activeTab === "bookings" ? "cb-chip--active" : ""
-            }`}
+            className={`cb-chip ${activeTab === "bookings" ? "cb-chip--active" : ""
+              }`}
             onClick={() => setActiveTab("bookings")}
           >
             🧾 Customer Booking
           </button>
 
           <button
-            className={`cb-chip ${
-              activeTab === "shifts" ? "cb-chip--active" : ""
-            }`}
+            className={`cb-chip ${activeTab === "shifts" ? "cb-chip--active" : ""
+              }`}
             onClick={() => setActiveTab("shifts")}
           >
             ⏰ Shifts
           </button>
 
           <button
-            className={`cb-chip ${
-              activeTab === "staff" ? "cb-chip--active" : ""
-            }`}
+            className={`cb-chip ${activeTab === "staff" ? "cb-chip--active" : ""
+              }`}
             onClick={() => setActiveTab("staff")}
           >
             👥 Staff

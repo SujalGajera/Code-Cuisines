@@ -87,7 +87,7 @@ export default function CustomersPage() {
             <p className="adm-sub">View and manage customer information. Registered customers appear here automatically.</p>
 
             <div className="adm-search" style={{ marginBottom: 12 }}>
-                🔎 <input placeholder="Search name, email, phone..." value={filter} onChange={e => setFilter(e.target.value)} />
+                <input placeholder="Search name, email, phone..." value={filter} onChange={e => setFilter(e.target.value)} />
             </div>
 
             {error && <div style={{ color: "#ff4444", padding: "10px", marginBottom: "10px", background: "#ffe0e0", borderRadius: "4px" }}>{error}</div>}

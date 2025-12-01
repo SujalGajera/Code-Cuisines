@@ -1,6 +1,6 @@
 import {
   collection, doc, addDoc, updateDoc, deleteDoc,
-  serverTimestamp, onSnapshot, query, orderBy, getCountFromServer
+  serverTimestamp, onSnapshot, query, orderBy, getCountFromServer, where
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 
@@ -25,5 +25,11 @@ export function watch(name, set, opts = {}) {
 }
 export async function count(name) {
   const c = await getCountFromServer(col(name));
+  return c.data().count;
+}
+// Count users by role
+export async function countByRole(role) {
+  const q = query(col("users"), where("role", "==", role));
+  const c = await getCountFromServer(q);
   return c.data().count;
 }

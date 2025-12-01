@@ -6,12 +6,15 @@ import "./CustomerReservations.css";
 import { auth, db } from "../../firebase";
 import {
   collection,
-  getDocs,
+  query,
+  where,
+  onSnapshot,
   addDoc,
   updateDoc,
   deleteDoc,
   doc,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
 
 function CustomerReservations() {
@@ -32,7 +35,7 @@ function CustomerReservations() {
     notes: "",
   });
 
-  // ---------- load reservations from subcollection ----------
+  // ---------- load reservations from top-level collection ----------
   useEffect(() => {
     const init = async () => {
       // Try Firebase Auth
@@ -53,20 +56,27 @@ function CustomerReservations() {
       setCustomerUid(uid);
 
       try {
-        // 🔹 customers/{uid}/reservations
-        const resCol = collection(db, "customers", uid, "reservations");
-        const snap = await getDocs(resCol);
+        // 🔹 Real-time listener for reservations collection filtered by userId
+        const q = query(
+          collection(db, "reservations"),
+          where("userId", "==", uid)
+        );
 
-        const all = snap.docs.map((d) => ({
-          id: d.id,
-          ...d.data(),
-        }));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+          const all = snapshot.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          }));
 
-        setUpcomingReservations(all.filter((r) => r.status !== "Completed"));
-        setPastReservations(all.filter((r) => r.status === "Completed"));
+          setUpcomingReservations(all.filter((r) => r.status !== "Completed"));
+          setPastReservations(all.filter((r) => r.status === "Completed"));
+          setLoading(false);
+        });
+
+        // Cleanup listener on unmount
+        return () => unsubscribe();
       } catch (err) {
         console.error("Error loading reservations:", err);
-      } finally {
         setLoading(false);
       }
     };
@@ -121,7 +131,15 @@ function CustomerReservations() {
     }
 
     try {
+      // Get customer details from users collection
+      const userDoc = await getDoc(doc(db, "users", customerUid));
+      const userData = userDoc.data();
+
       const newResData = {
+        userId: customerUid,
+        userName: userData?.name || "Customer",
+        userEmail: userData?.email || "",
+        userPhone: userData?.phone || "",
         date: form.date || "New date",
         time: form.time || "Time",
         guests: Number(form.guests) || 2,
@@ -131,16 +149,12 @@ function CustomerReservations() {
         createdAt: serverTimestamp(),
       };
 
-      // 🔹 addDoc into customers/{uid}/reservations
-      const colRef = collection(db, "customers", customerUid, "reservations");
-      const docRef = await addDoc(colRef, newResData);
-
-      setUpcomingReservations((prev) => [
-        ...prev,
-        { id: docRef.id, ...newResData },
-      ]);
+      // 🔹 addDoc into top-level reservations collection
+      await addDoc(collection(db, "reservations"), newResData);
+      // Real-time listener will update the UI automatically
 
       closeModal();
+      alert("Reservation created successfully!");
     } catch (err) {
       console.error("Error creating reservation:", err);
       alert("Could not create reservation. Please try again.");
@@ -152,13 +166,7 @@ function CustomerReservations() {
     if (!activeReservation || !customerUid) return;
 
     try {
-      const ref = doc(
-        db,
-        "customers",
-        customerUid,
-        "reservations",
-        activeReservation.id
-      );
+      const ref = doc(db, "reservations", activeReservation.id);
 
       await updateDoc(ref, {
         date: form.date,
@@ -166,22 +174,10 @@ function CustomerReservations() {
         guests: Number(form.guests) || 2,
         note: form.notes || "",
       });
-
-      setUpcomingReservations((prev) =>
-        prev.map((res) =>
-          res.id === activeReservation.id
-            ? {
-                ...res,
-                date: form.date,
-                time: form.time,
-                guests: Number(form.guests) || 2,
-                note: form.notes || "",
-              }
-            : res
-        )
-      );
+      // Real-time listener will update UI automatically
 
       closeModal();
+      alert("Reservation updated successfully!");
     } catch (err) {
       console.error("Error updating reservation:", err);
       alert("Could not update reservation. Please try again.");
@@ -192,20 +188,12 @@ function CustomerReservations() {
     if (!activeReservation || !customerUid) return;
 
     try {
-      const ref = doc(
-        db,
-        "customers",
-        customerUid,
-        "reservations",
-        activeReservation.id
-      );
+      const ref = doc(db, "reservations", activeReservation.id);
       await deleteDoc(ref);
-
-      setUpcomingReservations((prev) =>
-        prev.filter((res) => res.id !== activeReservation.id)
-      );
+      // Real-time listener will update UI automatically
 
       closeModal();
+      alert("Reservation cancelled successfully.");
     } catch (err) {
       console.error("Error cancelling reservation:", err);
       alert("Could not cancel reservation. Please try again.");
@@ -426,11 +414,10 @@ function CustomerReservations() {
                   </div>
 
                   <span
-                    className={`cc-pill ${
-                      res.status === "Confirmed"
+                    className={`cc-pill ${res.status === "Confirmed"
                         ? "cc-pill-success"
                         : "cc-pill-warning"
-                    }`}
+                      }`}
                   >
                     {res.status}
                   </span>

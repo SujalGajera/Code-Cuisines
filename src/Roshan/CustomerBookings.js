@@ -6,12 +6,8 @@ import React, { useState } from "react";
 import "./ReceptionistDashboard.css";
 
 export default function CustomerBookings() {
-  const [bookings, setBookings] = useState([
-    { id: 1, name: "John Smith", contact: "021 456 98724", date: "Oct 7", time: "7:30 PM", table: "Table 3", status: "Confirmed" },
-    { id: 2, name: "Alice Brown", contact: "027 321 65425", date: "Oct 1", time: "1:00 PM", table: "Table 5", status: "Pending" },
-    { id: 3, name: "David Clark", contact: "020 345 78926", date: "Oct 6", time: "6:45 PM", table: "Table 1", status: "Cancelled" },
-    { id: 4, name: "Maria Lopez", contact: "029 876 54326", date: "Oct 8", time: "8:00 PM", table: "Table 7", status: "Confirmed" },
-  ]);
+  // Bookings will be managed from Admin dashboard
+  const [bookings, setBookings] = useState([]);
 
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");

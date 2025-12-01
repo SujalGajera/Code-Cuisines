@@ -95,7 +95,7 @@ export default function StaffPage() {
             <p className="adm-sub">Add, edit, or manage restaurant staff and their access.</p>
 
             <div className="adm-list-head">
-                <div className="adm-search">🔎
+                <div className="adm-search">
                     <input placeholder="Search name, email, role..." value={filter} onChange={e => setFilter(e.target.value)} />
                 </div>
             </div>
