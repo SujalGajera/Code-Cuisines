@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CustomerLayout from "../Layout/CustomerLayout";
 import { useCart } from "../Cart/CartContext";
 import { auth, db } from "../../firebase";
-import { collection, query, where, orderBy, limit, getDocs, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, limit, getDocs, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import "./CustomerPayment.css";
 
 function CustomerPayment() {

@@ -3,7 +3,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import CustomerLayout from "../Layout/CustomerLayout";
 import "./CustomerMenu.css";
 import { useCart } from "../Cart/CartContext";
-import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 
 // Default image for menu items without specific image

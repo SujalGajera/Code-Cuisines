@@ -11,22 +11,29 @@ export default function AdminOverview() {
   useEffect(() => {
     (async () => {
       try {
-        const [
-          receptionistSnap,
-          customerSnap,
-          menuSnap,
-          reservationsSnap,
-          feedbackSnap
-        ] = await Promise.all([
-          getCountFromServer(collection(db, "receptionist")),
-          getCountFromServer(collection(db, "customer")),
-          getCountFromServer(collection(db, "menu")),
-          getCountFromServer(collection(db, "reservations")),
-          getCountFromServer(collectionGroup(db, "feedback"))
-        ]);
+        console.log("Fetching dashboard counts...");
+
+        // Fetch counts individually to prevent one failure from breaking all
+        const staffSnap = await getCountFromServer(collection(db, "users")).catch(e => { console.error("Staff count failed:", e); return { data: () => ({ count: 0 }) }; });
+        const receptionistSnap = await getCountFromServer(collection(db, "receptionist")).catch(e => { console.error("Receptionist count failed:", e); return { data: () => ({ count: 0 }) }; });
+        const customerSnap = await getCountFromServer(collection(db, "customer")).catch(e => { console.error("Customer count failed:", e); return { data: () => ({ count: 0 }) }; });
+        const menuSnap = await getCountFromServer(collection(db, "menu")).catch(e => { console.error("Menu count failed:", e); return { data: () => ({ count: 0 }) }; });
+        const reservationsSnap = await getCountFromServer(collection(db, "reservations")).catch(e => { console.error("Reservations count failed:", e); return { data: () => ({ count: 0 }) }; });
+
+        // Collection group query might require an index or specific permissions
+        const feedbackSnap = await getCountFromServer(collectionGroup(db, "feedback")).catch(e => { console.error("Feedback count failed:", e); return { data: () => ({ count: 0 }) }; });
+
+        console.log("Counts fetched:", {
+          staff: staffSnap.data().count,
+          receptionists: receptionistSnap.data().count,
+          customers: customerSnap.data().count,
+          menu: menuSnap.data().count,
+          reservations: reservationsSnap.data().count,
+          feedback: feedbackSnap.data().count
+        });
 
         setTotals({
-          staff: 0, // Staff count logic needs to be defined if separate from receptionists
+          staff: staffSnap.data().count,
           receptionists: receptionistSnap.data().count,
           customers: customerSnap.data().count,
           menu: menuSnap.data().count,

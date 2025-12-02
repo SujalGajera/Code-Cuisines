@@ -240,7 +240,7 @@ function CustomerLayout({ children }) {
                     <button
                       type="button"
                       className="checkout-btn"
-                      onClick={() => navigate("/customer/payment")}
+                      onClick={() => handleCheckout(items, cartTotal, clearCart, navigate, setShowCart)}
                     >
                       Checkout
                     </button>
