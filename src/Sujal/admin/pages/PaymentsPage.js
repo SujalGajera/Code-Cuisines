@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { collectionGroup, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import { collectionGroup, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase";
 import "./AdminPages.css";
 
@@ -10,23 +10,35 @@ export default function PaymentsPage() {
   useEffect(() => {
     const ordersQuery = query(
       collectionGroup(db, "orders"),
-      where("paymentStatus", "==", "Completed"),
-      orderBy("paidAt", "desc")
+      where("paymentStatus", "==", "Completed")
     );
 
+    console.log("Fetching payments...");
+
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
+      console.log("Payments snapshot size:", snapshot.size);
+
       const ordersList = snapshot.docs.map(doc => {
         const data = doc.data();
+        console.log("Payment doc:", doc.id, data);
         return {
           id: doc.id,
           customer: data.userEmail || "Unknown",
           amount: `$${data.total?.toFixed(2) || "0.00"}`,
           method: data.paymentMethod || "N/A",
           date: data.paidAt?.toDate().toLocaleDateString() || data.createdAt?.toDate().toLocaleDateString() || "Recent",
-          status: data.paymentStatus || "Pending"
+          status: data.paymentStatus || "Pending",
+          // Store raw date for sorting
+          rawDate: data.paidAt?.toDate() || data.createdAt?.toDate() || new Date(0)
         };
       });
+
+      // Sort client-side to avoid index requirement
+      ordersList.sort((a, b) => b.rawDate - a.rawDate);
+
       setRows(ordersList);
+    }, (error) => {
+      console.error("Error fetching payments:", error);
     });
 
     return () => unsubscribe();
