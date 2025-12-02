@@ -31,17 +31,20 @@ export const handleCheckout = async (items, cartTotal, clearCart, navigate, setS
             createdAt: serverTimestamp()
         };
 
-        await addDoc(collection(db, "orders"), orderData);
+        console.log("Creating order with data:", orderData);
+        console.log("Creating order at path:", `customer/${user.uid}/orders`);
 
-        // Clear cart and show confirmation
-        clearCart();
-        alert("Order placed successfully! 🎉\\n\\nYour order has been submitted and is being processed.");
+        const docRef = await addDoc(collection(db, "customer", user.uid, "orders"), orderData);
+        console.log("✅ Order created successfully! Order ID:", docRef.id);
+
+        // Navigate to payment page
         setShowCart(false);
-        navigate("/customer/dashboard");
+        navigate("/customer/payment");
 
         return true;
     } catch (error) {
-        console.error("Error placing order:", error);
+        console.error("❌ Error placing order:", error);
+        console.error("Error details:", error.message, error.code);
         alert("Failed to place order. Please try again.\\nError: " + error.message);
         return false;
     }

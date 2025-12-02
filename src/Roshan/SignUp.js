@@ -25,8 +25,8 @@ export default function SignUp() {
       // 1️⃣ Create Firebase Auth account
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
-      // 2️⃣ Save Firestore document in receptionists collection
-      await setDoc(doc(db, "receptionists", userCred.user.uid), {
+      // 2️⃣ Save Firestore document in receptionist collection
+      await setDoc(doc(db, "receptionist", userCred.user.uid), {
         firstName,
         lastName,
         email,

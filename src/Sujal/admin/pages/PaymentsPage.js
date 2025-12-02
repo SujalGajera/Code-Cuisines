@@ -1,12 +1,37 @@
 import { useEffect, useMemo, useState } from "react";
-import { patch, watch } from "../data/fireUtils";
+import { collectionGroup, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase";
 import "./AdminPages.css";
 
 export default function PaymentsPage() {
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState("");
 
-  useEffect(() => watch("payments", setRows, { orderBy: "createdAt", dir: "desc" }), []);
+  useEffect(() => {
+    const ordersQuery = query(
+      collectionGroup(db, "orders"),
+      where("paymentStatus", "==", "Completed"),
+      orderBy("paidAt", "desc")
+    );
+
+    const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
+      const ordersList = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          customer: data.userEmail || "Unknown",
+          amount: `$${data.total?.toFixed(2) || "0.00"}`,
+          method: data.paymentMethod || "N/A",
+          date: data.paidAt?.toDate().toLocaleDateString() || data.createdAt?.toDate().toLocaleDateString() || "Recent",
+          status: data.paymentStatus || "Pending"
+        };
+      });
+      setRows(ordersList);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const visible = useMemo(() => {
     const f = filter.toLowerCase();
     return rows.filter(r => [r.customer, r.amount, r.method, r.date, r.status].some(v => String(v || "").toLowerCase().includes(f)));
@@ -51,7 +76,7 @@ export default function PaymentsPage() {
                 <td>{r.customer}</td><td>{r.amount}</td><td>{r.method}</td><td>{r.date}</td>
                 <td><span className={`adm-chip ${statusClass(r.status)}`}>{r.status}</span></td>
                 <td className="adm-actions">
-                  <button className="link" onClick={() => patch("payments", r.id, { status: "Completed" })}>Mark Completed</button>
+                  <span className="adm-muted">—</span>
                 </td>
               </tr>
             ))}

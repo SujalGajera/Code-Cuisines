@@ -3,6 +3,8 @@
 // Description: Receptionist Dashboard (clean UI + bookings + staff orders + profile + shifts)
 
 import React, { useMemo, useState, useEffect, useRef } from "react";
+import { collection, query, where, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { db, auth } from "../firebase";
 import "./ReceptionistDashboard.css";
 
 export default function ReceptionistDashboard() {
@@ -136,15 +138,21 @@ export default function ReceptionistDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  const [bookings, setBookings] = useState(() => {
-    const saved = localStorage.getItem("bookings");
-    // Bookings will be managed from Admin dashboard - reservations collection
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [bookings, setBookings] = useState([]);
 
+  // Fetch bookings from Firestore (reservations collection)
   useEffect(() => {
-    localStorage.setItem("bookings", JSON.stringify(bookings));
-  }, [bookings]);
+    const q = query(collection(db, "reservations"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const list = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      // Filter for receptionist view if needed, or show all
+      setBookings(list);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -164,9 +172,9 @@ export default function ReceptionistDashboard() {
     return bookings.filter(
       (b) =>
         (filterStatus === "All" || b.status === filterStatus) &&
-        (b.name.toLowerCase().includes(q) ||
-          b.contact.toLowerCase().includes(q) ||
-          b.table.toLowerCase().includes(q))
+        ((b.name || "").toLowerCase().includes(q) ||
+          (b.contact || "").toLowerCase().includes(q) ||
+          (b.table || "").toLowerCase().includes(q))
     );
   }, [searchTerm, filterStatus, bookings]);
 
@@ -190,7 +198,7 @@ export default function ReceptionistDashboard() {
     setShowModal(true);
   };
 
-  const saveBooking = () => {
+  const saveBooking = async () => {
     if (
       !formData.name ||
       !formData.contact ||
@@ -202,20 +210,44 @@ export default function ReceptionistDashboard() {
       return;
     }
 
-    if (isEditing) {
-      setBookings((prev) =>
-        prev.map((x) => (x.id === formData.id ? formData : x))
-      );
-    } else {
-      setBookings((prev) => [{ ...formData, id: Date.now() }, ...prev]);
-    }
+    const user = auth.currentUser;
+    const bookingData = {
+      name: formData.name,
+      contact: formData.contact,
+      date: formData.date,
+      time: formData.time,
+      table: formData.table,
+      status: formData.status || "Pending",
+      userId: "receptionist-created",
+      createdBy: {
+        role: "receptionist",
+        id: user?.uid || "unknown",
+        name: profile.name || user?.email || "Receptionist"
+      }
+    };
 
-    setShowModal(false);
+    try {
+      if (isEditing && formData.id) {
+        const docRef = doc(db, "reservations", formData.id);
+        await updateDoc(docRef, bookingData);
+      } else {
+        await addDoc(collection(db, "reservations"), bookingData);
+      }
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error saving booking:", error);
+      alert("Failed to save booking");
+    }
   };
 
-  const deleteBooking = (id) => {
+  const deleteBooking = async (id) => {
     if (window.confirm("Delete this booking?")) {
-      setBookings((prev) => prev.filter((x) => x.id !== id));
+      try {
+        await deleteDoc(doc(db, "reservations", id));
+      } catch (error) {
+        console.error("Error deleting booking:", error);
+        alert("Failed to delete booking");
+      }
     }
   };
 
@@ -313,15 +345,24 @@ export default function ReceptionistDashboard() {
   // 3) SHIFTS
   // =======================
 
-  const [shifts, setShifts] = useState(() => {
-    const saved = localStorage.getItem("receptionShifts");
-    // Shifts will be managed from Admin dashboard
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [shifts, setShifts] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem("receptionShifts", JSON.stringify(shifts));
-  }, [shifts]);
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const q = collection(db, "receptionist", user.uid, "shifts");
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const shiftsData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setShifts(shiftsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const [shiftFilter, setShiftFilter] = useState("All");
   const [shiftModalOpen, setShiftModalOpen] = useState(false);
@@ -1131,9 +1172,7 @@ export default function ReceptionistDashboard() {
       {activeTab === "shifts" && (
         <>
           <div className="cb-actionbar">
-            <button className="cb-add" onClick={openShiftAdd}>
-              + Add New Shift
-            </button>
+            {/* Read-only view for shifts */}
 
             <div className="cb-filterbar">
               <label>Filter:</label>
@@ -1160,7 +1199,7 @@ export default function ReceptionistDashboard() {
                   <th>Date</th>
                   <th>Time</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  {/* <th>Actions</th> */}
                 </tr>
               </thead>
 
@@ -1168,33 +1207,22 @@ export default function ReceptionistDashboard() {
                 {filteredShifts.map((s) => (
                   <tr key={s.id} className="cb-row">
                     <td>{s.id}</td>
-                    <td>{s.staff}</td>
+                    <td>{s.receptionistName}</td>
                     <td>{s.role}</td>
                     <td>{formatDateLabel(s.date)}</td>
                     <td>
-                      {s.start} – {s.end}
+                      {s.startTime} – {s.endTime}
                     </td>
                     <td>
                       <span className={`cb-badge ${s.status.toLowerCase()}`}>
                         {s.status}
                       </span>
                     </td>
-                    <td>
+                    {/* <td>
                       <div className="cb-actions-col">
-                        <button
-                          className="edit-btn"
-                          onClick={() => openShiftEdit(s)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => deleteShift(s.id)}
-                        >
-                          Delete
-                        </button>
+                        ...
                       </div>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>

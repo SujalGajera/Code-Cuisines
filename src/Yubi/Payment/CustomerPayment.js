@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import CustomerLayout from "../Layout/CustomerLayout";
 import { useCart } from "../Cart/CartContext";
+import { auth, db } from "../../firebase";
+import { collection, query, where, orderBy, limit, getDocs, doc, updateDoc, serverTimestamp } from "firebase/firestore";
 import "./CustomerPayment.css";
 
 function CustomerPayment() {
@@ -23,7 +25,7 @@ function CustomerPayment() {
     setCardDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     // must choose any method
     if (!method) {
       setMsg("❌ Please select a payment method.");
@@ -45,16 +47,56 @@ function CustomerPayment() {
 
     setLoading(true);
 
-    // DEMO ONLY: pretend payment is always successful
-    clearCart(); // empty the cart
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        setMsg("❌ Please log in to complete payment.");
+        setLoading(false);
+        return;
+      }
 
-    setMsg("✅ Payment Successful! Thank you for your order.");
-    setTimeout(() => {
-      // optional: go to order history page
-      window.location.href = "/customer/orders";
-    }, 1500);
+      // Get the most recent pending order for this user
+      const ordersRef = collection(db, "customer", user.uid, "orders");
+      console.log("Querying orders for user:", user.uid);
 
-    setLoading(false);
+      // Simplified query - no orderBy to avoid index requirement
+      const q = query(ordersRef, where("paymentStatus", "==", "Pending"), limit(1));
+      const orderSnapshot = await getDocs(q);
+
+      console.log("Orders found:", orderSnapshot.size);
+      orderSnapshot.forEach(doc => console.log("Order doc:", doc.id, doc.data()));
+
+      if (orderSnapshot.empty) {
+        setMsg("❌ No pending order found.");
+        setLoading(false);
+        return;
+      }
+
+      const orderDoc = orderSnapshot.docs[0];
+
+      // Update order with payment information
+      await updateDoc(doc(db, "customer", user.uid, "orders", orderDoc.id), {
+        paymentMethod: method,
+        paymentStatus: "Completed",
+        status: "Confirmed",
+        paidAt: serverTimestamp()
+      });
+
+      // DEMO ONLY: pretend payment is always successful
+      clearCart(); // empty the cart
+
+      setMsg("✅ Payment Successful! Thank you for your order.");
+      setLoading(false);
+
+      setTimeout(() => {
+        // optional: go to order history page
+        window.location.href = "/customer/orders";
+      }, 1500);
+    } catch (error) {
+      console.error("Payment error:", error);
+      setMsg("❌ Payment failed. Please try again.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -177,9 +219,8 @@ function CustomerPayment() {
 
         {msg && (
           <p
-            className={`pay-msg ${
-              msg.startsWith("❌") ? "pay-error" : "pay-success"
-            }`}
+            className={`pay-msg ${msg.startsWith("❌") ? "pay-error" : "pay-success"
+              }`}
           >
             {msg}
           </p>

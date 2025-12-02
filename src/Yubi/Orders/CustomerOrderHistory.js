@@ -3,10 +3,35 @@ import React from "react";
 import CustomerLayout from "../Layout/CustomerLayout";
 import "./CustomerOrderHistory.css";
 
-// Orders will be populated from Firebase in the future
-const ORDERS = [];
+import { auth, db } from "../../firebase";
+import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { useState, useEffect } from "react";
 
 function CustomerOrderHistory() {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const q = query(
+      collection(db, "customer", user.uid, "orders"),
+      orderBy("createdAt", "desc")
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const orderList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().createdAt?.toDate().toLocaleDateString() || "Recent",
+        amount: doc.data().total || 0,
+        items: doc.data().items?.map(i => i.name).join(", ") || "Items"
+      }));
+      setOrders(orderList);
+    });
+
+    return () => unsubscribe();
+  }, []);
   return (
     <CustomerLayout>
       <div className="cc-orders-page">
@@ -30,8 +55,8 @@ function CustomerOrderHistory() {
               </tr>
             </thead>
             <tbody>
-              {ORDERS.length > 0 ? (
-                ORDERS.map((order) => (
+              {orders.length > 0 ? (
+                orders.map((order) => (
                   <tr key={order.id}>
                     <td>{order.id}</td>
                     <td>{order.items}</td>

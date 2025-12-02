@@ -27,7 +27,7 @@ function CustomerRegister() {
       const user = userCredential.user;
 
       // Create Firestore user document with customer role
-      await setDoc(doc(db, "users", user.uid), {
+      await setDoc(doc(db, "customer", user.uid), {
         name: `${firstName} ${lastName}`,
         email: email,
         phone: phone,

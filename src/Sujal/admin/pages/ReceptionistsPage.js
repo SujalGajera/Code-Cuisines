@@ -11,9 +11,9 @@ export default function ReceptionistsPage() {
     const [editingId, setEditingId] = useState(null);
     const [error, setError] = useState("");
 
-    // Real-time listener for receptionists from users collection
+    // Real-time listener for receptionists from receptionist collection
     useEffect(() => {
-        const q = query(collection(db, "users"), where("role", "==", "receptionist"));
+        const q = collection(db, "receptionist");
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const receptionistsList = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -48,7 +48,7 @@ export default function ReceptionistsPage() {
                 const user = await createSecondaryUser(form.email, form.password);
 
                 // Create user document in Firestore
-                await setDoc(doc(db, "users", user.uid), {
+                await setDoc(doc(db, "receptionist", user.uid), {
                     name: form.name,
                     email: form.email,
                     role: "receptionist",
@@ -75,7 +75,7 @@ export default function ReceptionistsPage() {
     const deleteReceptionist = async (id) => {
         if (window.confirm("Delete this receptionist? This will remove from database.")) {
             try {
-                await deleteDoc(doc(db, "users", id));
+                await deleteDoc(doc(db, "receptionist", id));
                 alert("Receptionist removed from database.");
             } catch (err) {
                 console.error("Error deleting receptionist:", err);

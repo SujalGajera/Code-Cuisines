@@ -11,9 +11,9 @@ export default function CustomersPage() {
     const [editingId, setEditingId] = useState(null);
     const [error, setError] = useState("");
 
-    // Real-time listener for customers from users collection
+    // Real-time listener for customers from customer collection
     useEffect(() => {
-        const q = query(collection(db, "users"), where("role", "==", "customer"));
+        const q = collection(db, "customer");
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const customers = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -43,7 +43,7 @@ export default function CustomersPage() {
                 const user = await createSecondaryUser(form.email, form.password);
 
                 // Create user document in Firestore
-                await setDoc(doc(db, "users", user.uid), {
+                await setDoc(doc(db, "customer", user.uid), {
                     name: form.name,
                     email: form.email,
                     phone: form.phone || "",
@@ -70,7 +70,7 @@ export default function CustomersPage() {
     const deleteCustomer = async (id) => {
         if (window.confirm("Delete this customer? This will remove from database (Firebase Auth account will remain).")) {
             try {
-                await deleteDoc(doc(db, "users", id));
+                await deleteDoc(doc(db, "customer", id));
                 alert("Customer removed from database.");
             } catch (err) {
                 console.error("Error deleting customer:", err);

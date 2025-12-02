@@ -45,6 +45,9 @@ export default function AdminLayout() {
             <NavLink to="/admin/receptionists" className="adm-link">
               <span>💁</span> <span>Receptionists</span>
             </NavLink>
+            <NavLink to="/admin/shifts" className="adm-link">
+              <span>⏰</span> <span>Shifts</span>
+            </NavLink>
             <NavLink to="/admin/customers" className="adm-link">
               <span>🍽️</span> <span>Customers</span>
             </NavLink>

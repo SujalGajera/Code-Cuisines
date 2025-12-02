@@ -25,9 +25,19 @@ export function AdminProvider({ children }) {
 
         setUser(firebaseUser);
 
-        // Check Firestore for user role
-        const userRef = doc(db, "users", firebaseUser.uid);
-        const snap = await getDoc(userRef);
+        // Check Firestore for user role in all collections
+        let userRef = doc(db, "users", firebaseUser.uid);
+        let snap = await getDoc(userRef);
+
+        if (!snap.exists()) {
+          userRef = doc(db, "receptionist", firebaseUser.uid);
+          snap = await getDoc(userRef);
+        }
+
+        if (!snap.exists()) {
+          userRef = doc(db, "customer", firebaseUser.uid);
+          snap = await getDoc(userRef);
+        }
 
         if (snap.exists()) {
           const userData = snap.data();

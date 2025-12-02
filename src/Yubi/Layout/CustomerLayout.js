@@ -19,6 +19,7 @@ import avatarImg from "../images/avatar.png";
 import logo from "../images/logo.png";
 
 import { useCart } from "../Cart/CartContext";
+import { handleCheckout } from "../Cart/checkoutHandler";
 
 //Side Navigation Items 
 const navItems = [
@@ -95,7 +96,7 @@ function CustomerLayout({ children }) {
             </div>
           </div>
 
-          
+
         </div>
 
         {/* RIGHT PART */}
@@ -138,9 +139,8 @@ function CustomerLayout({ children }) {
               return (
                 <li
                   key={item.id}
-                  className={`cc-sidebar-item ${
-                    isActive ? "cc-sidebar-item-active" : ""
-                  }`}
+                  className={`cc-sidebar-item ${isActive ? "cc-sidebar-item-active" : ""
+                    }`}
                   onClick={() => navigate(item.path)}
                 >
                   <div className="cc-sidebar-icon">{item.icon}</div>

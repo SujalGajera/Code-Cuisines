@@ -6,22 +6,6 @@ import { useCart } from "../Cart/CartContext";
 import { collection, query, where, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "../../firebase";
 
-// Map each menu item id to an image URL (GUARANTEED TO LOAD)
-const IMAGE_MAP = {
-  capuccino:
-    "https://cdn.pixabay.com/photo/2016/08/09/13/21/coffee-1580595_1280.jpg",
-  croissant:
-    "https://images.pexels.com/photos/4038314/pexels-photo-4038314.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "avocado-toast":
-    "https://images.pexels.com/photos/573722/pexels-photo-573722.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "fresh-lemonade":
-    "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=800",
-  espresso:
-    "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800",
-  "blueberry-muffin":
-    "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800",
-};
-
 // Default image for menu items without specific image
 const DEFAULT_IMAGE = "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800";
 
@@ -39,19 +23,29 @@ function CustomerMenu() {
       where("availability", "==", "Available")
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const items = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          name: data.item || data.name || "Unknown Item",
-          category: data.category || "Mains",
-          price: parseFloat(data.price?.toString().replace(/[^0-9.]/g, '') || 0),
-          description: data.description || `Delicious ${data.item || 'dish'}`,
-        };
-      });
-      setMenuItems(items);
-    });
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const items = snapshot.docs.map(doc => {
+          const data = doc.data();
+          console.log("Menu item data:", doc.id, data); // Debug log
+          return {
+            id: doc.id,
+            name: data.item || data.name || "Unknown Item",
+            category: data.category || "Mains",
+            price: parseFloat(data.price?.toString().replace(/[^0-9.]/g, '') || 0),
+            description: data.description || `Delicious ${data.item || 'dish'}`,
+            imageUrl: data.imageUrl || DEFAULT_IMAGE,
+          };
+        });
+        console.log("Processed menu items:", items); // Debug log
+        setMenuItems(items);
+      },
+      (error) => {
+        console.error("Error syncing menuItems:", error);
+        console.error("Full error details:", error.message, error.code);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
@@ -101,13 +95,11 @@ function CustomerMenu() {
         {/* Grid */}
         <div className="cc-menu-grid">
           {filteredItems.map((item) => {
-            const imgSrc = IMAGE_MAP[item.id] || DEFAULT_IMAGE;
-
             return (
               <article key={item.id} className="cc-card cc-menu-card">
                 <div
                   className="cc-menu-card-image"
-                  style={{ backgroundImage: `url(${imgSrc})` }}
+                  style={{ backgroundImage: `url(${item.imageUrl})` }}
                   aria-hidden="true"
                 />
                 <div className="cc-menu-card-body">

@@ -49,10 +49,7 @@ function CustomerFeedback() {
       setCustomerUid(uid);
 
       // Real-time listener for feedback filtered by userId
-      const q = query(
-        collection(db, "feedback"),
-        where("userId", "==", uid)
-      );
+      const q = collection(db, "customer", uid, "feedback");
 
       const unsubscribe = onSnapshot(q, (snapshot) => {
         const feedbacks = snapshot.docs.map((d) => {
@@ -94,7 +91,7 @@ function CustomerFeedback() {
       const userDoc = await getDoc(doc(db, "users", customerUid));
       const userData = userDoc.data();
 
-      await addDoc(collection(db, "feedback"), {
+      await addDoc(collection(db, "customer", customerUid, "feedback"), {
         userId: customerUid,
         userName: userData?.name || "Customer",
         userEmail: userData?.email || "",

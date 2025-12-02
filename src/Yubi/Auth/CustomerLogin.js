@@ -23,8 +23,13 @@ function CustomerLogin() {
             const user = userCredential.user;
 
             // Step 2: Verify user role from Firestore
-            const userRef = doc(db, "users", user.uid);
-            const userSnap = await getDoc(userRef);
+            let userRef = doc(db, "users", user.uid);
+            let userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                userRef = doc(db, "customer", user.uid);
+                userSnap = await getDoc(userRef);
+            }
 
             if (!userSnap.exists()) {
                 await auth.signOut();

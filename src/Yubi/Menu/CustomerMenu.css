@@ -1,8 +1,4 @@
-CustomerMenu.css
-
-
-
-.cc-menu-page {
+CustomerMenu.css .cc-menu-page {
   padding: 2.5rem 3rem;
   background: #fdfaf6;
   min-height: 100%;
@@ -56,7 +52,9 @@ CustomerMenu.css
 
 .cc-menu-card-image {
   height: 160px;
-  background-image: linear-gradient(135deg, #fed7aa, #a94c0a);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .cc-menu-card-body {
@@ -125,31 +123,3 @@ CustomerMenu.css
     padding: 1.5rem 1.25rem;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

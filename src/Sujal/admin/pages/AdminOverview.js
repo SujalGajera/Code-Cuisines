@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { count, countByRole } from "../data/fireUtils";
+import { collection, collectionGroup, getCountFromServer } from "firebase/firestore";
+import { db } from "../../../firebase";
 import "./AdminPages.css";
 
 export default function AdminOverview() {
@@ -9,20 +10,32 @@ export default function AdminOverview() {
 
   useEffect(() => {
     (async () => {
-      const [staff, receptionists, customers, menu, reservations, feedback] = await Promise.all([
-        countByRole("staff"),
-        countByRole("receptionist"),
-        countByRole("customer"),
-        count("menu"),
-        count("reservations"),
-        count("feedback")
-      ]);
+      try {
+        const [
+          receptionistSnap,
+          customerSnap,
+          menuSnap,
+          reservationsSnap,
+          feedbackSnap
+        ] = await Promise.all([
+          getCountFromServer(collection(db, "receptionist")),
+          getCountFromServer(collection(db, "customer")),
+          getCountFromServer(collection(db, "menu")),
+          getCountFromServer(collection(db, "reservations")),
+          getCountFromServer(collectionGroup(db, "feedback"))
+        ]);
 
-      setTotals({
-        staff, receptionists, customers, menu,
-        reservations,
-        feedback
-      });
+        setTotals({
+          staff: 0, // Staff count logic needs to be defined if separate from receptionists
+          receptionists: receptionistSnap.data().count,
+          customers: customerSnap.data().count,
+          menu: menuSnap.data().count,
+          reservations: reservationsSnap.data().count,
+          feedback: feedbackSnap.data().count
+        });
+      } catch (error) {
+        console.error("Error fetching dashboard counts:", error);
+      }
     })();
   }, []);
 

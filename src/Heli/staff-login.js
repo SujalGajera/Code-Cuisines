@@ -27,9 +27,14 @@ export default function StaffLogin() {
       // Step 1: Authenticate with Firebase
       const userCred = await signInWithEmailAndPassword(auth, email, password);
 
-      // Step 2: Check user role in Firestore (users collection, not receptionists)
-      const userRef = doc(db, "users", userCred.user.uid);
-      const snap = await getDoc(userRef);
+      // Step 2: Check user role in Firestore (users or receptionist collection)
+      let userRef = doc(db, "users", userCred.user.uid);
+      let snap = await getDoc(userRef);
+
+      if (!snap.exists()) {
+        userRef = doc(db, "receptionist", userCred.user.uid);
+        snap = await getDoc(userRef);
+      }
 
       // ❌ Block if user doesn't exist in Firestore
       if (!snap.exists()) {
@@ -79,7 +84,7 @@ export default function StaffLogin() {
 
     } catch (err) {
       console.error("Login error:", err);
-      
+
       if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
         setError("⚠️ Incorrect email or password.");
       } else if (err.code === "auth/invalid-email") {
@@ -127,8 +132,8 @@ export default function StaffLogin() {
 
           {error && <p className="error-login">{error}</p>}
 
-          <button 
-            className="btn-primary login-btn" 
+          <button
+            className="btn-primary login-btn"
             onClick={handleLogin}
             disabled={isLoading}
           >

@@ -17,6 +17,7 @@ import AdminLayout from "./Sujal/admin/AdminLayout";
 import AdminOverview from "./Sujal/admin/pages/AdminOverview";
 import StaffPage from "./Sujal/admin/pages/StaffPage";
 import ReceptionistsPage from "./Sujal/admin/pages/ReceptionistsPage";
+import ShiftsPage from "./Sujal/admin/pages/ShiftsPage";
 import CustomersPage from "./Sujal/admin/pages/CustomersPage";
 import MenuPage from "./Sujal/admin/pages/MenuPage";
 import ReservationsPage from "./Sujal/admin/pages/ReservationsPage";
@@ -34,6 +35,7 @@ import CustomerFeedback from "./Yubi/Feedback/CustomerFeedback";
 import CustomerMenu from "./Yubi/Menu/CustomerMenu";
 import CustomerOrderHistory from "./Yubi/Orders/CustomerOrderHistory";
 import CustomerReservations from "./Yubi/Reservations/CustomerReservations";
+import CustomerPayment from "./Yubi/Payment/CustomerPayment";
 
 // Providers
 import { CartProvider } from "./Yubi/Cart/CartContext";
@@ -101,6 +103,7 @@ function AppWrapper() {
           <Route index element={<AdminOverview />} />
           <Route path="staff" element={<StaffPage />} />
           <Route path="receptionists" element={<ReceptionistsPage />} />
+          <Route path="shifts" element={<ShiftsPage />} />
           <Route path="customers" element={<CustomersPage />} />
           <Route path="menu" element={<MenuPage />} />
           <Route path="reservations" element={<ReservationsPage />} />
@@ -161,6 +164,14 @@ function AppWrapper() {
           element={
             <CustomerRoute>
               <CustomerFeedback />
+            </CustomerRoute>
+          }
+        />
+        <Route
+          path="/customer/payment"
+          element={
+            <CustomerRoute>
+              <CustomerPayment />
             </CustomerRoute>
           }
         />
