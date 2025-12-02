@@ -37,32 +37,18 @@ function CustomerReservations() {
 
   // ---------- load reservations from top-level collection ----------
   useEffect(() => {
-    const init = async () => {
-      // Try Firebase Auth
-      const userFromAuth = auth.currentUser;
-      // Fallback to localStorage
-      const customerFromStorage = JSON.parse(
-        localStorage.getItem("currentCustomer") || "null"
-      );
-
-      const uid = userFromAuth?.uid || customerFromStorage?.uid;
-
-      if (!uid) {
-        console.warn("No logged-in customer; cannot load reservations");
+    const unsubAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCustomerUid(user.uid);
         setLoading(false);
-        return;
-      }
 
-      setCustomerUid(uid);
-
-      try {
         // 🔹 Real-time listener for reservations collection filtered by userId
         const q = query(
           collection(db, "reservations"),
-          where("userId", "==", uid)
+          where("userId", "==", user.uid)
         );
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const unsubSnapshot = onSnapshot(q, (snapshot) => {
           const all = snapshot.docs.map((d) => ({
             id: d.id,
             ...d.data(),
@@ -70,18 +56,16 @@ function CustomerReservations() {
 
           setUpcomingReservations(all.filter((r) => r.status !== "Completed"));
           setPastReservations(all.filter((r) => r.status === "Completed"));
-          setLoading(false);
         });
 
-        // Cleanup listener on unmount
-        return () => unsubscribe();
-      } catch (err) {
-        console.error("Error loading reservations:", err);
+        return () => unsubSnapshot();
+      } else {
         setLoading(false);
+        console.warn("No logged-in customer");
       }
-    };
+    });
 
-    init();
+    return () => unsubAuth();
   }, []);
 
   // ---------- open / close helpers ----------
@@ -131,15 +115,34 @@ function CustomerReservations() {
     }
 
     try {
-      // Get customer details from users collection
-      const userDoc = await getDoc(doc(db, "users", customerUid));
-      const userData = userDoc.data();
+      // Try to get customer details from users collection, but don't fail if it doesn't exist
+      let userName = "Customer";
+      let userEmail = "";
+      let userPhone = "";
+
+      try {
+        const userDoc = await getDoc(doc(db, "users", customerUid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          userName = userData?.name || auth.currentUser?.displayName || "Customer";
+          userEmail = userData?.email || auth.currentUser?.email || "";
+          userPhone = userData?.phone || "";
+        } else {
+          // Use auth data if Firestore document doesn't exist
+          userName = auth.currentUser?.displayName || auth.currentUser?.email?.split('@')[0] || "Customer";
+          userEmail = auth.currentUser?.email || "";
+        }
+      } catch (error) {
+        console.warn("Could not fetch user document, using auth data:", error);
+        userName = auth.currentUser?.displayName || auth.currentUser?.email?.split('@')[0] || "Customer";
+        userEmail = auth.currentUser?.email || "";
+      }
 
       const newResData = {
         userId: customerUid,
-        userName: userData?.name || "Customer",
-        userEmail: userData?.email || "",
-        userPhone: userData?.phone || "",
+        userName: userName,
+        userEmail: userEmail,
+        userPhone: userPhone,
         date: form.date || "New date",
         time: form.time || "Time",
         guests: Number(form.guests) || 2,
@@ -415,8 +418,8 @@ function CustomerReservations() {
 
                   <span
                     className={`cc-pill ${res.status === "Confirmed"
-                        ? "cc-pill-success"
-                        : "cc-pill-warning"
+                      ? "cc-pill-success"
+                      : "cc-pill-warning"
                       }`}
                   >
                     {res.status}

@@ -319,7 +319,7 @@
 }
 
 /* ==================================================================
-   CART ICON (TOPBAR)
+   CART BUTTON & DRAWER
    ================================================================== */
 
 .cc-cart-btn {
@@ -328,20 +328,246 @@
   outline: none;
   background: transparent;
   margin-right: 0.5rem;
-  padding: 0;
+  padding: 0.5rem;
   display: inline-flex;
-  opacity: 0.5;
-  cursor: default;
-  box-shadow: none;
-}
-
-.cc-brand-logo {
-  width: 36px;
-  height: 36px;
+  cursor: pointer;
   border-radius: 50%;
-  object-fit: cover;
+  transition: background 0.2s;
 }
 
+.cc-cart-btn:hover {
+  background: #fff7f0;
+}
+
+.cc-cart-icon {
+  font-size: 1.2rem;
+  color: #4b5563;
+}
+
+.cc-cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+}
+
+.cc-cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.cc-cart-drawer {
+  width: 400px;
+  max-width: 90%;
+  background: #ffffff;
+  height: 100%;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.cc-cart-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-cart-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #111827;
+}
+
+.cc-cart-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.cc-cart-close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.cc-cart-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.cc-cart-items {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cc-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f9fafb;
+}
+
+.cc-cart-item-name {
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.cc-cart-item-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.cc-cart-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.cc-cart-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 0.15rem 0.25rem;
+}
+
+.cc-cart-qty button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: #ffffff;
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.cc-cart-qty span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+
+.cc-cart-remove {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+}
+
+.cc-cart-remove:hover {
+  opacity: 1;
+}
+
+.cc-cart-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #f3f4f6;
+  background: #f9fafb;
+}
+
+.cc-cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.25rem;
+}
+
+.cc-cart-footer-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.cc-cart-clear {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.checkout-btn {
+  flex: 2;
+  padding: 0.75rem;
+  border: none;
+  background: #a94c0a;
+  color: #ffffff;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(169, 76, 10, 0.25);
+}
+
+.checkout-btn:hover {
+  background: #ea580c;
+}
 
 .cc-brand-logo {
   width: 38px;
