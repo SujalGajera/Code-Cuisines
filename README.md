@@ -1,70 +1,93 @@
-# Getting Started with Create React App
+# Code & Cuisine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive Restaurant Management System built with React and Firebase. This application provides distinct portals for Administrators, Staff/Receptionists, and Customers to manage all aspects of restaurant operations.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+### 👑 Admin Portal
+- **Dashboard Overview**: Real-time insights into restaurant performance.
+- **Staff Management**: Manage staff accounts, roles, and shifts.
+- **Menu Management**: Add, edit, and remove menu items with images.
+- **Reservation Management**: View and manage table bookings.
+- **Payment & Orders**: Track customer orders and payment history.
+- **User Management**: Manage customer and staff access.
 
-### `npm start`
+### 🍽️ Customer Portal
+- **Menu Browsing**: View the full menu with categories and search.
+- **Ordering System**: Add items to cart and place orders.
+- **Table Reservation**: Book tables for specific dates and times.
+- **Order History**: View past orders and their status.
+- **Profile Management**: Update personal details and preferences.
+- **Feedback**: Submit reviews and feedback.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 💼 Staff & Receptionist Portal
+- **Shift Management**: View assigned shifts and schedules.
+- **Reservation Handling**: Manage walk-ins and phone bookings.
+- **Order Processing**: View and update order statuses.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `npm test`
+- **Frontend**: React.js
+- **Styling**: CSS3 (Custom responsive design)
+- **Backend**: Firebase (Firestore Database)
+- **Authentication**: Firebase Authentication
+- **Routing**: React Router v6
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📂 Project Structure
 
-### `npm run build`
+The project is organized by team responsibilities and shared resources:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+src/
+├── Sujal/          # Admin Dashboard & Core Pages
+├── Yubraj/         # Customer Portal & Features
+├── Roshan/         # Receptionist Dashboard & Auth
+├── Heli/           # Staff Portal & Auth
+├── components/     # Shared UI Components
+├── contexts/       # Global State (Auth, Cart, Admin)
+├── routes/         # Protected Route Logic
+├── utils/          # Helper Functions
+├── assets/         # Images and Static Files
+└── firebase.js     # Firebase Configuration
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚦 Getting Started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
+- Node.js installed
+- npm or yarn package manager
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    cd Code-Cuisines
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3.  **Start the development server**
+    ```bash
+    npm start
+    ```
+    The app will open at [http://localhost:3000](http://localhost:3000).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🔐 Roles & Access
 
-## Learn More
+- **Admin**: Full access to all modules.
+- **Staff/Receptionist**: Access to specific operational modules.
+- **Customer**: Access to ordering and reservation features.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🤝 Contributors
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Sujal** - Admin Dashboard & Core Architecture
+- **Yubraj** - Customer Features & Ordering System
+- **Roshan** - Receptionist Module & Authentication
+- **Heli** - Staff Module & Authentication
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+*Built for the Year 2 Block 2 Project.*

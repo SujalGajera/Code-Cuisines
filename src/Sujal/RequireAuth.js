@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useAdmin } from "./admin/AdminContext";
+import { useAdmin } from "../contexts/AdminContext";
 
 // Protect routes based on:
 // - logged in

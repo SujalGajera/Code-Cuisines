@@ -2,59 +2,59 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // Global UI
-import Navbar from "./Sujal/Navbar";
+import Navbar from "./Sujal/components/Navbar";
 
 // Landing
-import Home from "./Sujal/Home";
+import Home from "./Sujal/pages/Home";
 
 // Admin auth screens
-import AdminSignIn from "./Sujal/AdminSignIn";
-import AdminForgot from "./Sujal/AdminForgot";
-import AdminVerify from "./Sujal/AdminVerify";
+import AdminSignIn from "./Sujal/pages/AdminSignIn";
+import AdminForgot from "./Sujal/pages/AdminForgot";
+import AdminVerify from "./Sujal/pages/AdminVerify";
 
 // Admin dashboard shell + pages
-import AdminLayout from "./Sujal/admin/AdminLayout";
-import AdminOverview from "./Sujal/admin/pages/AdminOverview";
-import StaffPage from "./Sujal/admin/pages/StaffPage";
-import ReceptionistsPage from "./Sujal/admin/pages/ReceptionistsPage";
-import ShiftsPage from "./Sujal/admin/pages/ShiftsPage";
-import CustomersPage from "./Sujal/admin/pages/CustomersPage";
-import MenuPage from "./Sujal/admin/pages/MenuPage";
-import ReservationsPage from "./Sujal/admin/pages/ReservationsPage";
-import PaymentsPage from "./Sujal/admin/pages/PaymentsPage";
+import AdminLayout from "./Sujal/components/AdminLayout";
+import AdminOverview from "./Sujal/pages/AdminOverview";
+import StaffPage from "./Sujal/pages/StaffPage";
+import ReceptionistsPage from "./Sujal/pages/ReceptionistsPage";
+import ShiftsPage from "./Sujal/pages/ShiftsPage";
+import CustomersPage from "./Sujal/pages/CustomersPage";
+import MenuPage from "./Sujal/pages/MenuPage";
+import ReservationsPage from "./Sujal/pages/ReservationsPage";
+import PaymentsPage from "./Sujal/pages/PaymentsPage";
 
 // CUSTOMER AUTH
-import CustomerLogin from "./Yubi/Auth/CustomerLogin";
-import CustomerRegister from "./Yubi/Auth/CustomerRegister";
-import CustomerForgot from "./Yubi/Auth/ForgotPassword";
+import CustomerLogin from "./Yubraj/pages/CustomerLogin";
+import CustomerRegister from "./Yubraj/pages/CustomerRegister";
+import CustomerForgot from "./Yubraj/pages/ForgotPassword";
 
 // CUSTOMER DASHBOARD + PAGES
-import CustomerDashboard from "./Yubi/Customer/Dashboard/CustomerDashboard";
-import CustomerProfile from "./Yubi/Profile/CustomerProfile";
-import CustomerFeedback from "./Yubi/Feedback/CustomerFeedback";
-import CustomerMenu from "./Yubi/Menu/CustomerMenu";
-import CustomerOrderHistory from "./Yubi/Orders/CustomerOrderHistory";
-import CustomerReservations from "./Yubi/Reservations/CustomerReservations";
-import CustomerPayment from "./Yubi/Payment/CustomerPayment";
+import CustomerDashboard from "./Yubraj/pages/CustomerDashboard";
+import CustomerProfile from "./Yubraj/pages/CustomerProfile";
+import CustomerFeedback from "./Yubraj/pages/CustomerFeedback";
+import CustomerMenu from "./Yubraj/pages/CustomerMenu";
+import CustomerOrderHistory from "./Yubraj/pages/CustomerOrderHistory";
+import CustomerReservations from "./Yubraj/pages/CustomerReservations";
+import CustomerPayment from "./Yubraj/pages/CustomerPayment";
 
 // Providers
-import { CartProvider } from "./Yubi/Cart/CartContext";
-import { AdminProvider } from "./Sujal/admin/AdminContext";
+import { CartProvider } from "./contexts/CartContext";
+import { AdminProvider } from "./contexts/AdminContext";
 
 // Staff / Receptionist screens
-import StaffLogin from "./Heli/staff-login";
-import StaffForgot from "./Heli/ForgotPassword";
-import SignUp from "./Roshan/SignUp";
+import StaffLogin from "./Heli/pages/staff-login";
+import StaffForgot from "./Heli/pages/ForgotPassword";
+import SignUp from "./Roshan/pages/SignUp";
 
 // Receptionist Dashboard
-import ReceptionistDashboard from "./Roshan/ReceptionistDashboard";
+import ReceptionistDashboard from "./Roshan/pages/ReceptionistDashboard";
 
 // Auth / role context + protected routes
 import {
   AdminRoute,
   CustomerRoute,
   StaffRoute,
-} from "./Sujal/admin/ProtectedRoute";
+} from "./routes/ProtectedRoute";
 
 // Placeholder pages
 const Explore = () => <div style={{ padding: 24 }}>Explore Page (placeholder)</div>;
