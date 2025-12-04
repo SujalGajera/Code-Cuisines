@@ -4,12 +4,18 @@
 .login-container,
 .register-container,
 .forgot-container {
-  min-height: 100vh;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #faf7f4;
   padding: 2rem;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 /* Main box */

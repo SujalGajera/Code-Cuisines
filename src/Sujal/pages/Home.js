@@ -72,6 +72,13 @@ function Home() {
     }
   }, [location]);
 
+  // Clear admin verification when returning to home page
+  // This ensures admin must re-verify every time they access the dashboard
+  useEffect(() => {
+    localStorage.removeItem("isAdminVerified");
+    localStorage.removeItem("pendingAdminVerify");
+  }, []);
+
   const handleGetStarted = () => {
     navigate('/login/customer');
   };
