@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-tests:
+    name: Security Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Neccesary for gitleaks to scan all commits
+
+      - name: Secret Scanning (Check for Passwords/API Keys)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Dependency Vulnerability Scanning (npm audit)
+        run: |
+          # Fails the build if it finds vulnerabilities of level high or critical
+          # We use || true here to prevent failing the entire workflow if we just want to see the report.
+          # Remove "|| true" if you want the pipeline to strictly fail on high vulnerabilities.
+          npm audit --audit-level=high || true
+
+  build-and-deploy:
+    name: Build & Deploy to Firebase
+    needs: security-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CODECUISINEFB }}
+          # Deploys to a preview channel for PRs, and "live" for merges to main
+          channelId: ${{ github.event_name == 'pull_request' && 'pr' || 'live' }}
+          projectId: codecuisinefb
