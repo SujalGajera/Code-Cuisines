@@ -1,0 +1,21 @@
+name: OWASP 2 - Insecure Design
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  semgrep-scan:
+    name: Semgrep Analysis for Design Flaws
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Run Semgrep with OWASP Top 10 rules
+        run: semgrep scan --config "p/owasp-top-ten" --error || true
+  
