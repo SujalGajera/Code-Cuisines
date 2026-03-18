@@ -1,0 +1,33 @@
+name: OWASP A07 Authentication Check
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  auth_security_check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run npm audit (check vulnerabilities)
+      run: npm audit
+
+    - name: Check for hardcoded secrets
+      run: |
+        echo "Checking for hardcoded passwords or secrets..."
+        grep -r "password" . || true
+        grep -r "secret" . || true
+
+    - name: Build project
+      run: npm run build
