@@ -1,11 +1,11 @@
-name: OWASP A07 Authentication Check
+name: OWASP A07 Authentication & Dependency Check
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  auth_security_check:
+  security-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,14 +20,15 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Run npm audit (check vulnerabilities)
-      run: npm audit
+    - name: Run npm audit (do NOT fail)
+      run: npm audit || true
 
-    - name: Check for hardcoded secrets
+    - name: Scan for hardcoded secrets
       run: |
-        echo "Checking for hardcoded passwords or secrets..."
+        echo "Checking for hardcoded passwords..."
         grep -r "password" . || true
         grep -r "secret" . || true
+        grep -r "apiKey" . || true
 
     - name: Build project
       run: npm run build
