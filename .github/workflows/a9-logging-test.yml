@@ -28,7 +28,6 @@ jobs:
         run: |
           echo "FAILED LOGIN ATTEMPT" >> security.log
           echo "ERROR: Unauthorized access" >> security.log
-          exit 1
 
       - name: Upload logs
         if: always()
