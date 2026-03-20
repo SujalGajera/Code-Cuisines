@@ -14,9 +14,11 @@ jobs:
 
       - name: Check for insecure Firebase rules
         run: |
-          if grep -r 'allow read, write: if true' .; then
+          if grep -r 'allow read, write: if true' . --exclude-dir=.github; then
             echo "Critical: Public access detected"
             exit 1
+          else
+            echo "No public access rule found"
           fi
 
       - name: Check for missing role validation
