@@ -1,0 +1,31 @@
+name: A10 SSRF Security Check
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  ssrf-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Semgrep
+        continue-on-error: true
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: "p/owasp-top-ten"
+
+      - name: Done
+        run: echo "Scan completed"

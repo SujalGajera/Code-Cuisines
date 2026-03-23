@@ -35,20 +35,8 @@
       "last 1 safari version"
     ]
   },
-  "overrides": {
-    "@svgr/plugin-svgo": "^8.1.0",
-    "@svgr/webpack": "*",
-    "bfj": "*",
-    "css-minimizer-webpack-plugin": "*",
-    "css-select": "*",
-    "jsonpath": "*",
-    "nth-check": "^2.1.1",
-    "react-scripts": "*",
-    "rollup-plugin-terser": "*",
-    "serialize-javascript": "*",
-    "svgo": "*",
-    "underscore": "*",
-    "workbox-build": "*",
-    "workbox-webpack-plugin": "*"
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0"
   }
 }
