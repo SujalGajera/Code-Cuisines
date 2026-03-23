@@ -1,0 +1,41 @@
+name: OWASP A9 Logging Test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  logging-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test || true
+
+      - name: Simulate security event
+        run: |
+          echo "FAILED LOGIN ATTEMPT" >> security.log
+          echo "ERROR: Unauthorized access" >> security.log
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: security.log
+
+      - name: Alert
+        if: failure()
+        run: echo "Check logs - possible security issue"

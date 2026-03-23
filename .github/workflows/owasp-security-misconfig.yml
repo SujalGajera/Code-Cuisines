@@ -1,0 +1,27 @@
+name: OWASP 3 - Security Misconfiguration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  trivy-misconfig-scan:
+    name: Trivy Scan for Misconfigurations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner in IaC mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          hide-progress: false
+          format: 'table'
+          # Exit code 1 will fail the pipeline if High or Critical misconfigurations are found
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'HIGH,CRITICAL'

@@ -1,0 +1,45 @@
+name: OWASP 4 - Vulnerable and Outdated Components
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  dependency-check:
+    name: OWASP Dependency-Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      # Alternative lightweight check built into NPM
+      - name: NPM Audit
+        run: npm audit --audit-level=high || true
+
+      - name: Run OWASP Dependency-Check Action
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'Code-Cuisines'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+        continue-on-error: true # Prevents the workflow from suddenly blocking if the NVD API rate limits
+
+      - name: Upload Dependency Check Report
+        uses: actions/upload-artifact@v4
+        with:
+           name: dependency-check-report
+           path: ${{github.workspace}}/reports

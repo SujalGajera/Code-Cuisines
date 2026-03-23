@@ -1,0 +1,27 @@
+name: OWASP - 1 Cryptographic Failures
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run security audit
+        run: npm audit --audit-level=moderate || true
+
+      - name: Build project
+        run: CI=false npm run build

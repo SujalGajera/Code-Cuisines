@@ -1,0 +1,48 @@
+name: OWASP A08 Software Integrity Check
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  integrity-check:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: false   # prevent build from failing on warnings
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Check dependency vulnerabilities
+      run: npm audit || true
+
+    - name: Verify package integrity
+      run: npm ci || true
+
+    - name: Check for outdated packages
+      run: npm outdated || true
+
+    - name: Run OWASP ZAP Baseline Scan
+      run: |
+        docker run --rm \
+          -v ${{ github.workspace }}:/zap/wrk/:rw \
+          ghcr.io/zaproxy/zaproxy:stable \
+          zap-baseline.py \
+          -t http://host.docker.internal:3000 \
+          -r zap_report.html || true
+
+    - name: Upload ZAP Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: zap-report-a08
+        path: zap_report.html

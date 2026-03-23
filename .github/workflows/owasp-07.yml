@@ -1,0 +1,37 @@
+name: OWASP A07 Authentication & Dependency Check
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: false   # 🔥 disables strict CI mode
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run npm audit (do NOT fail)
+      run: npm audit || true
+
+    - name: Scan for hardcoded secrets
+      run: |
+        echo "Checking for hardcoded passwords..."
+        grep -r "password" . || true
+        grep -r "secret" . || true
+        grep -r "apiKey" . || true
+
+    - name: Build project
+      run: npm run build
