@@ -3,7 +3,7 @@
 // Description: Receptionist Dashboard (clean UI + bookings + staff orders + profile + shifts)
 
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import { collection, query, where, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import "../styles/ReceptionistDashboard.css";
 

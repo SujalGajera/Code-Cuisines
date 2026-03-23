@@ -5,8 +5,6 @@ import "../styles/CustomerFeedback.css";
 import { auth, db } from "../../firebase";
 import {
   collection,
-  query,
-  where,
   onSnapshot,
   addDoc,
   serverTimestamp,

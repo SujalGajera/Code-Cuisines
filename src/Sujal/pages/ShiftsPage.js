@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { create, patch, remove } from "../utils/fireUtils";
-import { collection, query, where, getDocs, collectionGroup, onSnapshot, doc, deleteDoc, addDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+//import { create, patch, remove } from "../utils/fireUtils";
+import { collection, query, getDocs, collectionGroup, onSnapshot, doc, deleteDoc, addDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
 import "../styles/AdminPages.css";
 

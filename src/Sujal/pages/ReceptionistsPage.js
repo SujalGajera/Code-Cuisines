@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { collection, query, where, onSnapshot, doc, deleteDoc, setDoc } from "firebase/firestore";
+import { collection, onSnapshot, doc, deleteDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { createSecondaryUser } from "../utils/fireUtils";
 import "../styles/AdminPages.css";
