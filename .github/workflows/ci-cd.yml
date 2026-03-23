@@ -9,6 +9,7 @@ on:
       - main
 
 jobs:
+  # ── JOB 1: Security checks ─────────────────────────────────────────────
   security-tests:
     name: Security Testing
     runs-on: ubuntu-latest
@@ -16,9 +17,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Neccesary for gitleaks to scan all commits
+          fetch-depth: 0 # Required for Gitleaks to scan full commit history
 
-      - name: Secret Scanning (Check for Passwords/API Keys)
+      - name: Secret Scanning (Gitleaks)
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -27,18 +28,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Dependency Vulnerability Scanning (npm audit)
-        run: |
-          # Fails the build if it finds vulnerabilities of level high or critical
-          # We use || true here to prevent failing the entire workflow if we just want to see the report.
-          # Remove "|| true" if you want the pipeline to strictly fail on high vulnerabilities.
-          npm audit --audit-level=high || true
+        run: npm audit --audit-level=high || true
 
-  build-and-deploy:
-    name: Build & Deploy to Firebase
-    needs: security-tests
+  # ── JOB 2: Code quality & tests ────────────────────────────────────────
+  quality-and-test:
+    name: Lint & Test
     runs-on: ubuntu-latest
+    needs: security-tests
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -47,6 +49,33 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint (static code analysis)
+        run: npx eslint src/ --ext .js,.jsx --max-warnings=50 || true
+
+      - name: Run automated tests (Jest + RTL)
+        env:
+          CI: true
+        run: npm test -- --watchAll=false --passWithNoTests
+
+  # ── JOB 3: Build & Deploy ──────────────────────────────────────────────
+  build-and-deploy:
+    name: Build & Deploy to Firebase
+    runs-on: ubuntu-latest
+    needs: quality-and-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -61,6 +90,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CODECUISINEFB }}
-          # Deploys to a preview channel for PRs, and "live" for merges to main
           channelId: ${{ github.event_name == 'pull_request' && 'pr' || 'live' }}
           projectId: codecuisinefb
