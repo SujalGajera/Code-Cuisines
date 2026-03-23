@@ -11,7 +11,7 @@ export default defineConfig({
 
   use: {
     baseURL: 'http://localhost:3000', // change this if your app uses another port
-    headless: false,
+    headless: true,
     trace: 'on-first-retry',
   },
 
