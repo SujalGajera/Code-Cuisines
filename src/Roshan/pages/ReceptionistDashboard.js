@@ -34,9 +34,8 @@ export default function ReceptionistDashboard() {
   const [profileDraft, setProfileDraft] = useState(profile);
   const [newSkill, setNewSkill] = useState("");
 
-  useEffect(() => {
-    localStorage.setItem("receptionProfile", JSON.stringify(profile));
-  }, [profile]);
+  // Keep profile state in memory only; do not persist it to localStorage to
+  // avoid storing authenticated user data in clear text.
 
   useEffect(() => {
     setProfileDraft(profile);

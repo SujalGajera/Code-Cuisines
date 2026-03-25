@@ -59,19 +59,8 @@ export default function StaffLogin() {
       if (role === "admin" || role === "staff" || role === "receptionist") {
         console.log(`✅ ${role} logged in successfully`);
 
-        // --- START NEW LOGIC: Save profile to localStorage ---
-        const profile = {
-          name: userData.name || userCred.user.email.split('@')[0], // Use name from Firestore or part of email
-          email: userCred.user.email,
-          phone: userData.phone || "N/A",
-          role: role.charAt(0).toUpperCase() + role.slice(1), // Capitalize role for display
-          avatar: userData.avatar || "",
-          skills: userData.skills || ["General Staff Duties"],
-        };
-
-        // Save the profile data for the ReceptionistDashboard to pick up
-        localStorage.setItem("receptionProfile", JSON.stringify(profile));
-        // --- END NEW LOGIC ---
+        // Profile data can be fetched where needed (for example, inside dashboards)
+        // without persisting sensitive or identity-bearing data in localStorage.
 
         // Navigate to staff dashboard
         navigate("/staff/dashboard");
